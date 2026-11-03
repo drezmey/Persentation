@@ -3,290 +3,358 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Presentasi Interaktif: Limbah B3 Rumah Sakit</title>
+  <title>Presentasi Limbah B3 Rumah Sakit — Playful Geometric 16:9</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
     :root {
-      --bg: #07111f;
-      --panel: rgba(255, 255, 255, 0.06);
-      --panel-2: rgba(255, 255, 255, 0.09);
-      --text: #eaf2ff;
-      --muted: #a9bad3;
-      --blue: #38bdf8;
-      --green: #34d399;
-      --yellow: #fbbf24;
-      --orange: #fb923c;
-      --red: #f87171;
-      --purple: #c084fc;
-      --pink: #f472b6;
-      --shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
-      --radius: 24px;
+      --ink: #17131f;
+      --paper: #fff7ea;
+      --white: #fffdf7;
+      --muted: #5f5669;
+
+      --violet: #8b5cf6;
+      --pink: #ec4899;
+      --amber: #f59e0b;
+      --mint: #34d399;
+
+      --border: 4px solid var(--ink);
+      --shadow: 12px 12px 0 var(--ink);
+      --shadow-sm: 7px 7px 0 var(--ink);
+      --radius: 30px;
     }
 
     * {
       box-sizing: border-box;
     }
 
-    html, body {
+    html,
+    body {
       margin: 0;
       padding: 0;
       width: 100%;
       height: 100%;
       overflow: hidden;
       background:
-        radial-gradient(circle at top left, rgba(56, 189, 248, 0.16), transparent 30%),
-        radial-gradient(circle at bottom right, rgba(52, 211, 153, 0.14), transparent 32%),
-        linear-gradient(135deg, #07111f, #0d1b2e 45%, #091423);
-      color: var(--text);
-      font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        radial-gradient(circle at top left, rgba(139, 92, 246, 0.25), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(52, 211, 153, 0.22), transparent 30%),
+        #17111f;
+      font-family: "Space Grotesk", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--ink);
     }
 
-    #bg {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
+    .frame {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 2vmin;
     }
 
-    .hud {
-      position: fixed;
+    .stage {
+      position: relative;
+      width: min(100vw, calc(100vh * 16 / 9));
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border: 5px solid var(--ink);
+      border-radius: 34px;
+      background: var(--paper);
+      box-shadow: 26px 26px 0 rgba(0, 0, 0, 0.38);
+    }
+
+    .canvas {
+      position: absolute;
+      left: 0;
       top: 0;
+      width: 1600px;
+      height: 900px;
+      transform-origin: top left;
+      --px: 0;
+      --py: 0;
+    }
+
+    .paper {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle, rgba(23, 19, 31, 0.09) 1.4px, transparent 1.4px),
+        linear-gradient(135deg, rgba(139, 92, 246, 0.08), transparent 35%, rgba(52, 211, 153, 0.09));
+      background-size: 24px 24px, cover;
+    }
+
+    .layer {
+      position: absolute;
+      inset: -140px;
+      pointer-events: none;
+      transform: translate3d(
+        calc(var(--px) * var(--depth, 0) * 1px),
+        calc(var(--py) * var(--depth, 0) * 1px),
+        0
+      );
+      will-change: transform;
+      z-index: 1;
+    }
+
+    .shape {
+      position: absolute;
+      border: var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .circle { border-radius: 50%; }
+    .square { border-radius: 26px; }
+    .pill { border-radius: 999px; }
+
+    .topbar {
+      position: absolute;
+      z-index: 30;
       left: 0;
       right: 0;
-      height: 68px;
+      top: 0;
+      height: 88px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 0 18px;
-      z-index: 50;
-      backdrop-filter: blur(14px);
-      background: linear-gradient(to bottom, rgba(7, 17, 31, 0.82), rgba(7, 17, 31, 0.35));
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      gap: 24px;
+      padding: 0 34px;
+      border-bottom: var(--border);
+      background: rgba(255, 247, 234, 0.9);
+      backdrop-filter: blur(10px);
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-weight: 800;
-      letter-spacing: 0.2px;
+      gap: 14px;
+      font-family: "Fredoka", sans-serif;
+      font-weight: 700;
+      font-size: 26px;
       white-space: nowrap;
     }
 
-    .brand .svg-icon {
-      width: 28px;
-      height: 28px;
-      color: var(--yellow);
+    .brand-badge {
+      width: 54px;
+      height: 54px;
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--violet);
+      box-shadow: var(--shadow-sm);
+      display: grid;
+      place-items: center;
+      color: #fff;
     }
 
     .progress {
       flex: 1;
-      height: 8px;
+      height: 24px;
+      border: var(--border);
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.12);
+      background: #fff;
+      box-shadow: 6px 6px 0 var(--ink);
       overflow: hidden;
-      min-width: 80px;
+      min-width: 120px;
     }
 
     #bar {
       width: 0%;
       height: 100%;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--blue), var(--green), var(--yellow));
+      background: repeating-linear-gradient(
+        90deg,
+        var(--pink) 0 22px,
+        var(--amber) 22px 44px,
+        var(--mint) 44px 66px,
+        var(--violet) 66px 88px
+      );
       transition: width 0.45s ease;
-    }
-
-    .hud-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
     }
 
     .nav-btn,
     .icon-btn {
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      background: rgba(255, 255, 255, 0.08);
-      color: var(--text);
-      border-radius: 14px;
-      min-width: 42px;
-      height: 42px;
+      width: 54px;
+      height: 54px;
+      border: var(--border);
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: var(--shadow-sm);
       display: grid;
       place-items: center;
       cursor: pointer;
-      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
-      font-size: 1rem;
-      font-weight: 800;
+      font-family: "Fredoka", sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      transition: transform 0.16s ease, box-shadow 0.16s ease;
+      color: var(--ink);
     }
 
     .nav-btn:hover,
     .icon-btn:hover {
-      transform: translateY(-2px);
-      background: rgba(255, 255, 255, 0.14);
-      border-color: rgba(255, 255, 255, 0.24);
+      transform: translate(-2px, -2px);
+      box-shadow: 9px 9px 0 var(--ink);
+    }
+
+    .nav-btn:active,
+    .icon-btn:active {
+      transform: translate(5px, 5px);
+      box-shadow: 2px 2px 0 var(--ink);
     }
 
     .counter {
-      min-width: 76px;
+      min-width: 104px;
       text-align: center;
-      font-weight: 800;
-      color: var(--muted);
-      font-variant-numeric: tabular-nums;
+      font-family: "Fredoka", sans-serif;
+      font-weight: 700;
+      font-size: 20px;
+      border: var(--border);
+      border-radius: 999px;
+      padding: 10px 14px;
+      background: var(--mint);
+      box-shadow: 6px 6px 0 var(--ink);
     }
 
-    #deck {
-      position: fixed;
-      inset: 0;
+    .deck {
+      position: absolute;
+      inset: 88px 0 0 0;
+      z-index: 20;
       perspective: 1600px;
     }
 
     .slide {
       position: absolute;
       inset: 0;
-      display: grid;
-      place-items: center;
-      padding: 96px 4vw 92px;
+      padding: 46px 70px 72px;
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
-      transform: perspective(1600px) rotateY(var(--from, 22deg)) translateX(var(--x, 90px)) scale(0.92);
+      transform: translateX(80px) rotateY(8deg) scale(0.97);
       transition:
-        opacity 0.65s ease,
-        transform 0.78s cubic-bezier(0.2, 0.8, 0.2, 1),
-        visibility 0.65s ease;
+        opacity 0.55s ease,
+        transform 0.72s cubic-bezier(0.2, 0.8, 0.2, 1),
+        visibility 0.55s ease;
+      overflow: hidden;
     }
 
     .slide.active {
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
-      transform: perspective(1600px) rotateY(0deg) translateX(0px) scale(1);
+      transform: none;
     }
 
     .wrap {
-      width: min(1200px, 100%);
-    }
-
-    .slide-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 20px;
-      margin-bottom: 24px;
+      width: 100%;
+      height: 100%;
     }
 
     .kicker {
-      display: block;
-      color: var(--muted);
+      display: inline-block;
+      font-family: "Fredoka", sans-serif;
+      font-size: 18px;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      letter-spacing: 0.14em;
-      font-size: 0.82rem;
-      font-weight: 800;
-      margin-bottom: 8px;
+      padding: 8px 14px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--amber);
+      box-shadow: 6px 6px 0 var(--ink);
+      margin-bottom: 18px;
     }
 
     h1 {
-      margin: 0 0 14px;
-      line-height: 1.02;
-      font-size: clamp(2.2rem, 5.4vw, 4.4rem);
-      font-weight: 900;
-      letter-spacing: -0.04em;
+      margin: 0 0 18px;
+      font-family: "Fredoka", sans-serif;
+      font-size: 72px;
+      line-height: 0.98;
+      letter-spacing: -2px;
     }
 
     h2 {
-      margin: 0;
-      line-height: 1.08;
-      font-size: clamp(1.6rem, 3.8vw, 3rem);
-      font-weight: 900;
-      letter-spacing: -0.03em;
+      margin: 0 0 14px;
+      font-family: "Fredoka", sans-serif;
+      font-size: 48px;
+      line-height: 1.05;
+      letter-spacing: -1px;
     }
 
     h3 {
-      margin: 0 0 8px;
-      font-size: 1.08rem;
-      line-height: 1.25;
+      margin: 0 0 10px;
+      font-family: "Fredoka", sans-serif;
+      font-size: 25px;
+      line-height: 1.18;
     }
 
     p {
       margin: 0;
-      line-height: 1.65;
-      color: #dbe7f7;
+      font-size: 20px;
+      line-height: 1.55;
     }
 
     .lead {
-      font-size: clamp(1rem, 1.6vw, 1.18rem);
-      color: #d9e6f8;
-      max-width: 70ch;
+      font-size: 24px;
+      line-height: 1.5;
+      max-width: 760px;
+      color: #463f50;
     }
 
     .muted {
       color: var(--muted);
     }
 
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 9px 14px;
-      border-radius: 999px;
-      background: rgba(56, 189, 248, 0.12);
-      border: 1px solid rgba(56, 189, 248, 0.32);
-      color: #bae6fd;
-      font-weight: 800;
-      font-size: 0.88rem;
-      margin-bottom: 16px;
+    .hl {
+      padding: 0 0.12em;
+      border-radius: 0.25em;
+      -webkit-box-decoration-break: clone;
+      box-decoration-break: clone;
     }
 
-    .pulse {
-      animation: pulseRing 2.4s infinite;
-    }
-
-    .gradient-text {
-      background: linear-gradient(90deg, #60a5fa, #34d399, #fbbf24, #c084fc);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
+    .hl-violet { background: rgba(139, 92, 246, 0.26); }
+    .hl-pink { background: rgba(236, 72, 153, 0.22); }
+    .hl-amber { background: rgba(245, 158, 11, 0.28); }
+    .hl-mint { background: rgba(52, 211, 153, 0.28); }
 
     .cta-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 22px;
+      gap: 14px;
+      margin-top: 24px;
     }
 
     .btn {
-      border: 0;
+      font-family: "Fredoka", sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      border: var(--border);
       border-radius: 999px;
-      padding: 13px 18px;
-      font-weight: 900;
+      padding: 14px 22px;
+      background: #fff;
+      box-shadow: 8px 8px 0 var(--ink);
       cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-      color: var(--text);
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.14);
+      transition: transform 0.16s ease, box-shadow 0.16s ease;
+      color: var(--ink);
     }
 
     .btn:hover {
-      transform: translateY(-2px);
+      transform: translate(-2px, -2px);
+      box-shadow: 10px 10px 0 var(--ink);
     }
 
-    .btn.primary {
-      background: linear-gradient(135deg, var(--blue), var(--green));
-      color: #052018;
-      border: 0;
-      box-shadow: 0 16px 40px rgba(52, 211, 153, 0.22);
+    .btn:active {
+      transform: translate(5px, 5px);
+      box-shadow: 3px 3px 0 var(--ink);
     }
 
-    .btn.ghost {
-      background: transparent;
-    }
+    .btn.primary { background: var(--mint); }
+    .btn.violet { background: var(--violet); color: #fff; }
+    .btn.pink { background: var(--pink); color: #fff; }
+    .btn.amber { background: var(--amber); }
 
     .svg-icon {
-      width: 28px;
-      height: 28px;
+      width: 34px;
+      height: 34px;
       fill: none;
       stroke: currentColor;
-      stroke-width: 2.4;
+      stroke-width: 3;
       stroke-linecap: round;
       stroke-linejoin: round;
       flex: 0 0 auto;
@@ -294,78 +362,93 @@
 
     .hero {
       display: grid;
-      grid-template-columns: 1.08fr 0.92fr;
-      gap: 34px;
+      grid-template-columns: 1.03fr 0.97fr;
+      gap: 54px;
       align-items: center;
+      height: 100%;
     }
 
-    .quiz-box {
-      margin-top: 22px;
-      padding: 18px;
-      border-radius: 22px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+    .quiz {
+      margin-top: 24px;
+      padding: 24px;
+      border: var(--border);
+      border-radius: var(--radius);
+      background: var(--white);
       box-shadow: var(--shadow);
     }
 
-    .quiz-q {
-      font-weight: 900;
+    .quiz-title {
+      font-family: "Fredoka", sans-serif;
+      font-size: 26px;
+      font-weight: 700;
       margin-bottom: 14px;
-      font-size: 1.02rem;
     }
 
-    .quiz-options {
+    .choices {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 12px;
+      gap: 14px;
     }
 
     .choice {
-      all: unset;
-      box-sizing: border-box;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
+      width: 100%;
       padding: 14px 16px;
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      border: var(--border);
+      border-radius: 22px;
+      background: #fff;
+      box-shadow: 6px 6px 0 var(--ink);
       cursor: pointer;
-      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
-      color: var(--text);
-      font-weight: 700;
-      line-height: 1.35;
+      font-size: 19px;
+      font-weight: 600;
+      text-align: left;
+      color: var(--ink);
+      transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.2s ease;
     }
 
     .choice:hover {
-      transform: translateY(-3px);
-      background: rgba(255, 255, 255, 0.1);
+      transform: translate(-2px, -2px);
+      box-shadow: 8px 8px 0 var(--ink);
     }
 
     .choice:disabled {
-      cursor: not-allowed;
-      opacity: 0.92;
+      cursor: default;
+      opacity: 0.96;
     }
 
     .choice.correct {
-      border-color: rgba(52, 211, 153, 0.65);
-      background: rgba(52, 211, 153, 0.14);
-      box-shadow: 0 0 0 1px rgba(52, 211, 153, 0.18) inset;
+      background: rgba(52, 211, 153, 0.22);
     }
 
     .choice.wrong {
-      border-color: rgba(248, 113, 113, 0.65);
-      background: rgba(248, 113, 113, 0.14);
+      background: rgba(236, 72, 153, 0.18);
+    }
+
+    .mark {
+      width: 40px;
+      height: 40px;
+      border: var(--border);
+      border-radius: 14px;
+      background: var(--amber);
+      box-shadow: 4px 4px 0 var(--ink);
+      display: grid;
+      place-items: center;
+      font-family: "Fredoka", sans-serif;
+      font-weight: 700;
+      flex: 0 0 auto;
     }
 
     .feedback {
       display: none;
-      margin-top: 14px;
-      padding: 14px 16px;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.07);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      line-height: 1.55;
+      margin-top: 16px;
+      padding: 16px 18px;
+      border: var(--border);
+      border-radius: 22px;
+      background: var(--paper);
+      box-shadow: 6px 6px 0 var(--ink);
+      font-size: 18px;
+      line-height: 1.5;
     }
 
     .feedback.show {
@@ -373,54 +456,20 @@
       animation: popIn 0.35s ease;
     }
 
-    .feedback.good {
-      border-left: 5px solid var(--green);
-    }
+    .feedback.good { border-left: 10px solid var(--mint); }
+    .feedback.bad { border-left: 10px solid var(--pink); }
 
-    .feedback.bad {
-      border-left: 5px solid var(--red);
-    }
-
-    .hero-visual {
+    .visual {
       position: relative;
-      min-height: 440px;
+      height: 620px;
       display: grid;
       place-items: center;
-      transform-style: preserve-3d;
     }
 
-    .orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(62px);
-      opacity: 0.45;
-      animation: pulseOrb 8s ease-in-out infinite;
-    }
-
-    .orb-a {
-      width: 280px;
-      height: 280px;
-      background: #2563eb;
-      top: 8%;
-      left: 8%;
-    }
-
-    .orb-b {
-      width: 240px;
-      height: 240px;
-      background: #10b981;
-      bottom: 8%;
-      right: 4%;
-      animation-delay: 2s;
-    }
-
-    .main-svg {
-      width: min(380px, 76%);
-      height: auto;
-      color: #93c5fd;
-      filter: drop-shadow(0 28px 55px rgba(37, 99, 235, 0.35));
-      animation: float 6s ease-in-out infinite;
-      transform: translateZ(20px);
+    .hero-svg {
+      width: 560px;
+      height: 560px;
+      animation: float 6.5s ease-in-out infinite;
     }
 
     .chip {
@@ -429,356 +478,303 @@
       align-items: center;
       gap: 10px;
       padding: 12px 16px;
-      border-radius: 18px;
-      background: rgba(15, 23, 42, 0.74);
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      backdrop-filter: blur(10px);
-      box-shadow: var(--shadow);
-      font-weight: 900;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      box-shadow: 8px 8px 0 var(--ink);
+      font-family: "Fredoka", sans-serif;
+      font-size: 18px;
+      font-weight: 600;
       white-space: nowrap;
-      transform: translateZ(40px);
+      --accent: var(--violet);
     }
 
-    .chip .svg-icon {
-      width: 26px;
-      height: 26px;
+    .chip .dot {
+      width: 18px;
+      height: 18px;
+      border: 3px solid var(--ink);
+      border-radius: 50%;
+      background: var(--accent);
     }
 
-    .chip-1 {
-      top: 8%;
-      left: 0%;
-      color: #fca5a5;
-      animation: float 5.2s ease-in-out infinite;
+    .slide-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 30px;
+      margin-bottom: 28px;
     }
 
-    .chip-2 {
-      top: 20%;
-      right: 0%;
-      color: #fdba74;
-      animation: float 5.8s ease-in-out infinite 0.6s;
-    }
-
-    .chip-3 {
-      bottom: 20%;
-      left: 0%;
-      color: #fde68a;
-      animation: float 6.2s ease-in-out infinite 1.2s;
-    }
-
-    .chip-4 {
-      bottom: 6%;
-      right: 10%;
-      color: #c4b5fd;
-      animation: float 5.4s ease-in-out infinite 1.8s;
+    .slide-head p {
+      max-width: 430px;
+      font-size: 19px;
+      color: var(--muted);
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 18px;
+      gap: 24px;
     }
+
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-4 { grid-template-columns: repeat(4, 1fr); }
 
     .card {
       position: relative;
-      overflow: hidden;
-      padding: 22px;
+      background: var(--white);
+      border: var(--border);
       border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.045));
-      border: 1px solid rgba(255, 255, 255, 0.12);
       box-shadow: var(--shadow);
-      transform-style: preserve-3d;
-      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      padding: 26px 24px 24px;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      --accent: var(--violet);
     }
 
     .card:hover {
-      border-color: rgba(255, 255, 255, 0.2);
+      transform: translate(-3px, -3px);
+      box-shadow: 15px 15px 0 var(--ink);
     }
 
-    .card::after {
-      content: "";
+    .card .top-accent {
       position: absolute;
-      inset: auto -40% -70% -40%;
-      height: 140px;
-      background: radial-gradient(circle, rgba(255,255,255,0.1), transparent 65%);
-      pointer-events: none;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 12px;
+      border-bottom: var(--border);
+      background: var(--accent);
     }
 
-    .card-icon {
-      width: 58px;
-      height: 58px;
-      border-radius: 18px;
+    .card.violet { --accent: var(--violet); }
+    .card.pink { --accent: var(--pink); }
+    .card.amber { --accent: var(--amber); }
+    .card.mint { --accent: var(--mint); }
+
+    .icon {
+      width: 72px;
+      height: 72px;
+      border: var(--border);
+      border-radius: 22px;
+      background: var(--accent);
+      box-shadow: var(--shadow-sm);
       display: grid;
       place-items: center;
-      margin-bottom: 14px;
-      background: rgba(255, 255, 255, 0.08);
+      margin: 20px 0 16px;
+      color: var(--ink);
     }
 
-    .card-icon .svg-icon {
-      width: 30px;
-      height: 30px;
+    .icon-text {
+      font-family: "Fredoka", sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--ink);
     }
 
-    .icon-blue { background: rgba(56, 189, 248, 0.14); color: #7dd3fc; }
-    .icon-green { background: rgba(52, 211, 153, 0.14); color: #6ee7b7; }
-    .icon-yellow { background: rgba(251, 191, 36, 0.14); color: #fcd34d; }
-    .icon-red { background: rgba(248, 113, 113, 0.14); color: #fca5a5; }
-    .icon-orange { background: rgba(251, 146, 60, 0.14); color: #fdba74; }
-    .icon-purple { background: rgba(192, 132, 252, 0.14); color: #d8b4fe; }
-    .icon-pink { background: rgba(244, 114, 182, 0.14); color: #f9a8d4; }
+    .card p {
+      font-size: 18px;
+      line-height: 1.5;
+      color: #584f61;
+    }
 
-    .two-col {
+    .split {
       display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 28px;
+      grid-template-columns: 1.02fr 0.98fr;
+      gap: 44px;
       align-items: center;
+      height: 100%;
     }
 
     .list {
-      display: grid;
-      gap: 12px;
-      margin: 18px 0 0;
-      padding: 0;
       list-style: none;
+      padding: 0;
+      margin: 20px 0 0;
+      display: grid;
+      gap: 14px;
+      font-size: 20px;
     }
 
     .list li {
       position: relative;
-      padding-left: 28px;
-      line-height: 1.55;
-      color: #dbe7f7;
+      padding-left: 42px;
+      line-height: 1.45;
+      color: #4b4355;
     }
 
     .list li::before {
       content: "✓";
       position: absolute;
       left: 0;
-      top: 0;
-      color: var(--green);
+      top: 1px;
+      width: 30px;
+      height: 30px;
+      border: 3px solid var(--ink);
+      border-radius: 11px;
+      background: var(--mint);
+      box-shadow: 4px 4px 0 var(--ink);
+      display: grid;
+      place-items: center;
       font-weight: 900;
+      font-size: 17px;
     }
 
     .note {
-      margin-top: 16px;
-      padding: 14px 16px;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px dashed rgba(255, 255, 255, 0.18);
-      color: var(--muted);
-      line-height: 1.55;
+      margin-top: 22px;
+      padding: 20px 22px;
+      border: var(--border);
+      border-radius: 24px;
+      background: rgba(245, 158, 11, 0.16);
+      box-shadow: 8px 8px 0 var(--ink);
+      font-size: 18px;
+      line-height: 1.5;
     }
 
-    .warn {
-      border-left: 5px solid var(--yellow);
-      background: rgba(251, 191, 36, 0.09);
-    }
-
-    .flow {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    .step {
-      flex: 1 1 150px;
-      min-width: 140px;
-      padding: 16px 14px;
-      border-radius: 18px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.045));
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      text-align: center;
-      font-weight: 900;
-      box-shadow: var(--shadow);
-      transform-style: preserve-3d;
-      transition: transform 0.25s ease;
-    }
-
-    .arrow {
-      font-size: 1.5rem;
-      color: var(--muted);
-      font-weight: 900;
-    }
-
-    .stat-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      gap: 18px;
+    .note strong {
+      font-family: "Fredoka", sans-serif;
     }
 
     .stat {
-      padding: 24px 18px;
-      border-radius: 22px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.045));
-      border: 1px solid rgba(255, 255, 255, 0.12);
       text-align: center;
-      box-shadow: var(--shadow);
+      padding: 30px 20px;
     }
 
     .num {
       display: block;
-      font-size: clamp(2.2rem, 5vw, 3.6rem);
-      font-weight: 900;
+      font-family: "Fredoka", sans-serif;
+      font-size: 58px;
       line-height: 1;
-      color: var(--blue);
-      margin-bottom: 8px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 10px;
+      text-shadow: 4px 4px 0 rgba(23, 19, 31, 0.12);
       font-variant-numeric: tabular-nums;
     }
 
-    .tab-wrap {
-      margin-top: 18px;
-    }
-
-    .tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-
-    .tab-btn {
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      background: rgba(255, 255, 255, 0.07);
-      color: var(--text);
-      padding: 10px 14px;
-      border-radius: 999px;
-      font-weight: 900;
-      cursor: pointer;
-      transition: 0.2s ease;
-    }
-
-    .tab-btn.active {
-      background: #fff;
-      color: #0f172a;
-      border-color: transparent;
-    }
-
-    .tab-panel {
-      display: none;
-      padding: 18px;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      line-height: 1.6;
-    }
-
-    .tab-panel.active {
-      display: block;
-      animation: popIn 0.35s ease;
-    }
-
-    .checklist-layout {
+    .stack {
       display: grid;
-      grid-template-columns: 1fr 270px;
-      gap: 24px;
+      gap: 18px;
+    }
+
+    .check-layout {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 44px;
       align-items: center;
-    }
-
-    .checklist {
-      display: grid;
-      gap: 10px;
+      height: 100%;
     }
 
     .check {
       display: flex;
-      gap: 12px;
+      gap: 14px;
       align-items: flex-start;
-      padding: 12px 14px;
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.055);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 11px 14px;
+      border: var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      box-shadow: 6px 6px 0 var(--ink);
+      margin-bottom: 10px;
+      font-size: 17px;
+      line-height: 1.35;
       cursor: pointer;
-      transition: 0.2s ease;
+      transition: transform 0.16s ease, box-shadow 0.16s ease;
     }
 
     .check:hover {
-      background: rgba(255, 255, 255, 0.09);
+      transform: translate(-2px, -2px);
+      box-shadow: 8px 8px 0 var(--ink);
     }
 
     .check input {
-      margin-top: 3px;
-      width: 18px;
-      height: 18px;
-      accent-color: var(--green);
+      width: 24px;
+      height: 24px;
+      margin-top: 1px;
+      accent-color: var(--mint);
       flex: 0 0 auto;
+    }
+
+    .ring-card {
+      padding: 34px;
+      text-align: center;
     }
 
     .ring-wrap {
       position: relative;
-      display: grid;
-      place-items: center;
-      min-height: 240px;
+      width: 260px;
+      height: 260px;
+      margin: 18px auto 0;
     }
 
     .ring {
-      width: 200px;
-      height: 200px;
+      width: 260px;
+      height: 260px;
       transform: rotate(-90deg);
     }
 
     .ring-bg {
       fill: none;
-      stroke: rgba(255, 255, 255, 0.12);
-      stroke-width: 10;
+      stroke: rgba(23, 19, 31, 0.14);
+      stroke-width: 14;
     }
 
     .ring-fg {
       fill: none;
       stroke: url(#ringGrad);
-      stroke-width: 10;
+      stroke-width: 14;
       stroke-linecap: round;
-      stroke-dasharray: 327;
-      stroke-dashoffset: 327;
-      transition: stroke-dashoffset 0.6s ease;
+      transition: stroke-dashoffset 0.55s ease;
     }
 
     .ring-center {
       position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
       text-align: center;
     }
 
     #ringText {
-      font-size: 2.2rem;
-      font-weight: 900;
-      color: var(--green);
+      font-family: "Fredoka", sans-serif;
+      font-size: 46px;
+      font-weight: 700;
+      color: var(--mint);
+      line-height: 1;
     }
 
-    .final-grid {
+    .final-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 18px;
-      margin: 24px 0;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 40px;
+      align-items: center;
+      margin-top: 28px;
     }
 
-    .commit {
-      padding: 22px;
-      border-radius: 22px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.045));
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      text-align: center;
-      box-shadow: var(--shadow);
+    .thanks {
+      font-family: "Fredoka", sans-serif;
+      font-size: 64px;
+      line-height: 1;
+      margin: 0;
     }
 
     .toast {
-      position: fixed;
+      position: absolute;
       left: 50%;
-      bottom: 92px;
+      bottom: 34px;
       transform: translate(-50%, 20px);
-      background: rgba(15, 23, 42, 0.94);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      color: white;
-      padding: 14px 18px;
-      border-radius: 16px;
-      box-shadow: var(--shadow);
+      z-index: 60;
+      padding: 16px 22px;
+      border: var(--border);
+      border-radius: 999px;
+      background: var(--ink);
+      color: var(--paper);
+      box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.25);
+      font-size: 18px;
+      line-height: 1.4;
       opacity: 0;
       pointer-events: none;
       transition: 0.3s ease;
-      z-index: 100;
-      max-width: min(560px, 90vw);
+      max-width: 980px;
       text-align: center;
-      font-weight: 700;
-      line-height: 1.45;
     }
 
     .toast.show {
@@ -786,40 +782,57 @@
       transform: translate(-50%, 0);
     }
 
+    .hint {
+      position: absolute;
+      left: 34px;
+      bottom: 24px;
+      z-index: 25;
+      font-size: 16px;
+      color: #6b6375;
+    }
+
+    .dots {
+      position: absolute;
+      right: 34px;
+      bottom: 26px;
+      display: flex;
+      gap: 9px;
+      z-index: 25;
+    }
+
+    .dot-btn {
+      width: 15px;
+      height: 15px;
+      border: 3px solid var(--ink);
+      border-radius: 50%;
+      background: #fff;
+      cursor: pointer;
+      box-shadow: 3px 3px 0 var(--ink);
+      padding: 0;
+      transition: transform 0.16s ease, background 0.2s ease;
+    }
+
+    .dot-btn.active {
+      background: var(--pink);
+      transform: scale(1.18);
+    }
+
     .confetti {
-      position: fixed;
-      top: -20px;
-      width: 10px;
-      height: 14px;
-      border-radius: 2px;
-      z-index: 999;
+      position: absolute;
+      top: -40px;
+      width: 16px;
+      height: 22px;
+      border: 3px solid var(--ink);
+      border-radius: 5px;
+      box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.18);
+      z-index: 70;
       pointer-events: none;
       animation: fall linear forwards;
     }
 
-    .help {
-      position: fixed;
-      left: 18px;
-      bottom: 18px;
-      color: rgba(255, 255, 255, 0.45);
-      font-size: 0.85rem;
-      z-index: 40;
-    }
-
     @keyframes float {
-      0%, 100% { transform: translateY(0) rotateZ(0deg); }
-      50% { transform: translateY(-18px) rotateZ(1deg); }
-    }
-
-    @keyframes pulseRing {
-      0% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.35); }
-      70% { box-shadow: 0 0 0 18px rgba(56, 189, 248, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }
-    }
-
-    @keyframes pulseOrb {
-      0%, 100% { transform: scale(1); opacity: 0.38; }
-      50% { transform: scale(1.08); opacity: 0.52; }
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-18px) rotate(1.5deg); }
     }
 
     @keyframes popIn {
@@ -828,59 +841,7 @@
     }
 
     @keyframes fall {
-      to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
-    }
-
-    @media (max-width: 980px) {
-      .hero,
-      .two-col,
-      .checklist-layout {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-visual {
-        order: -1;
-        min-height: 340px;
-      }
-
-      .brand span {
-        display: none;
-      }
-
-      .help {
-        display: none;
-      }
-    }
-
-    @media (max-width: 680px) {
-      .slide {
-        padding: 88px 18px 88px;
-      }
-
-      .flow {
-        flex-direction: column;
-      }
-
-      .arrow {
-        transform: rotate(90deg);
-      }
-
-      .quiz-options {
-        grid-template-columns: 1fr;
-      }
-
-      .hud {
-        padding: 0 10px;
-      }
-
-      .progress {
-        margin: 0 8px;
-      }
-
-      .counter {
-        min-width: 64px;
-        font-size: 0.9rem;
-      }
+      to { transform: translateY(1000px) rotate(720deg); opacity: 0; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -893,14 +854,13 @@
   </style>
 </head>
 <body>
-  <!-- SVG SYMBOL / GAMBAR PENDUKUNG -->
+  <!-- SVG DEFS + ICONS -->
   <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden;">
-    <symbol id="hospital" viewBox="0 0 64 64">
-      <path d="M10 54V22l22-12 22 12v32" />
-      <path d="M24 54V38h16v16" />
-      <path d="M32 18v10M27 23h10" />
-      <path d="M4 54h56" />
-    </symbol>
+    <defs>
+      <filter id="hardShadow" x="-30%" y="-30%" width="180%" height="180%">
+        <feDropShadow dx="10" dy="10" stdDeviation="0" flood-color="#17131f" flood-opacity="1" />
+      </filter>
+    </defs>
 
     <symbol id="biohazard" viewBox="0 0 64 64">
       <circle cx="32" cy="32" r="6" />
@@ -908,6 +868,13 @@
       <circle cx="17" cy="46" r="8" />
       <circle cx="47" cy="46" r="8" />
       <path d="M32 22v4M25 38l-4 3M39 38l4 3" />
+    </symbol>
+
+    <symbol id="hospital" viewBox="0 0 64 64">
+      <path d="M10 54V22l22-12 22 12v32" />
+      <path d="M24 54V38h16v16" />
+      <path d="M32 18v10M27 23h10" />
+      <path d="M4 54h56" />
     </symbol>
 
     <symbol id="syringe" viewBox="0 0 64 64">
@@ -930,9 +897,9 @@
 
     <symbol id="radiation" viewBox="0 0 64 64">
       <circle cx="32" cy="32" r="6" />
-      <path d="M32 26L44 8a28 28 0 0 0-24 0z" fill="currentColor" stroke="none" />
-      <path d="M38 35l18 6a28 28 0 0 0-12-21z" fill="currentColor" stroke="none" />
-      <path d="M26 35L8 41a28 28 0 0 0 12 21z" fill="currentColor" stroke="none" />
+      <path d="M32 26L44 8a28 28 0 0 0-24 0z" />
+      <path d="M38 35l18 6a28 28 0 0 0-12-21z" />
+      <path d="M26 35L8 41a28 28 0 0 0 12 21z" />
     </symbol>
 
     <symbol id="glove" viewBox="0 0 64 64">
@@ -1001,652 +968,495 @@
       <path d="M18 8h20l10 10v38H18z" />
       <path d="M38 8v10h10M26 28h20M26 38h20M26 48h12" />
     </symbol>
+
+    <symbol id="flask" viewBox="0 0 64 64">
+      <path d="M24 8h16M28 8v16L14 50h36L36 24V8" />
+      <path d="M20 40h24" />
+    </symbol>
+
+    <symbol id="clipboard" viewBox="0 0 64 64">
+      <rect x="14" y="12" width="36" height="44" rx="4" />
+      <path d="M24 12V8h16v4M24 28h16M24 38h16M24 48h10" />
+    </symbol>
+
+    <symbol id="bed" viewBox="0 0 64 64">
+      <path d="M8 44V26h12v18M44 44V26h12v18M8 44h48M20 32h24" />
+    </symbol>
+
+    <symbol id="scalpel" viewBox="0 0 64 64">
+      <path d="M18 46L42 22l8 8-24 24-10 2z" />
+      <path d="M36 16l12 12" />
+    </symbol>
+
+    <symbol id="drop" viewBox="0 0 64 64">
+      <path d="M32 8c10 14 18 22 18 32a18 18 0 0 1-36 0c0-10 8-18 18-32z" />
+    </symbol>
+
+    <symbol id="skull" viewBox="0 0 64 64">
+      <path d="M20 42v-6a12 12 0 0 1 24 0v6" />
+      <path d="M18 42h28v6a4 4 0 0 1-4 4H22a4 4 0 0 1-4-4z" />
+      <circle cx="26" cy="34" r="3" />
+      <circle cx="38" cy="34" r="3" />
+    </symbol>
+
+    <symbol id="heart" viewBox="0 0 64 64">
+      <path d="M32 52S10 38 10 24a12 12 0 0 1 22-8 12 12 0 0 1 22 8c0 14-22 28-22 28z" />
+    </symbol>
+
+    <symbol id="scale" viewBox="0 0 64 64">
+      <path d="M32 10v44M16 54h32M18 22h28M18 22l-8 16h16zM46 22l-8 16h16z" />
+    </symbol>
   </svg>
 
-  <canvas id="bg"></canvas>
+  <div class="frame">
+    <div class="stage" id="stage">
+      <div class="canvas" id="canvas">
+        <div class="paper"></div>
 
-  <header class="hud">
-    <div class="brand">
-      <svg class="svg-icon"><use href="#biohazard"></use></svg>
-      <span>Limbah B3 RS</span>
-    </div>
-
-    <div class="progress" aria-label="Progres presentasi">
-      <div id="bar"></div>
-    </div>
-
-    <div class="hud-actions">
-      <button class="nav-btn" id="btnPrev" aria-label="Slide sebelumnya">◀</button>
-      <div class="counter" id="counter">1 / 12</div>
-      <button class="nav-btn" id="btnNext" aria-label="Slide berikutnya">▶</button>
-      <button class="icon-btn" id="btnFull" aria-label="Layar penuh">⛶</button>
-    </div>
-  </header>
-
-  <main id="deck">
-    <!-- SLIDE 1: INTRO INTERAKTIF -->
-    <section class="slide active" data-title="Pembuka" aria-hidden="false">
-      <div class="wrap hero">
-        <div class="hero-copy">
-          <span class="badge pulse">Interaktif • 3D • Siap Presentasi</span>
-          <h1>
-            Limbah B3 Rumah Sakit:
-            <span class="gradient-text">Aman, Patuh, Berdampak</span>
-          </h1>
-          <p class="lead">
-            Sebelum masuk ke materi, mari uji insting Anda. Menurut Anda, manakah yang
-            <strong>wajib</strong> masuk ke pengelolaan limbah B3/infeksius di rumah sakit?
-          </p>
-
-          <div class="quiz-box">
-            <div class="quiz-q">Klik salah satu jawaban untuk memulai interaksi.</div>
-            <div class="quiz-options">
-              <button class="choice" data-correct="false">
-                <svg class="svg-icon"><use href="#pill"></use></svg>
-                <span>Obat belum kedaluwarsa dengan kemasan bersih</span>
-              </button>
-              <button class="choice" data-correct="true">
-                <svg class="svg-icon"><use href="#syringe"></use></svg>
-                <span>Spuit bekas pakai terkontaminasi darah</span>
-              </button>
-              <button class="choice" data-correct="false">
-                <svg class="svg-icon"><use href="#bin"></use></svg>
-                <span>Sisa makanan pasien</span>
-              </button>
-              <button class="choice" data-correct="false">
-                <svg class="svg-icon"><use href="#doc"></use></svg>
-                <span>Kertas HVS bersih</span>
-              </button>
-            </div>
-            <div id="introFeedback" class="feedback"></div>
-          </div>
-
-          <div class="cta-row">
-            <button class="btn primary" id="startBtn">Mulai Presentasi →</button>
-            <button class="btn ghost" id="askBtn">Pantik Diskusi</button>
-          </div>
-        </div>
-
-        <div class="hero-visual tilt">
-          <div class="orb orb-a"></div>
-          <div class="orb orb-b"></div>
-          <svg class="main-svg" viewBox="0 0 64 64" aria-hidden="true">
-            <use href="#hospital"></use>
+        <!-- PARALLAX DECOR LAYER 1 -->
+        <div class="layer" style="--depth: 22;">
+          <div class="shape circle" style="width:260px;height:260px;background:var(--violet);left:-50px;top:120px;"></div>
+          <div class="shape square" style="width:170px;height:170px;background:var(--amber);right:90px;top:70px;transform:rotate(14deg);"></div>
+          <div class="shape pill" style="width:230px;height:90px;background:var(--pink);left:520px;bottom:40px;transform:rotate(-8deg);"></div>
+          <svg class="shape" style="width:150px;height:130px;right:360px;bottom:120px;border:none;box-shadow:none;" viewBox="0 0 100 100">
+            <polygon points="50,6 96,94 4,94" fill="var(--mint)" stroke="var(--ink)" stroke-width="7" stroke-linejoin="round" filter="url(#hardShadow)" />
           </svg>
-
-          <div class="chip chip-1">
-            <svg class="svg-icon"><use href="#biohazard"></use></svg>
-            <b>Infeksius</b>
-          </div>
-          <div class="chip chip-2">
-            <svg class="svg-icon"><use href="#drum"></use></svg>
-            <b>Kimia</b>
-          </div>
-          <div class="chip chip-3">
-            <svg class="svg-icon"><use href="#box"></use></svg>
-            <b>Tajam</b>
-          </div>
-          <div class="chip chip-4">
-            <svg class="svg-icon"><use href="#pill"></use></svg>
-            <b>Farmasi</b>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SLIDE 2: AGENDA -->
-    <section class="slide" data-title="Agenda" aria-hidden="true">
-      <div class="wrap">
-        <div class="slide-head">
-          <div>
-            <span class="kicker">Agenda</span>
-            <h2>Apa yang akan kita bahas?</h2>
-          </div>
-          <p class="muted">Dari pemahaman dasar hingga aksi nyata di lapangan.</p>
         </div>
 
-        <div class="grid">
-          <div class="card tilt">
-            <div class="card-icon icon-blue"><svg class="svg-icon"><use href="#alert"></use></svg></div>
-            <h3>01. Pembuka Interaktif</h3>
-            <p>Menguji persepsi awal tentang risiko limbah di fasilitas kesehatan.</p>
-          </div>
-          <div class="card tilt">
-            <div class="card-icon icon-green"><svg class="svg-icon"><use href="#doc"></use></svg></div>
-            <h3>02. Definisi & Regulasi</h3>
-            <p>Memahami apa itu limbah B3 dan dasar hukum pengelolaannya.</p>
-          </div>
-          <div class="card tilt">
-            <div class="card-icon icon-yellow"><svg class="svg-icon"><use href="#hospital"></use></svg></div>
-            <h3>03. Sumber & Jenis</h3>
-            <p>Mengenali asal limbah B3 di berbagai unit rumah sakit.</p>
-          </div>
-          <div class="card tilt">
-            <div class="card-icon icon-red"><svg class="svg-icon"><use href="#biohazard"></use></svg></div>
-            <h3>04. Karakteristik Bahaya</h3>
-            <p>Infektius, toksik, korosif, reaktif, mudah menyala, dan mudah meledak.</p>
-          </div>
-          <div class="card tilt">
-            <div class="card-icon icon-purple"><svg class="svg-icon"><use href="#chart"></use></svg></div>
-            <h3>05. Dampak & Data</h3>
-            <p>Dampak terhadap petugas, pasien, lingkungan, dan kepatuhan hukum.</p>
-          </div>
-          <div class="card tilt">
-            <div class="card-icon icon-orange"><svg class="svg-icon"><use href="#truck"></use></svg></div>
-            <h3>06. Alur Pengelolaan</h3>
-            <p>Dari pemilahan di sumber hingga pengangkutan dan pemusnahan.</p>
-          </div>
-          <div class="card tilt">
-            <div class="card-icon icon-pink"><svg class="svg-icon"><use href="#glove"></use></svg></div>
-            <h3>07. APD & Tanggap Darurat</h3>
-            <p>Perlindungan petugas dan penanganan tumpahan/insiden.</p>
-          </div>
-          <div class="card tilt">
-            <div class="card-icon icon-green"><svg class="svg-icon"><use href="#check"></use></svg></div>
-            <h3>08. Checklist & Komitmen</h3>
-            <p>Evaluasi mandiri dan ajakan perbaikan berkelanjutan.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SLIDE 3: DEFINISI & REGULASI -->
-    <section class="slide" data-title="Definisi" aria-hidden="true">
-      <div class="wrap two-col">
-        <div>
-          <span class="kicker">Dasar Pemahaman</span>
-          <h2>Apa itu Limbah B3 di Rumah Sakit?</h2>
-          <p class="lead" style="margin-top:14px;">
-            <strong>Limbah B3</strong> adalah limbah yang mengandung atau terkontaminasi
-            bahan berbahaya dan/atau beracun yang karena sifat, konsentrasi, dan/atau
-            jumlahnya dapat mencemarkan lingkungan, membahayakan kesehatan manusia,
-            atau menimbulkan penyakit.
-          </p>
-          <ul class="list">
-            <li>Di RS, limbah B3 dapat berasal dari layanan medis, penunjang medis, dan kegiatan operasional tertentu.</li>
-            <li>Tidak semua sampah RS adalah B3; sampah domestik perlu dipisahkan sejak sumber.</li>
-            <li>Kesalahan pemilahan dapat mengubah limbah biasa menjadi berpotensi berbahaya.</li>
-          </ul>
-          <div class="note warn">
-            <strong>Catatan:</strong> Selalu rujuk peraturan terbaru dan SOP internal rumah sakit.
-            Contoh rujukan umum: PP No. 22 Tahun 2021, Permen LHK terkait pengelolaan limbah B3,
-            serta Permenkes No. 7 Tahun 2019 tentang Kesehatan Lingkungan Rumah Sakit.
-          </div>
+        <!-- PARALLAX DECOR LAYER 2 -->
+        <div class="layer" style="--depth: 52;">
+          <div class="shape circle" style="width:110px;height:110px;background:var(--mint);left:260px;top:560px;"></div>
+          <div class="shape square" style="width:90px;height:90px;background:var(--violet);right:220px;top:430px;transform:rotate(-12deg);"></div>
+          <div class="shape circle" style="width:140px;height:140px;background:transparent;border:16px solid var(--pink);left:1160px;top:120px;box-shadow:10px 10px 0 var(--ink);"></div>
         </div>
 
-        <div class="grid">
-          <div class="card tilt">
-            <div class="card-icon icon-blue"><svg class="svg-icon"><use href="#doc"></use></svg></div>
-            <h3>PP 22/2021</h3>
-            <p>Perlindungan dan pengelolaan lingkungan hidup, termasuk ketentuan limbah B3.</p>
-          </div>
-          <div class="card tilt">
-            <div class="card-icon icon-green"><svg class="svg-icon"><use href="#leaf"></use></svg></div>
-            <h3>Permen LHK</h3>
-            <p>Tata cara pengelolaan limbah B3: penyimpanan, pengangkutan, pengolahan, dan pemantauan.</p>
-          </div>
-          <div class="card tilt">
-            <div class="card-icon icon-yellow"><svg class="svg-icon"><use href="#hospital"></use></svg></div>
-            <h3>Permenkes 7/2019</h3>
-            <p>Kesehatan lingkungan rumah sakit, termasuk pengelolaan limbah medis dan domestik.</p>
-          </div>
-          <div class="card tilt">
-            <div class="card-icon icon-purple"><svg class="svg-icon"><use href="#check"></use></svg></div>
-            <h3>SOP RS</h3>
-            <p>Petunjuk teknis internal: warna wadah, alur angkut, APD, pelaporan, dan audit.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SLIDE 4: SUMBER & JENIS -->
-    <section class="slide" data-title="Sumber" aria-hidden="true">
-      <div class="wrap">
-        <div class="slide-head">
-          <div>
-            <span class="kicker">Sumber Timbulan</span>
-            <h2>Dari Mana Saja Limbah B3 RS Berasal?</h2>
-          </div>
-          <p class="muted">Setiap unit memiliki profil risiko berbeda.</p>
-        </div>
-
-        <div class="grid">
-          <div class="card tilt">
-            <div class="card-icon icon-red"><svg class="svg-icon"><use href="#biohazard"></use></svg></div>
-            <h3>Ruang Perawatan</h3>
-            <p>Kasa berdarah, sarung tangan terkontaminasi, selang infus, popok berisiko, dan bahan habis pakai medis.</p>
-          </div>
-          <div class="card tilt">
-            <div class="card-icon icon-orange"><svg class="svg-icon"><use href="#syringe"></use></svg></div>
-            <h3>IGD & Poliklinik</h3>
-            <p>Benda tajam, spuit, jarum, ampul, dan limbah yang terkontaminasi darah/cairan tubuh.</p>
-          </div>
-          <div class="card tilt">
-            <div class="card-icon icon-purple"><svg class="svg-icon"><use href="#glove"></use></svg></div>
-            <h3>Kamar Operasi</h3>
-            <p>Jaringan tubuh, bahan tajam, limbah anestesi tertentu, dan material terkontaminasi tinggi.</p>
-          </div>
-          <div class="card tilt">
-            <div class="card-icon icon-blue"><svg class="svg-icon"><use href="#drum"></use></svg></div>
-            <h3>Laboratorium</h3>
-            <p>Reagen kimia, sampel infeksius, limbah mikrobiologi, dan bahan berbahaya dari uji diagnostik.</p>
-          </div>
-          <div class="card tilt">
-            <div class="card-icon icon-green"><svg class="svg-icon"><use href="#pill"></use></svg></div>
-            <h3>Farmasi</h3>
-            <p>Obat kedaluwarsa, obat rusak, sitostatik, antibiotik tertentu, dan bahan farmasi berbahaya.</p>
-          </div>
-          <div class="card tilt">
-            <div class="card-icon icon-yellow"><svg class="svg-icon"><use href="#radiation"></use></svg></div>
-            <h3>Radiologi / Nuclear</h3>
-            <p>Limbah radioaktif, sumber tertutup, cairan kontras tertentu, dan material terkontaminasi radiasi.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SLIDE 5: KARAKTERISTIK -->
-    <section class="slide" data-title="Karakteristik" aria-hidden="true">
-      <div class="wrap">
-        <div class="slide-head">
-          <div>
-            <span class="kicker">Sifat Bahaya</span>
-            <h2>Karakteristik Limbah B3 yang Wajib Dikenali</h2>
-          </div>
-          <p class="muted">Karakter menentukan cara pemilahan, penyimpanan, dan penanganan.</p>
-        </div>
-
-        <div class="grid">
-          <div class="card tilt">
-            <div class="card-icon icon-red"><svg class="svg-icon"><use href="#biohazard"></use></svg></div>
-            <h3>Infektius</h3>
-            <p>Mengandung mikroorganisme patogen yang dapat menyebabkan infeksi.</p>
-          </div>
-          <div class="card tilt">
-            <div class="card-icon icon-orange"><svg class="svg-icon"><use href="#fire"></use></svg></div>
-            <h3>Mudah Menyala</h3>
-            <p>Dapat terbakar karena gesekan, panas, atau reaksi kimia spontan.</p>
-          </div>
-          <div class="card tilt">
-            <div class="card-icon icon-yellow"><svg class="svg-icon"><use href="#alert"></use></svg></div>
-            <h3>Mudah Meledak</h3>
-            <p>Reaktif terhadap tekanan, suhu, atau gesekan sehingga berpotensi ledakan.</p>
-          </div>
-          <div class="card tilt">
-            <div class="card-icon icon-purple"><svg class="svg-icon"><use href="#drum"></use></svg></div>
-            <h3>Reaktif</h3>
-            <p>Mudah menghasilkan gas, uap, atau panas berbahaya saat kontak air/asam.</p>
-          </div>
-          <div class="card tilt">
-            <div class="card-icon icon-blue"><svg class="svg-icon"><use href="#chart"></use></svg></div>
-            <h3>Beracun / Toksik</h3>
-            <p>Dapat menyebabkan keracunan akut maupun kronis pada manusia dan makhluk hidup.</p>
-          </div>
-          <div class="card tilt">
-            <div class="card-icon icon-green"><svg class="svg-icon"><use href="#leaf"></use></svg></div>
-            <h3>Korosif</h3>
-            <p>Dapat merusak jaringan logam, kulit, atau materia lain melalui reaksi kimia.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SLIDE 6: DAMPAK -->
-    <section class="slide" data-title="Dampak" aria-hidden="true">
-      <div class="wrap">
-        <div class="slide-head">
-          <div>
-            <span class="kicker">Mengapa Penting?</span>
-            <h2>Dampak Jika Pengelolaan Tidak Benar</h2>
-          </div>
-          <p class="muted">Risikonya berlapis: manusia, lingkungan, dan institusi.</p>
-        </div>
-
-        <div class="grid">
-          <div class="card tilt">
-            <div class="card-icon icon-red"><svg class="svg-icon"><use href="#alert"></use></svg></div>
-            <h3>Kesehatan Petugas & Pasien</h3>
-            <p>Luka tusuk, paparan darah, infeksi silang, iritan, keracunan, dan penyakit akibat kerja.</p>
-          </div>
-          <div class="card tilt">
-            <div class="card-icon icon-green"><svg class="svg-icon"><use href="#leaf"></use></svg></div>
-            <h3>Lingkungan Hidup</h3>
-            <p>Pencemaran tanah, air, udara, serta risiko residu berbahaya jika pembakaran tidak terkendali.</p>
-          </div>
-          <div class="card tilt">
-            <div class="card-icon icon-blue"><svg class="svg-icon"><use href="#doc"></use></svg></div>
-            <h3>Hukum & Reputasi</h3>
-            <p>Teguran, sanksi administratif, denda, gangguan operasional, dan menurunnya kepercayaan publik.</p>
-          </div>
-        </div>
-
-        <div class="note" style="margin-top:20px;">
-          <strong>Pesan kunci:</strong> Pengelolaan limbah B3 bukan hanya urusan IPSRS atau sanitasi,
-          tetapi tanggung jawab bersama mulai dari dokter, perawat, laboran, farmasi, petugas kebersihan,
-          hingga manajemen.
-        </div>
-      </div>
-    </section>
-
-    <!-- SLIDE 7: DATA & STATISTIK -->
-    <section class="slide" data-title="Data" aria-hidden="true">
-      <div class="wrap">
-        <div class="slide-head">
-          <div>
-            <span class="kicker">Data & Gambaran Umum</span>
-            <h2>Angka yang Perlu Diingat</h2>
-          </div>
-          <p class="muted">Contoh angka global/umum untuk memantik kesadaran.</p>
-        </div>
-
-        <div class="stat-grid">
-          <div class="stat tilt">
-            <span class="num" data-count="15" data-suffix="%">0%</span>
-            <h3>Limbah Berbahaya</h3>
-            <p class="muted">Secara global, sebagian limbah fasilitas kesehatan dapat tergolong berbahaya.</p>
-          </div>
-          <div class="stat tilt">
-            <span class="num" data-count="85" data-suffix="%">0%</span>
-            <h3>Non-B3 / Domestik</h3>
-            <p class="muted">Jika terpisah dengan benar, porsi ini tidak perlu masuk jalur limbah B3.</p>
-          </div>
-          <div class="stat tilt">
-            <span class="num" data-count="3" data-suffix=" pilar">0</span>
-            <h3>Pilar Pengelolaan</h3>
-            <p class="muted">Pilah di sumber, wadah sesuai standar, dan kemitraan pengolah berizin.</p>
-          </div>
-          <div class="stat tilt">
-            <span class="num" data-count="100" data-suffix="%">0%</span>
-            <h3>Terdokumentasi</h3>
-            <p class="muted">Jejak audit: manifest, log TPS, pelatihan, insiden, dan verifikasi akhir.</p>
-          </div>
-        </div>
-
-        <div class="note">
-          <strong>Catatan:</strong> Proporsi limbah dapat berbeda antar rumah sakit tergantung jenis layanan,
-          volume pasien, kebijakan pemilahan, dan audit internal. Gunakan data lokal RS Anda sebagai bukti paling kuat.
-        </div>
-      </div>
-    </section>
-
-    <!-- SLIDE 8: ALUR PENGELOLAAN -->
-    <section class="slide" data-title="Alur" aria-hidden="true">
-      <div class="wrap">
-        <div class="slide-head">
-          <div>
-            <span class="kicker">Sistem Pengelolaan</span>
-            <h2>Alur Limbah B3 dari Sumber hingga Musnah</h2>
-          </div>
-          <p class="muted">Putus di satu titik, risiko meningkat di titik berikutnya.</p>
-        </div>
-
-        <div class="flow">
-          <div class="step tilt">Pilah di Sumber</div>
-          <div class="arrow">→</div>
-          <div class="step tilt">Wadah Sesuai Standar</div>
-          <div class="arrow">→</div>
-          <div class="step tilt">Angkut Internal</div>
-          <div class="arrow">→</div>
-          <div class="step tilt">TPS Limbah B3</div>
-          <div class="arrow">→</div>
-          <div class="step tilt">Manifest & Pencatatan</div>
-          <div class="arrow">→</div>
-          <div class="step tilt">Angkut Pihak Berizin</div>
-          <div class="arrow">→</div>
-          <div class="step tilt">Pengolahan / Pemusnahan</div>
-          <div class="arrow">→</div>
-          <div class="step tilt">Verifikasi & Audit</div>
-        </div>
-
-        <div class="grid" style="margin-top:24px;">
-          <div class="card tilt">
-            <div class="card-icon icon-blue"><svg class="svg-icon"><use href="#bin"></use></svg></div>
-            <h3>Pemilahan</h3>
-            <p>Titik paling kritis. Campur sedikit saja, satu kantong bisa menjadi berpotensi B3.</p>
-          </div>
-          <div class="card tilt">
-            <div class="card-icon icon-yellow"><svg class="svg-icon"><use href="#truck"></use></svg></div>
-            <h3>TPS & Rute</h3>
-            <p>TPS harus aman, tertutup, berlabel, jauh dari publik, dan memiliki jadwal angkut jelas.</p>
-          </div>
-          <div class="card tilt">
-            <div class="card-icon icon-red"><svg class="svg-icon"><use href="#fire"></use></svg></div>
-            <h3>Pengolahan Akhir</h3>
-            <p>Dapat menggunakan autoclave, microwave, incinerator terkendali, atau teknologi lain sesuai izin.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SLIDE 9: PEMILAHAN & WARNA WADAH -->
-    <section class="slide" data-title="Pemilahan" aria-hidden="true">
-      <div class="wrap">
-        <div class="slide-head">
-          <div>
-            <span class="kicker">Praktik Lapangan</span>
-            <h2>Pemilahan, Wadah, dan Label</h2>
-          </div>
-          <p class="muted">Contoh umum; sesuaikan dengan regulasi dan SOP rumah sakit Anda.</p>
-        </div>
-
-        <div class="grid">
-          <div class="card tilt">
-            <div class="card-icon icon-yellow"><svg class="svg-icon"><use href="#biohazard"></use></svg></div>
-            <h3>Kuning: Infeksius</h3>
-            <p>Kantong/sampah kuning untuk limbah terkontaminasi darah, cairan tubuh, kultur mikroba, dan bahan medis habis pakai berisiko.</p>
-          </div>
-          <div class="card tilt">
-            <div class="card-icon icon-orange"><svg class="svg-icon"><use href="#box"></use></svg></div>
-            <h3>Safety Box: Benda Tajam</h3>
-            <p>Jarum, spuit, scalpel, ampul kaca. Isi maksimal ±3/4, tutup rapat, jangan dibuka kembali.</p>
-          </div>
-          <div class="card tilt">
-            <div class="card-icon icon-blue"><svg class="svg-icon"><use href="#bin"></use></svg></div>
-            <h3>Hitam / Domestik</h3>
-            <p>Sisa makanan, kertas bersih, kemasan umum yang tidak terkontaminasi bahan berbahaya.</p>
-          </div>
-          <div class="card tilt">
-            <div class="card-icon icon-red"><svg class="svg-icon"><use href="#radiation"></use></svg></div>
-            <h3>Merah / Radioaktif</h3>
-            <p>Untuk RS dengan layanan nuklir/radiologi tertentu. Penanganan wajib sesuai izin dan pengawasan khusus.</p>
-          </div>
-          <div class="card tilt">
-            <div class="card-icon icon-purple"><svg class="svg-icon"><use href="#drum"></use></svg></div>
-            <h3>Kimia & Farmasi</h3>
-            <p>Wadah tertutup, berlabel, mengikuti SDS/M SDS, tidak dicampur sembarangan, terutama sitostatik dan reagen.</p>
-          </div>
-          <div class="card tilt">
-            <div class="card-icon icon-green"><svg class="svg-icon"><use href="#check"></use></svg></div>
-            <h3>Label & Simbol</h3>
-            <p>Setiap wadah B3 perlu identitas: jenis limbah, tanggal, unit penghasil, simbol bahaya, dan peringatan.</p>
-          </div>
-        </div>
-
-        <div class="note warn">
-          <strong>Aturan emas:</strong> Jangan pernah mengandalkan warna saja. Pastikan bentuk wadah, label,
-          prosedur pengangkatan, dan pelatihan petugas berjalan bersamaan.
-        </div>
-      </div>
-    </section>
-
-    <!-- SLIDE 10: APD & TANGGAP KASUS -->
-    <section class="slide" data-title="APD & Kasus" aria-hidden="true">
-      <div class="wrap two-col">
-        <div>
-          <span class="kicker">Perlindungan Petugas</span>
-          <h2>APD Minimum & Kewaspadaan Standar</h2>
-          <p class="lead" style="margin-top:14px;">
-            Petugas pengelolaan limbah adalah garda depan yang sering terpapar risiko,
-            namun kadang paling sedikit mendapat perhatian pelatihan.
-          </p>
-
-          <div class="grid" style="margin-top:18px;">
-            <div class="card tilt">
-              <div class="card-icon icon-blue"><svg class="svg-icon"><use href="#glove"></use></svg></div>
-              <h3>Sarung Tangan</h3>
-              <p>Tahan tusuk, sesuai risiko, ganti jika robek/terkontaminasi.</p>
+        <header class="topbar">
+          <div class="brand">
+            <div class="brand-badge">
+              <svg class="svg-icon"><use href="#biohazard"></use></svg>
             </div>
-            <div class="card tilt">
-              <div class="card-icon icon-green"><svg class="svg-icon"><use href="#mask"></use></svg></div>
-              <h3>Masker / Respirator</h3>
-              <p>Sesuai potensi aerosol, debu, atau uap kimia.</p>
+            <span>Limbah B3 RS</span>
+          </div>
+
+          <div class="progress" aria-label="Progres presentasi">
+            <div id="bar"></div>
+          </div>
+
+          <button class="nav-btn" id="btnPrev" aria-label="Slide sebelumnya">◀</button>
+          <div class="counter" id="counter">1 / 12</div>
+          <button class="nav-btn" id="btnNext" aria-label="Slide berikutnya">▶</button>
+          <button class="icon-btn" id="btnFull" aria-label="Layar penuh">⛶</button>
+        </header>
+
+        <main class="deck">
+          <!-- SLIDE 1: INTRO -->
+          <section class="slide active" data-title="Pembuka" aria-hidden="false">
+            <div class="wrap hero">
+              <div>
+                <span class="kicker">Playful Geometric • 16:9</span>
+                <h1>
+                  Limbah B3 <span class="hl hl-violet">Rumah Sakit</span><br />
+                  <span class="hl hl-mint">Aman, Patuh, Berdampak</span>
+                </h1>
+                <p class="lead">
+                  Sebelum masuk materi, uji insting Anda: manakah yang
+                  <strong>wajib</strong> masuk ke pengelolaan limbah B3/infeksius?
+                </p>
+
+                <div class="quiz">
+                  <div class="quiz-title">Mini Poll Pembuka</div>
+                  <div class="choices">
+                    <button class="choice" data-correct="false">
+                      <span class="mark">A</span>
+                      <span>💊 Obat belum kedaluwarsa, kemasan bersih</span>
+                    </button>
+                    <button class="choice" data-correct="true">
+                      <span class="mark">B</span>
+                      <span>💉 Spuit bekas pakai terkontaminasi darah</span>
+                    </button>
+                    <button class="choice" data-correct="false">
+                      <span class="mark">C</span>
+                      <span>🍽️ Sisa makanan pasien</span>
+                    </button>
+                    <button class="choice" data-correct="false">
+                      <span class="mark">D</span>
+                      <span>📄 Kertas HVS bersih</span>
+                    </button>
+                  </div>
+                  <div id="introFeedback" class="feedback"></div>
+                </div>
+
+                <div class="cta-row">
+                  <button class="btn primary" id="startBtn">Mulai Presentasi →</button>
+                  <button class="btn" id="askBtn">Pantik Diskusi</button>
+                </div>
+              </div>
+
+              <div class="visual">
+                <svg class="hero-svg" viewBox="0 0 620 560" aria-label="Ilustrasi pengelolaan limbah B3 rumah sakit">
+                  <g filter="url(#hardShadow)">
+                    <circle cx="310" cy="270" r="220" fill="#fffdf7" stroke="var(--ink)" stroke-width="6" />
+                    <path d="M70 455h480" stroke="var(--ink)" stroke-width="8" stroke-linecap="round" />
+
+                    <rect x="155" y="225" width="230" height="200" rx="20" fill="#ffffff" stroke="var(--ink)" stroke-width="6" />
+                    <path d="M155 245l115-85 115 85z" fill="var(--violet)" stroke="var(--ink)" stroke-width="6" stroke-linejoin="round" />
+                    <rect x="245" y="335" width="52" height="90" rx="10" fill="var(--mint)" stroke="var(--ink)" stroke-width="6" />
+                    <rect x="185" y="275" width="42" height="42" rx="10" fill="var(--amber)" stroke="var(--ink)" stroke-width="6" />
+                    <rect x="313" y="275" width="42" height="42" rx="10" fill="var(--pink)" stroke="var(--ink)" stroke-width="6" />
+
+                    <rect x="245" y="145" width="52" height="52" rx="14" fill="#fff" stroke="var(--ink)" stroke-width="6" />
+                    <path d="M271 158v26M258 171h26" stroke="var(--violet)" stroke-width="8" stroke-linecap="round" />
+
+                    <rect x="420" y="290" width="120" height="145" rx="20" fill="var(--amber)" stroke="var(--ink)" stroke-width="6" />
+                    <rect x="408" y="268" width="144" height="30" rx="15" fill="var(--pink)" stroke="var(--ink)" stroke-width="6" />
+                    <circle cx="480" cy="350" r="20" fill="none" stroke="var(--ink)" stroke-width="6" />
+                    <circle cx="480" cy="318" r="12" fill="none" stroke="var(--ink)" stroke-width="6" />
+                    <circle cx="453" cy="368" r="12" fill="none" stroke="var(--ink)" stroke-width="6" />
+                    <circle cx="507" cy="368" r="12" fill="none" stroke="var(--ink)" stroke-width="6" />
+
+                    <g transform="rotate(-32 120 405)">
+                      <rect x="55" y="390" width="150" height="34" rx="17" fill="#fff" stroke="var(--ink)" stroke-width="6" />
+                      <rect x="75" y="398" width="65" height="18" rx="9" fill="var(--mint)" stroke="var(--ink)" stroke-width="4" />
+                      <path d="M205 407h45M225 390v34" stroke="var(--ink)" stroke-width="6" stroke-linecap="round" />
+                      <path d="M55 407H25" stroke="var(--ink)" stroke-width="6" stroke-linecap="round" />
+                    </g>
+
+                    <path d="M95 210c0-18 14-32 32-32h38c18 0 32 14 32 32v58c0 22-18 40-40 40h-22c-22 0-40-18-40-40z" fill="var(--pink)" stroke="var(--ink)" stroke-width="6" />
+                    <path d="M120 210h50" stroke="var(--ink)" stroke-width="5" stroke-linecap="round" />
+                  </g>
+                </svg>
+
+                <div class="chip" style="left:-10px; top:60px; --accent:var(--pink); animation: float 5.2s ease-in-out infinite;">
+                  <span class="dot"></span><span>Infeksius</span>
+                </div>
+                <div class="chip" style="right:-20px; top:130px; --accent:var(--amber); animation: float 5.8s ease-in-out infinite 0.5s;">
+                  <span class="dot"></span><span>Kimia</span>
+                </div>
+                <div class="chip" style="left:10px; bottom:120px; --accent:var(--violet); animation: float 6.2s ease-in-out infinite 1s;">
+                  <span class="dot"></span><span>Tajam</span>
+                </div>
+                <div class="chip" style="right:30px; bottom:50px; --accent:var(--mint); animation: float 5.4s ease-in-out infinite 1.5s;">
+                  <span class="dot"></span><span>Farmasi</span>
+                </div>
+              </div>
             </div>
-            <div class="card tilt">
-              <div class="card-icon icon-purple"><svg class="svg-icon"><use href="#gown"></use></svg></div>
-              <h3>Gown / Apron</h3>
-              <p>Mencegah percikan menempel pada pakaian kerja.</p>
+          </section>
+
+          <!-- SLIDE 2: AGENDA -->
+          <section class="slide" data-title="Agenda" aria-hidden="true">
+            <div class="wrap">
+              <div class="slide-head">
+                <div>
+                  <span class="kicker">Agenda</span>
+                  <h2>Apa yang akan kita bahas?</h2>
+                </div>
+                <p>Dari pemahaman dasar hingga aksi nyata di lapangan.</p>
+              </div>
+
+              <div class="grid grid-4">
+                <div class="card violet"><div class="top-accent"></div><div class="icon"><span class="icon-text">01</span></div><h3>Pembuka</h3><p>Menguji persepsi awal tentang risiko limbah di RS.</p></div>
+                <div class="card mint"><div class="top-accent"></div><div class="icon"><span class="icon-text">02</span></div><h3>Definisi</h3><p>Memahami limbah B3 dan dasar hukum pengelolaannya.</p></div>
+                <div class="card amber"><div class="top-accent"></div><div class="icon"><span class="icon-text">03</span></div><h3>Sumber</h3><p>Mengenali asal limbah B3 di berbagai unit RS.</p></div>
+                <div class="card pink"><div class="top-accent"></div><div class="icon"><span class="icon-text">04</span></div><h3>Bahaya</h3><p>Infektius, toksik, korosif, reaktif, mudah menyala/meledak.</p></div>
+                <div class="card violet"><div class="top-accent"></div><div class="icon"><span class="icon-text">05</span></div><h3>Dampak</h3><p>Efek ke petugas, pasien, lingkungan, dan institusi.</p></div>
+                <div class="card mint"><div class="top-accent"></div><div class="icon"><span class="icon-text">06</span></div><h3>Alur</h3><p>Dari pemilahan di sumber hingga pengangkutan/pemusnahan.</p></div>
+                <div class="card amber"><div class="top-accent"></div><div class="icon"><span class="icon-text">07</span></div><h3>APD</h3><p>Perlindungan petugas dan tanggap insiden.</p></div>
+                <div class="card pink"><div class="top-accent"></div><div class="icon"><span class="icon-text">08</span></div><h3>Aksi</h3><p>Checklist kepatuhan dan komitmen perbaikan.</p></div>
+              </div>
             </div>
-            <div class="card tilt">
-              <div class="card-icon icon-yellow"><svg class="svg-icon"><use href="#goggles"></use></svg></div>
-              <h3>Pelindung Mata</h3>
-              <p>Kacamata/google saat berpotensi terciprat atau uap.</p>
+          </section>
+
+          <!-- SLIDE 3: DEFINISI -->
+          <section class="slide" data-title="Definisi" aria-hidden="true">
+            <div class="wrap split">
+              <div>
+                <span class="kicker">Dasar Pemahaman</span>
+                <h2>Apa itu Limbah B3 RS?</h2>
+                <p class="lead" style="margin-top:14px;">
+                  Limbah B3 adalah limbah yang mengandung atau terkontaminasi bahan berbahaya
+                  dan/atau beracun yang karena sifat, konsentrasi, dan/atau jumlahnya dapat
+                  mencemarkan lingkungan, membahayakan kesehatan manusia, atau menimbulkan penyakit.
+                </p>
+                <ul class="list">
+                  <li>Dapat berasal dari layanan medis, penunjang medis, dan operasional tertentu.</li>
+                  <li>Tidak semua sampah RS adalah B3; sampah domestik perlu dipisahkan sejak sumber.</li>
+                  <li>Kesalahan pemilahan dapat membuat limbah biasa berpotensi menjadi berbahaya.</li>
+                </ul>
+                <div class="note">
+                  <strong>Catatan Regulasi:</strong> Rujuk peraturan terbaru: PP 22/2021, Permen LHK
+                  terkait limbah B3, Permenkes 7/2019, serta SOP internal rumah sakit.
+                </div>
+              </div>
+
+              <div class="grid grid-2">
+                <div class="card violet"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#doc"></use></svg></div><h3>PP 22/2021</h3><p>Perlindungan dan pengelolaan lingkungan hidup.</p></div>
+                <div class="card mint"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#leaf"></use></svg></div><h3>Permen LHK</h3><p>Penyimpanan, pengangkutan, pengolahan, pemantauan.</p></div>
+                <div class="card amber"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#hospital"></use></svg></div><h3>Permenkes 7/2019</h3><p>Kesehatan lingkungan rumah sakit.</p></div>
+                <div class="card pink"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#check"></use></svg></div><h3>SOP RS</h3><p>Warna wadah, rute angkut, APD, pelaporan, audit.</p></div>
+              </div>
             </div>
-          </div>
-        </div>
+          </section>
 
-        <div class="tab-wrap">
-          <span class="kicker">Skenario Interaktif</span>
-          <h2 style="margin-bottom:14px;">Tanggap Insiden</h2>
+          <!-- SLIDE 4: SUMBER -->
+          <section class="slide" data-title="Sumber" aria-hidden="true">
+            <div class="wrap">
+              <div class="slide-head">
+                <div>
+                  <span class="kicker">Sumber Timbulan</span>
+                  <h2>Sumber Limbah B3 RS</h2>
+                </div>
+                <p>Setiap unit memiliki profil risiko berbeda.</p>
+              </div>
 
-          <div class="tabs" role="tablist">
-            <button class="tab-btn active" data-tab="panelInfeksi">Infeksius</button>
-            <button class="tab-btn" data-tab="panelKimia">Kimia</button>
-            <button class="tab-btn" data-tab="panelTajam">Benda Tajam</button>
-          </div>
+              <div class="grid grid-3">
+                <div class="card pink"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#bed"></use></svg></div><h3>Ruang Perawatan</h3><p>Kasa berdarah, sarung tangan terkontaminasi, selang infus, bahan habis pakai medis.</p></div>
+                <div class="card amber"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#syringe"></use></svg></div><h3>IGD & Poliklinik</h3><p>Spuit, jarum, ampul, limbah terkontaminasi darah/cairan tubuh.</p></div>
+                <div class="card violet"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#scalpel"></use></svg></div><h3>Kamar Operasi</h3><p>Jaringan tubuh, benda tajam, material terkontaminasi tinggi.</p></div>
+                <div class="card mint"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#flask"></use></svg></div><h3>Laboratorium</h3><p>Reagen kimia, sampel infeksius, limbah mikrobiologi.</p></div>
+                <div class="card pink"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#pill"></use></svg></div><h3>Farmasi</h3><p>Obat kedaluwarsa/rusak, sitostatik, antibiotik tertentu.</p></div>
+                <div class="card amber"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#radiation"></use></svg></div><h3>Radiologi/Nuclear</h3><p>Limbah radioaktif, sumber tertutup, material terkontaminasi radiasi.</p></div>
+              </div>
+            </div>
+          </section>
 
-          <div id="panelInfeksi" class="tab-panel active">
-            <strong>Langkah utama:</strong>
-            <ul class="list">
-              <li>Amankan area dan batasi akses.</li>
-              <li>Gunakan APD lengkap sebelum menyentuh.</li>
-              <li>Serap dengan bahan penyerap dan desinfektan sesuai SOP.</li>
-              <li>Masukkan ke kantong kuning/safety box terkait.</li>
-              <li>Laporkan insiden dan lakukan dekontaminasi alat.</li>
-            </ul>
-          </div>
+          <!-- SLIDE 5: KARAKTERISTIK -->
+          <section class="slide" data-title="Karakteristik" aria-hidden="true">
+            <div class="wrap">
+              <div class="slide-head">
+                <div>
+                  <span class="kicker">Sifat Bahaya</span>
+                  <h2>Karakteristik Bahaya</h2>
+                </div>
+                <p>Karakter menentukan pemilahan, penyimpanan, dan penanganan.</p>
+              </div>
 
-          <div id="panelKimia" class="tab-panel">
-            <strong>Langkah utama:</strong>
-            <ul class="list">
-              <li>Identifikasi bahan dari label/SDS jika aman dilakukan.</li>
-              <li>Buka ventilasi, jauhkan sumber api jika mudah menyala.</li>
-              <li>Gunakan absorbent netral sesuai jenis bahan.</li>
-              <li>Jangan campur bahan kimia berbeda tanpa panduan.</li>
-              <li>Masukkan ke wadah tertutup berlabel dan laporkan.</li>
-            </ul>
-          </div>
+              <div class="grid grid-3">
+                <div class="card pink"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#biohazard"></use></svg></div><h3>Infektius</h3><p>Mengandung patogen yang dapat menyebabkan infeksi.</p></div>
+                <div class="card amber"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#fire"></use></svg></div><h3>Mudah Menyala</h3><p>Dapat terbakar karena gesekan, panas, atau reaksi kimia.</p></div>
+                <div class="card violet"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#alert"></use></svg></div><h3>Mudah Meledak</h3><p>Reaktif terhadap tekanan, suhu, atau gesekan.</p></div>
+                <div class="card mint"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#flask"></use></svg></div><h3>Reaktif</h3><p>Menghasilkan gas/uap/panas berbahaya saat kontak air/asam.</p></div>
+                <div class="card pink"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#skull"></use></svg></div><h3>Toksik</h3><p>Dapat menyebabkan keracunan akut maupun kronis.</p></div>
+                <div class="card amber"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#drop"></use></svg></div><h3>Korosif</h3><p>Merusak logam, kulit, atau material lain secara kimia.</p></div>
+              </div>
+            </div>
+          </section>
 
-          <div id="panelTajam" class="tab-panel">
-            <strong>Langkah utama:</strong>
-            <ul class="list">
-              <li>Jangan memungut dengan tangan kosong.</li>
-              <li>Gunakan pinset, sekop kecil, atau alat bantu aman.</li>
-              <li>Masukkan langsung ke safety box yang tersedia.</li>
-              <li>Jika terjadi luka tusuk, lakukan P3K, laporkan, dan evaluasi profilaksis bila perlu.</li>
-              <li>Tinjau ulang alasan terjadinya pajanan.</li>
-            </ul>
-          </div>
-        </div>
+          <!-- SLIDE 6: DAMPAK -->
+          <section class="slide" data-title="Dampak" aria-hidden="true">
+            <div class="wrap">
+              <div class="slide-head">
+                <div>
+                  <span class="kicker">Mengapa Penting?</span>
+                  <h2>Dampak Jika Salah Kelola</h2>
+                </div>
+                <p>Risikonya berlapis: manusia, lingkungan, dan institusi.</p>
+              </div>
+
+              <div class="grid grid-3">
+                <div class="card pink"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#heart"></use></svg></div><h3>Kesehatan</h3><p>Luka tusuk, paparan darah, infeksi silang, keracunan, penyakit akibat kerja.</p></div>
+                <div class="card mint"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#leaf"></use></svg></div><h3>Lingkungan</h3><p>Pencemaran tanah, air, udara, residu berbahaya jika pembakaran tidak terkendali.</p></div>
+                <div class="card violet"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#scale"></use></svg></div><h3>Hukum & Reputasi</h3><p>Sanksi administratif, denda, gangguan operasional, menurunnya kepercayaan publik.</p></div>
+              </div>
+
+              <div class="note" style="margin-top:28px;">
+                <strong>Pesan Kunci:</strong> Pengelolaan limbah B3 bukan hanya urusan IPSRS atau sanitasi,
+                tetapi tanggung jawab bersama: dokter, perawat, laboran, farmasi, petugas kebersihan, hingga manajemen.
+              </div>
+            </div>
+          </section>
+
+          <!-- SLIDE 7: DATA -->
+          <section class="slide" data-title="Data" aria-hidden="true">
+            <div class="wrap">
+              <div class="slide-head">
+                <div>
+                  <span class="kicker">Data & Gambaran Umum</span>
+                  <h2>Angka yang Perlu Diingat</h2>
+                </div>
+                <p>Contoh gambaran umum untuk memantik kesadaran.</p>
+              </div>
+
+              <div class="grid grid-4">
+                <div class="card pink stat"><div class="top-accent"></div><span class="num" data-count="15" data-suffix="%">0%</span><h3>Limbah Berbahaya</h3><p>Sebagian limbah faskes dapat tergolong berbahaya.</p></div>
+                <div class="card mint stat"><div class="top-accent"></div><span class="num" data-count="85" data-suffix="%">0%</span><h3>Non-B3/Domestik</h3><p>Jika terpisah benar, tidak perlu masuk jalur B3.</p></div>
+                <div class="card violet stat"><div class="top-accent"></div><span class="num" data-count="3" data-suffix="">0</span><h3>Pilar Utama</h3><p>Pilah di sumber, wadah standar, pengolah berizin.</p></div>
+                <div class="card amber stat"><div class="top-accent"></div><span class="num" data-count="100" data-suffix="%">0%</span><h3>Terdokumentasi</h3><p>Manifest, log TPS, pelatihan, insiden, verifikasi.</p></div>
+              </div>
+
+              <div class="note">
+                <strong>Catatan:</strong> Proporsi limbah dapat berbeda antar rumah sakit tergantung jenis layanan,
+                volume pasien, kebijakan pemilahan, dan audit internal. Gunakan data lokal RS Anda sebagai bukti paling kuat.
+              </div>
+            </div>
+          </section>
+
+          <!-- SLIDE 8: ALUR -->
+          <section class="slide" data-title="Alur" aria-hidden="true">
+            <div class="wrap">
+              <div class="slide-head">
+                <div>
+                  <span class="kicker">Sistem Pengelolaan</span>
+                  <h2>Alur Pengelolaan Limbah B3</h2>
+                </div>
+                <p>Putus di satu titik, risiko meningkat di titik berikutnya.</p>
+              </div>
+
+              <div class="grid grid-3">
+                <div class="card mint"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#bin"></use></svg></div><h3>1. Pilah di Sumber</h3><p>Pemisahan awal menentukan seluruh rantai aman.</p></div>
+                <div class="card violet"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#box"></use></svg></div><h3>2. Wadah Standar</h3><p>Kantong kuning, safety box, wadah kimia tertutup.</p></div>
+                <div class="card amber"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#truck"></use></svg></div><h3>3. Angkut Internal</h3><p>Rute dan jadwal jelas, hindari area publik.</p></div>
+                <div class="card pink"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#drum"></use></svg></div><h3>4. TPS Limbah B3</h3><p>Aman, tertutup, terkunci, berlabel, tidak overload.</p></div>
+                <div class="card violet"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#doc"></use></svg></div><h3>5. Manifest</h3><p>Serah terima terdokumentasi ke pengangkut berizin.</p></div>
+                <div class="card mint"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#fire"></use></svg></div><h3>6. Pengolahan Akhir</h3><p>Autoclave, incinerator terkendali, atau teknologi berizin.</p></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- SLIDE 9: PEMILAHAN -->
+          <section class="slide" data-title="Pemilahan" aria-hidden="true">
+            <div class="wrap">
+              <div class="slide-head">
+                <div>
+                  <span class="kicker">Praktik Lapangan</span>
+                  <h2>Pemilahan, Wadah, Label</h2>
+                </div>
+                <p>Contoh umum; sesuaikan dengan regulasi dan SOP RS Anda.</p>
+              </div>
+
+              <div class="grid grid-3">
+                <div class="card amber"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#biohazard"></use></svg></div><h3>Kuning: Infeksius</h3><p>Darah, cairan tubuh, kultur mikroba, BMHP terkontaminasi.</p></div>
+                <div class="card pink"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#box"></use></svg></div><h3>Safety Box: Tajam</h3><p>Jarum, spuit, scalpel, ampul. Maks 3/4, jangan dibuka ulang.</p></div>
+                <div class="card violet"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#bin"></use></svg></div><h3>Hitam/Domestik</h3><p>Sisa makanan, kertas bersih, kemasan umum tidak terkontaminasi.</p></div>
+                <div class="card mint"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#radiation"></use></svg></div><h3>Merah/Radioaktif</h3><p>Khusus layanan radiologi/nuklir berizin dan pengawasan khusus.</p></div>
+                <div class="card amber"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#flask"></use></svg></div><h3>Kimia & Farmasi</h3><p>Wadah tertutup, label, SDS, jangan campur sembarangan.</p></div>
+                <div class="card pink"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#check"></use></svg></div><h3>Label & Simbol</h3><p>Jenis limbah, tanggal, unit penghasil, simbol bahaya, peringatan.</p></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- SLIDE 10: APD & KASUS -->
+          <section class="slide" data-title="APD & Kasus" aria-hidden="true">
+            <div class="wrap split">
+              <div>
+                <span class="kicker">Perlindungan Petugas</span>
+                <h2>APD Minimum</h2>
+                <div class="grid grid-2" style="margin-top:22px;">
+                  <div class="card violet"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#glove"></use></svg></div><h3>Sarung Tangan</h3><p>Tahan tusuk, ganti jika robek/terkontaminasi.</p></div>
+                  <div class="card mint"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#mask"></use></svg></div><h3>Masker</h3><p>Sesuai potensi aerosol, debu, atau uap kimia.</p></div>
+                  <div class="card amber"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#gown"></use></svg></div><h3>Gown/Apron</h3><p>Mencegah percikan menempel pada pakaian kerja.</p></div>
+                  <div class="card pink"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#goggles"></use></svg></div><h3>Pelindung Mata</h3><p>Google/kacamata saat potensi terciprat.</p></div>
+                </div>
+              </div>
+
+              <div>
+                <span class="kicker">Tanggap Insiden</span>
+                <h2>Skenario Cepat</h2>
+                <div class="stack" style="margin-top:22px;">
+                  <div class="card pink"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#biohazard"></use></svg></div><h3>Infeksius</h3><p>Amankan area, APD lengkap, serap + desinfektan, lapor.</p></div>
+                  <div class="card amber"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#flask"></use></svg></div><h3>Kimia</h3><p>Cek label/SDS, ventilasi, absorbent netral, jangan campur.</p></div>
+                  <div class="card violet"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#box"></use></svg></div><h3>Benda Tajam</h3><p>Jangan pungut tangan kosong, pakai alat bantu, ke safety box.</p></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- SLIDE 11: CHECKLIST -->
+          <section class="slide" data-title="Checklist" aria-hidden="true">
+            <div class="wrap check-layout">
+              <div>
+                <span class="kicker">Evaluasi Mandiri</span>
+                <h2>Checklist Kepatuhan</h2>
+                <p class="muted" style="margin-top:8px;">Centang item yang sudah berjalan di unit Anda.</p>
+
+                <div id="auditChecklist" style="margin-top:20px;">
+                  <label class="check"><input type="checkbox" /> <span>SOP pengelolaan limbah B3 tersedia dan mudah diakses.</span></label>
+                  <label class="check"><input type="checkbox" /> <span>Petugas medis dan nonmedis mendapat pelatihan pemilahan limbah.</span></label>
+                  <label class="check"><input type="checkbox" /> <span>Wadah limbah sesuai jenis: infeksius, tajam, domestik, kimia, farmasi.</span></label>
+                  <label class="check"><input type="checkbox" /> <span>Label, simbol bahaya, tanggal, dan unit penghasil tercantum jelas.</span></label>
+                  <label class="check"><input type="checkbox" /> <span>Safety box tidak diisi melebihi 3/4 kapasitas.</span></label>
+                  <label class="check"><input type="checkbox" /> <span>TPS limbah B3 aman, tertutup, terkunci, dan jauh dari area publik.</span></label>
+                  <label class="check"><input type="checkbox" /> <span>Ada manifest/berita acara serah terima ke pihak pengangkut berizin.</span></label>
+                  <label class="check"><input type="checkbox" /> <span>APD tersedia, layak pakai, dan penggunaannya diawasi.</span></label>
+                  <label class="check"><input type="checkbox" /> <span>Insiden tumpahan/pajanan dilaporkan dan dievaluasi.</span></label>
+                  <label class="check"><input type="checkbox" /> <span>Audit internal dilakukan berkala dengan tindak lanjut terdokumentasi.</span></label>
+                </div>
+              </div>
+
+              <div class="card mint ring-card">
+                <div class="top-accent"></div>
+                <div class="icon" style="margin:0 auto 10px;"><svg class="svg-icon"><use href="#clipboard"></use></svg></div>
+                <h3>Skor Kepatuhan</h3>
+                <div class="ring-wrap">
+                  <svg class="ring" viewBox="0 0 200 200" aria-hidden="true">
+                    <defs>
+                      <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#34d399" />
+                        <stop offset="100%" stop-color="#8b5cf6" />
+                      </linearGradient>
+                    </defs>
+                    <circle class="ring-bg" cx="100" cy="100" r="85"></circle>
+                    <circle id="ringFg" class="ring-fg" cx="100" cy="100" r="85"></circle>
+                  </svg>
+                  <div class="ring-center">
+                    <div>
+                      <div id="ringText">0%</div>
+                      <div class="muted">terpenuhi</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="note" style="margin-top:22px;text-align:left;">
+                  <strong>Cara Pakai:</strong> Gunakan checklist ini sebagai template audit internal.
+                  Isi persen sesuai hasil penilaian, lalu buat tindak lanjut untuk item yang belum centang.
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- SLIDE 12: PENUTUP -->
+          <section class="slide" data-title="Penutup" aria-hidden="true">
+            <div class="wrap">
+              <div class="slide-head">
+                <div>
+                  <span class="kicker">Penutup</span>
+                  <h2>Penutup & Komitmen</h2>
+                </div>
+                <p>Dari kesadaran menjadi kebiasaan, dari kebiasaan menjadi budaya aman.</p>
+              </div>
+
+              <div class="grid grid-3">
+                <div class="card violet"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#bin"></use></svg></div><h3>Pilah Sejak Awal</h3><p>Kebiasaan kecil di ruang perawatan menentukan keselamatan besar di hilir.</p></div>
+                <div class="card mint"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#doc"></use></svg></div><h3>Dokumentasikan</h3><p>Jika tidak tercatat, sulit diaudit; jika sulit diaudit, sulit diperbaiki.</p></div>
+                <div class="card amber"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#check"></use></svg></div><h3>Perbaiki Terus</h3><p>Jadikan insiden dan temuan audit sebagai pembelajaran.</p></div>
+              </div>
+
+              <div class="final-row">
+                <div>
+                  <p class="thanks">Terima kasih</p>
+                  <p class="muted" style="margin-top:10px;">Silakan ganti ilustrasi dengan foto asli RS Anda agar lebih kontekstual.</p>
+                </div>
+                <div class="note" style="margin-top:0;">
+                  <strong>Ajakan Aksi:</strong> Mulai dari satu unit: pilih 3 item checklist yang paling mungkin diperbaiki minggu ini.
+                </div>
+              </div>
+
+              <div class="cta-row">
+                <button class="btn primary" id="commitBtn">Saya Komit Perbaiki 🎉</button>
+                <button class="btn pink" id="qaBtn">Buka Tanya Jawab</button>
+              </div>
+            </div>
+          </section>
+        </main>
+
+        <div class="hint">Navigasi: ← → / spasi / swipe layar</div>
+        <div class="dots" id="dots"></div>
+        <div class="toast" id="toast"></div>
       </div>
-    </section>
-
-    <!-- SLIDE 11: CHECKLIST AUDIT -->
-    <section class="slide" data-title="Checklist" aria-hidden="true">
-      <div class="wrap">
-        <div class="slide-head">
-          <div>
-            <span class="kicker">Evaluasi Mandiri</span>
-            <h2>Checklist Kepatuhan Pengelolaan Limbah B3</h2>
-          </div>
-          <p class="muted">Centang item yang sudah benar-benar berjalan di unit Anda.</p>
-        </div>
-
-        <div class="checklist-layout">
-          <div class="checklist" id="auditChecklist">
-            <label class="check"><input type="checkbox" /> <span>SOP pengelolaan limbah B3 tersedia dan mudah diakses.</span></label>
-            <label class="check"><input type="checkbox" /> <span>Petugas medis dan nonmedis mendapat pelatihan pemilahan limbah.</span></label>
-            <label class="check"><input type="checkbox" /> <span>Wadah limbah sesuai jenis: infeksius, tajam, domestik, kimia, farmasi.</span></label>
-            <label class="check"><input type="checkbox" /> <span>Label, simbol bahaya, tanggal, dan unit penghasil tercantum jelas.</span></label>
-            <label class="check"><input type="checkbox" /> <span>Safety box tidak diisi melebihi ±3/4 kapasitas.</span></label>
-            <label class="check"><input type="checkbox" /> <span>TPS limbah B3 aman, tertutup, terkunci, dan jauh dari area publik.</span></label>
-            <label class="check"><input type="checkbox" /> <span>Ada manifest/berita acara serah terima ke pihak pengangkut berizin.</span></label>
-            <label class="check"><input type="checkbox" /> <span>APD tersedia, layak pakai, dan penggunaannya diawasi.</span></label>
-            <label class="check"><input type="checkbox" /> <span>Insiden tumpahan/pajanan dilaporkan dan dievaluasi.</span></label>
-            <label class="check"><input type="checkbox" /> <span>Audit internal dilakukan berkala dengan tindak lanjut terdokumentasi.</span></label>
-          </div>
-
-          <div class="ring-wrap">
-            <svg class="ring" viewBox="0 0 120 120" aria-hidden="true">
-              <defs>
-                <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#34d399" />
-                  <stop offset="100%" stop-color="#38bdf8" />
-                </linearGradient>
-              </defs>
-              <circle class="ring-bg" cx="60" cy="60" r="52"></circle>
-              <circle id="ringFg" class="ring-fg" cx="60" cy="60" r="52"></circle>
-            </svg>
-            <div class="ring-center">
-              <div id="ringText">0%</div>
-              <div class="muted">terpenuhi</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SLIDE 12: PENUTUP -->
-    <section class="slide" data-title="Penutup" aria-hidden="true">
-      <div class="wrap">
-        <div class="slide-head">
-          <div>
-            <span class="kicker">Penutup</span>
-            <h2>Kelola dengan Benar, Lindungi Lebih Banyak Nyawa</h2>
-          </div>
-          <p class="muted">Dari kesadaran menjadi kebiasaan, dari kebiasaan menjadi budaya aman.</p>
-        </div>
-
-        <p class="lead">
-          Pengelolaan limbah B3 rumah sakit bukan sekadar menggugurkan kewajiban administrasi.
-          Ia adalah bentuk perlindungan terhadap pasien, petugas, masyarakat, dan lingkungan.
-        </p>
-
-        <div class="final-grid">
-          <div class="commit tilt">
-            <div class="card-icon icon-blue" style="margin:0 auto 14px;"><svg class="svg-icon"><use href="#bin"></use></svg></div>
-            <h3>Pilah Sejak Awal</h3>
-            <p>Kebiasaan kecil di ruang perawatan menentukan keselamatan besar di hilir.</p>
-          </div>
-          <div class="commit tilt">
-            <div class="card-icon icon-green" style="margin:0 auto 14px;"><svg class="svg-icon"><use href="#doc"></use></svg></div>
-            <h3>Dokumentasikan</h3>
-            <p>Jika tidak tercatat, sulit diaudit; jika sulit diaudit, sulit diperbaiki.</p>
-          </div>
-          <div class="commit tilt">
-            <div class="card-icon icon-yellow" style="margin:0 auto 14px;"><svg class="svg-icon"><use href="#check"></use></svg></div>
-            <h3>Perbaiki Terus</h3>
-            <p>Jadikan insiden dan temuan audit sebagai pembelajaran, bukan sekadar kesalahan.</p>
-          </div>
-        </div>
-
-        <div class="cta-row">
-          <button class="btn primary" id="commitBtn">Saya Komit Perbaiki 🎉</button>
-          <button class="btn ghost" id="qaBtn">Buka Tanya Jawab</button>
-        </div>
-
-        <div class="note" style="margin-top:20px;">
-          <strong>Terima kasih.</strong>  
-          Silakan ganti SVG/icon di atas dengan foto kegiatan RS Anda agar presentasi lebih kontekstual:
-          foto TPS, safety box, pelatihan, APD, atau alur pemilahan.
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <div class="toast" id="toast"></div>
-  <div class="help">Navigasi: ← → / spasi / swipe layar</div>
+    </div>
+  </div>
 
   <script>
+    const stage = document.getElementById("stage");
+    const canvas = document.getElementById("canvas");
     const slides = Array.from(document.querySelectorAll(".slide"));
     const bar = document.getElementById("bar");
     const counter = document.getElementById("counter");
@@ -1654,7 +1464,56 @@
     const btnNext = document.getElementById("btnNext");
     const btnFull = document.getElementById("btnFull");
     const toast = document.getElementById("toast");
+    const dotsWrap = document.getElementById("dots");
+
     let current = 0;
+
+    function fitCanvas() {
+      const scale = stage.clientWidth / 1600;
+      canvas.style.transform = `scale(${scale})`;
+    }
+
+    fitCanvas();
+    window.addEventListener("resize", fitCanvas);
+
+    // Parallax
+    let targetX = 0;
+    let targetY = 0;
+    let currentX = 0;
+    let currentY = 0;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    stage.addEventListener("mousemove", (e) => {
+      const rect = stage.getBoundingClientRect();
+      targetX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+      targetY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+    });
+
+    stage.addEventListener("mouseleave", () => {
+      targetX = 0;
+      targetY = 0;
+    });
+
+    function animateParallax() {
+      currentX += (targetX - currentX) * 0.08;
+      currentY += (targetY - currentY) * 0.08;
+      canvas.style.setProperty("--px", currentX.toFixed(4));
+      canvas.style.setProperty("--py", currentY.toFixed(4));
+      requestAnimationFrame(animateParallax);
+    }
+
+    if (!reduceMotion) {
+      animateParallax();
+    }
+
+    // Dots
+    slides.forEach((_, i) => {
+      const btn = document.createElement("button");
+      btn.className = "dot-btn" + (i === 0 ? " active" : "");
+      btn.setAttribute("aria-label", "Ke slide " + (i + 1));
+      btn.addEventListener("click", () => goTo(i));
+      dotsWrap.appendChild(btn);
+    });
 
     function showToast(message) {
       toast.textContent = message;
@@ -1667,6 +1526,7 @@
       const counters = slide.querySelectorAll("[data-count]");
       counters.forEach((el) => {
         if (el.dataset.animating === "1") return;
+
         const target = Number(el.dataset.count || 0);
         const suffix = el.dataset.suffix || "";
         const duration = 1200;
@@ -1692,28 +1552,28 @@
       index = Math.max(0, Math.min(slides.length - 1, index));
 
       slides.forEach((slide, i) => {
-        slide.classList.remove("active");
-        slide.setAttribute("aria-hidden", "true");
-        slide.style.setProperty("--from", i < index ? "-22deg" : "22deg");
-        slide.style.setProperty("--x", i < index ? "-90px" : "90px");
+        slide.classList.toggle("active", i === index);
+        slide.setAttribute("aria-hidden", i !== index ? "true" : "false");
       });
-
-      const active = slides[index];
-      active.classList.add("active");
-      active.setAttribute("aria-hidden", "false");
-      active.style.setProperty("--from", "0deg");
-      active.style.setProperty("--x", "0px");
 
       current = index;
       bar.style.width = (index / (slides.length - 1)) * 100 + "%";
       counter.textContent = `${index + 1} / ${slides.length}`;
-      animateCounters(active);
+
+      document.querySelectorAll(".dot-btn").forEach((dot, i) => {
+        dot.classList.toggle("active", i === index);
+      });
+
+      animateCounters(slides[index]);
     }
 
     btnPrev.addEventListener("click", () => goTo(current - 1));
     btnNext.addEventListener("click", () => goTo(current + 1));
 
     window.addEventListener("keydown", (e) => {
+      const interactive = e.target.closest("button, input, textarea, select");
+      if (interactive && (e.key === "Enter" || e.key === " ")) return;
+
       if (["ArrowRight", "PageDown", " ", "Enter"].includes(e.key)) {
         e.preventDefault();
         goTo(current + 1);
@@ -1726,15 +1586,13 @@
       if (e.key === "End") goTo(slides.length - 1);
     });
 
-    // Swipe touch
+    // Swipe
     let startX = null;
-    const deck = document.getElementById("deck");
-
-    deck.addEventListener("touchstart", (e) => {
+    stage.addEventListener("touchstart", (e) => {
       startX = e.touches[0].clientX;
     }, { passive: true });
 
-    deck.addEventListener("touchend", (e) => {
+    stage.addEventListener("touchend", (e) => {
       if (startX === null) return;
       const endX = e.changedTouches[0].clientX;
       const dx = endX - startX;
@@ -1748,33 +1606,15 @@
     btnFull.addEventListener("click", async () => {
       try {
         if (!document.fullscreenElement) {
-          await document.documentElement.requestFullscreen();
+          await stage.requestFullscreen();
         } else {
           await document.exitFullscreen();
         }
+        setTimeout(fitCanvas, 120);
       } catch (err) {
         showToast("Fullscreen tidak didukung di browser ini.");
       }
     });
-
-    // 3D tilt effect
-    const tiltElements = document.querySelectorAll(".tilt");
-    const canHover = window.matchMedia("(hover: hover)").matches;
-
-    if (canHover) {
-      tiltElements.forEach((el) => {
-        el.addEventListener("mousemove", (e) => {
-          const rect = el.getBoundingClientRect();
-          const x = (e.clientX - rect.left) / rect.width - 0.5;
-          const y = (e.clientY - rect.top) / rect.height - 0.5;
-          el.style.transform = `perspective(900px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg) translateZ(8px)`;
-        });
-
-        el.addEventListener("mouseleave", () => {
-          el.style.transform = "";
-        });
-      });
-    }
 
     // Intro quiz
     const choices = document.querySelectorAll(".choice");
@@ -1815,26 +1655,11 @@
       showToast("Coba lempar ke audiens: “Kapan terakhir kali kita melihat tumpahan atau pemilahan yang keliru di RS ini?”");
     });
 
-    // Tabs
-    document.querySelectorAll(".tab-btn").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const group = btn.closest(".tab-wrap");
-        const targetId = btn.dataset.tab;
-
-        group.querySelectorAll(".tab-btn").forEach((b) => b.classList.remove("active"));
-        btn.classList.add("active");
-
-        group.querySelectorAll(".tab-panel").forEach((panel) => {
-          panel.classList.toggle("active", panel.id === targetId);
-        });
-      });
-    });
-
     // Checklist ring
     const checks = document.querySelectorAll("#auditChecklist input");
     const ringFg = document.getElementById("ringFg");
     const ringText = document.getElementById("ringText");
-    const circumference = 2 * Math.PI * 52;
+    const circumference = 2 * Math.PI * 85;
 
     ringFg.style.strokeDasharray = circumference;
     ringFg.style.strokeDashoffset = circumference;
@@ -1852,16 +1677,16 @@
 
     // Confetti
     function celebrate() {
-      const colors = ["#38bdf8", "#34d399", "#fbbf24", "#f87171", "#c084fc", "#f472b6"];
+      const colors = ["#8b5cf6", "#ec4899", "#f59e0b", "#34d399", "#ffffff"];
       for (let i = 0; i < 90; i++) {
         const piece = document.createElement("div");
         piece.className = "confetti";
-        piece.style.left = Math.random() * 100 + "vw";
+        piece.style.left = Math.random() * 1600 + "px";
         piece.style.background = colors[i % colors.length];
         piece.style.animationDuration = (2 + Math.random() * 2) + "s";
         piece.style.animationDelay = (Math.random() * 0.4) + "s";
         piece.style.transform = `rotate(${Math.random() * 360}deg)`;
-        document.body.appendChild(piece);
+        canvas.appendChild(piece);
         setTimeout(() => piece.remove(), 4500);
       }
     }
@@ -1874,62 +1699,6 @@
     document.getElementById("qaBtn").addEventListener("click", () => {
       showToast("Silakan berbagi: bagian mana dari alur limbah yang paling sering terlewat di unit Anda?");
     });
-
-    // Background particles
-    const canvas = document.getElementById("bg");
-    const ctx = canvas.getContext("2d");
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let width, height;
-    const particles = [];
-    const particleColors = ["#38bdf8", "#34d399", "#fbbf24", "#c084fc"];
-
-    function resizeCanvas() {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    }
-
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
-
-    const particleCount = reducedMotion ? 18 : 70;
-    for (let i = 0; i < particleCount; i++) {
-      particles.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        r: Math.random() * 2.2 + 0.6,
-        vx: (Math.random() - 0.5) * 0.25,
-        vy: (Math.random() - 0.5) * 0.25,
-        color: particleColors[Math.floor(Math.random() * particleColors.length)],
-        alpha: Math.random() * 0.45 + 0.18
-      });
-    }
-
-    function drawParticles() {
-      ctx.clearRect(0, 0, width, height);
-
-      particles.forEach((p) => {
-        if (!reducedMotion) {
-          p.x += p.vx;
-          p.y += p.vy;
-
-          if (p.x < 0) p.x = width;
-          if (p.x > width) p.x = 0;
-          if (p.y < 0) p.y = height;
-          if (p.y > height) p.y = 0;
-        }
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.globalAlpha = p.alpha;
-        ctx.fill();
-      });
-
-      ctx.globalAlpha = 1;
-      if (!reducedMotion) requestAnimationFrame(drawParticles);
-    }
-
-    drawParticles();
 
     // Init
     goTo(0);
