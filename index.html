@@ -1067,6 +1067,263 @@
     .slide.active .stagger > *:nth-child(7) { animation-delay: 0.28s; }
     .slide.active .stagger > *:nth-child(8) { animation-delay: 0.32s; }
 
+    /* ===== SLIDE KATEGORI WADAH SAMPAH B3 MEDIS ===== */
+    .wadah-slide .body {
+      grid-template-rows: minmax(0, 1fr);
+    }
+
+    .wadah-board {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .wadah-card {
+      position: relative;
+      min-width: 0;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+      padding: 24px 14px 14px;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .wadah-card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 13px 13px 0 var(--ink);
+    }
+
+    .wadah-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 10px;
+      border-bottom: var(--border);
+      background: var(--accent);
+    }
+
+    .wadah-card.kuning { --accent: #facc15; --soft: rgba(250, 204, 21, 0.20); }
+    .wadah-card.merah { --accent: #ef4444; --soft: rgba(239, 68, 68, 0.16); }
+    .wadah-card.ungu { --accent: #a855f7; --soft: rgba(168, 85, 247, 0.16); }
+    .wadah-card.coklat { --accent: #92400e; --soft: rgba(146, 64, 14, 0.14); }
+    .wadah-card.sharp { --accent: #f59e0b; --soft: rgba(245, 158, 11, 0.18); }
+
+    .wadah-art {
+      height: 148px;
+      margin-bottom: 10px;
+      border: 3px solid rgba(23, 19, 31, 0.12);
+      border-radius: 20px;
+      background: var(--soft);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 12px;
+      padding: 14px;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+    }
+
+    .bag,
+    .bin,
+    .safety {
+      position: relative;
+      border: 3px solid var(--ink);
+      box-shadow: 5px 5px 0 var(--ink);
+      flex: 0 0 auto;
+    }
+
+    .bag {
+      width: 54px;
+      height: 78px;
+      border-radius: 16px 16px 12px 12px;
+      background: var(--accent);
+    }
+
+    .bag::before {
+      content: "";
+      position: absolute;
+      top: -14px;
+      left: 10px;
+      width: 32px;
+      height: 18px;
+      border: 3px solid var(--ink);
+      border-bottom: 0;
+      border-radius: 16px 16px 0 0;
+      background: var(--accent);
+    }
+
+    .bag::after {
+      content: "";
+      position: absolute;
+      top: -2px;
+      left: 16px;
+      width: 20px;
+      height: 8px;
+      border: 3px solid var(--ink);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.55);
+    }
+
+    .bin {
+      width: 62px;
+      height: 74px;
+      border-radius: 8px;
+      background: var(--accent);
+    }
+
+    .bin::before {
+      content: "";
+      position: absolute;
+      top: -14px;
+      left: -7px;
+      width: 76px;
+      height: 16px;
+      border: 3px solid var(--ink);
+      border-radius: 8px;
+      background: var(--accent);
+    }
+
+    .bin::after {
+      content: "";
+      position: absolute;
+      top: 18px;
+      left: 13px;
+      width: 36px;
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(23, 19, 31, 0.20);
+      box-shadow:
+        0 14px 0 rgba(23, 19, 31, 0.20),
+        0 28px 0 rgba(23, 19, 31, 0.20);
+    }
+
+    .safety {
+      width: 92px;
+      height: 74px;
+      border-radius: 10px;
+      background: #fde047;
+    }
+
+    .safety::before {
+      content: "";
+      position: absolute;
+      top: -16px;
+      left: 24px;
+      width: 42px;
+      height: 16px;
+      border: 3px solid var(--ink);
+      border-bottom: 0;
+      border-radius: 10px 10px 0 0;
+      background: #fde047;
+    }
+
+    .safety::after {
+      content: "SAFETY BOX";
+      position: absolute;
+      left: 8px;
+      bottom: 7px;
+      font-family: "Fredoka", sans-serif;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+    }
+
+    .art-icon {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      font-size: 25px;
+      line-height: 1;
+      filter: drop-shadow(2px 2px 0 rgba(23, 19, 31, 0.20));
+      pointer-events: none;
+    }
+
+    .safety .art-icon {
+      inset: 8px 0 16px;
+      font-size: 24px;
+    }
+
+    .sharp-tools {
+      display: grid;
+      gap: 8px;
+      font-size: 24px;
+      filter: drop-shadow(2px 2px 0 rgba(23, 19, 31, 0.18));
+    }
+
+    .wadah-card h3 {
+      margin: 0;
+      font-family: "Fredoka", sans-serif;
+      font-size: 22px;
+      line-height: 1;
+      letter-spacing: -0.4px;
+    }
+
+    .wadah-sub {
+      margin-top: 5px;
+      font-family: "Fredoka", sans-serif;
+      font-size: 12.5px;
+      font-weight: 700;
+      line-height: 1.22;
+      color: var(--ink);
+    }
+
+    .wadah-list {
+      margin: 9px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 5px;
+      font-size: 12.5px;
+      line-height: 1.28;
+      color: #5a5261;
+    }
+
+    .wadah-list li {
+      position: relative;
+      padding-left: 14px;
+    }
+
+    .wadah-list li::before {
+      content: "•";
+      position: absolute;
+      left: 1px;
+      color: var(--accent);
+      font-weight: 900;
+    }
+
+    .wadah-tag {
+      margin-top: auto;
+      align-self: flex-start;
+      padding: 6px 9px;
+      border: 3px solid var(--ink);
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 3px 3px 0 var(--ink);
+      font-family: "Fredoka", sans-serif;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--ink);
+      white-space: nowrap;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .wadah-card.merah .wadah-tag,
+    .wadah-card.ungu .wadah-tag,
+    .wadah-card.coklat .wadah-tag {
+      color: #fff;
+    }
+
     @media (prefers-reduced-motion: reduce) {
       * {
         animation-duration: 0.001ms !important;
@@ -1113,7 +1370,7 @@
           </div>
 
           <button class="nav-btn" id="btnPrev" aria-label="Slide sebelumnya">◀</button>
-          <div class="counter" id="counter">1 / 13</div>
+          <div class="counter" id="counter">1 / 14</div>
           <button class="nav-btn" id="btnNext" aria-label="Slide berikutnya">▶</button>
           <button class="icon-btn" id="btnFull" aria-label="Layar penuh">⛶</button>
         </header>
@@ -1213,7 +1470,7 @@
                   <div class="card pink"><div class="top-accent"></div><div class="icon"><span class="icon-text">04</span></div><h3>Bahaya</h3><p>Infektius, toksik, korosif, reaktif, mudah menyala/meledak.</p></div>
                   <div class="card violet"><div class="top-accent"></div><div class="icon"><span class="icon-text">05</span></div><h3>Dampak</h3><p>Efek ke petugas, pasien, lingkungan, dan institusi.</p></div>
                   <div class="card mint"><div class="top-accent"></div><div class="icon"><span class="icon-text">06</span></div><h3>Alur</h3><p>Dari pemilahan di sumber hingga pengangkutan/pemusnahan.</p></div>
-                  <div class="card amber"><div class="top-accent"></div><div class="icon"><span class="icon-text">07</span></div><h3>APD</h3><p>Perlindungan petugas dan tanggap insiden.</p></div>
+                  <div class="card amber"><div class="top-accent"></div><div class="icon"><span class="icon-text">07</span></div><h3>Wadah</h3><p>Katalog warna wadah B3 medis dan safety box.</p></div>
                   <div class="card pink"><div class="top-accent"></div><div class="icon"><span class="icon-text">08</span></div><h3>Aksi</h3><p>Checklist, dokumentasi foto, dan komitmen perbaikan.</p></div>
                 </div>
               </div>
@@ -1384,13 +1641,13 @@
             </div>
           </section>
 
-          <!-- SLIDE 9: PEMILAHAN DENGAN BLOK GAMBAR -->
+          <!-- SLIDE 9: PEMILAHAN DI SUMBER (FOTO) -->
           <section class="slide" aria-hidden="true">
             <div class="slide-inner">
               <div class="slide-head">
                 <div>
                   <span class="kicker">Praktik Lapangan</span>
-                  <h2>Pemilahan, Wadah, Label</h2>
+                  <h2>Pemilahan di Sumber</h2>
                 </div>
                 <p>Blok gambar di bawah bisa Anda ganti dengan foto asli RS Anda.</p>
               </div>
@@ -1424,15 +1681,115 @@
                 </div>
 
                 <div class="grid grid-3 fill stagger">
-                  <div class="card mint"><div class="top-accent"></div><div class="icon">☢️</div><h3>Merah/Radioaktif</h3><p>Khusus layanan radiologi/nuklir berizin dan pengawasan khusus.</p></div>
-                  <div class="card amber"><div class="top-accent"></div><div class="icon">🧪</div><h3>Kimia & Farmasi</h3><p>Wadah tertutup, label, SDS, jangan campur sembarangan.</p></div>
-                  <div class="card pink"><div class="top-accent"></div><div class="icon">🏷️</div><h3>Label & Simbol</h3><p>Jenis limbah, tanggal, unit penghasil, simbol bahaya, peringatan.</p></div>
+                  <div class="card mint"><div class="top-accent"></div><div class="icon"></div><h3>Pilah di Titik Hasil</h3><p>Letakkan wadah dekat sumber, bukan jauh di ujung koridor.</p></div>
+                  <div class="card amber"><div class="top-accent"></div><div class="icon">🚫</div><h3>Jangan Campur</h3><p>Satu benda tajam/infeksius ke kantong domestik = satu kantong jadi B3.</p></div>
+                  <div class="card pink"><div class="top-accent"></div><div class="icon">🏷️</div><h3>Label & Tanggal</h3><p>Jenis limbah, tanggal, unit penghasil, simbol bahaya, peringatan.</p></div>
                 </div>
               </div>
             </div>
           </section>
 
-          <!-- SLIDE 10: APD & KASUS -->
+          <!-- SLIDE 10: KATEGORI WADAH SAMPAH B3 MEDIS (BARU) -->
+          <section class="slide" aria-hidden="true">
+            <div class="slide-inner wadah-slide">
+              <div class="slide-head">
+                <div>
+                  <span class="kicker">Katalog Warna Wadah</span>
+                  <h2>Kategori Wadah Sampah B3 Medis</h2>
+                </div>
+                <p>
+                  Versi slide-ready dari infografis wadah B3: 5 kategori warna,
+                  dibangun dengan vektor/CSS agar tajam, tidak terpotong, dan ikut parallax.
+                </p>
+              </div>
+
+              <div class="body">
+                <div class="wadah-board stagger">
+                  <article class="wadah-card kuning">
+                    <div class="wadah-art">
+                      <div class="bag"><span class="art-icon">☣️</span></div>
+                      <div class="bin"><span class="art-icon">☣️</span></div>
+                    </div>
+                    <h3>Kuning</h3>
+                    <div class="wadah-sub">Limbah Infeksius & Patologis</div>
+                    <ul class="wadah-list">
+                      <li>Perban berdarah</li>
+                      <li>Kasa & balutan</li>
+                      <li>Cairan tubuh</li>
+                      <li>Jaringan / patologi</li>
+                    </ul>
+                    <div class="wadah-tag">Kantong + tempat sampah kuning</div>
+                  </article>
+
+                  <article class="wadah-card merah">
+                    <div class="wadah-art">
+                      <div class="bag"><span class="art-icon">☢️</span></div>
+                      <div class="bin"><span class="art-icon">☢️</span></div>
+                    </div>
+                    <h3>Merah</h3>
+                    <div class="wadah-sub">Limbah Radioaktif</div>
+                    <ul class="wadah-list">
+                      <li>Terkontaminasi radioterapi</li>
+                      <li>Sumber tertutup</li>
+                      <li>Material radiologi / nuklir</li>
+                    </ul>
+                    <div class="wadah-tag">Penanganan khusus & berizin</div>
+                  </article>
+
+                  <article class="wadah-card ungu">
+                    <div class="wadah-art">
+                      <div class="bag"><span class="art-icon">🧬</span></div>
+                      <div class="bin"><span class="art-icon">🧪</span></div>
+                    </div>
+                    <h3>Ungu</h3>
+                    <div class="wadah-sub">Limbah Sitotoksik</div>
+                    <ul class="wadah-list">
+                      <li>Sisa obat kemoterapi</li>
+                      <li>Vial / botol kemo</li>
+                      <li>Material kontak sitostatik</li>
+                    </ul>
+                    <div class="wadah-tag">Jangan dicampur limbah biasa</div>
+                  </article>
+
+                  <article class="wadah-card coklat">
+                    <div class="wadah-art">
+                      <div class="bag"><span class="art-icon">💊</span></div>
+                      <div class="bin"><span class="art-icon">🧪</span></div>
+                    </div>
+                    <h3>Coklat</h3>
+                    <div class="wadah-sub">Limbah Farmasi & Kimiawi</div>
+                    <ul class="wadah-list">
+                      <li>Obat kedaluwarsa</li>
+                      <li>Obat rusak / ditarik</li>
+                      <li>Sisa bahan kimia / reagen</li>
+                    </ul>
+                    <div class="wadah-tag">Ikuti SDS & label</div>
+                  </article>
+
+                  <article class="wadah-card sharp">
+                    <div class="wadah-art">
+                      <div class="safety"><span class="art-icon">☣️</span></div>
+                      <div class="sharp-tools">
+                        <span>💉</span>
+                        <span>🔪</span>
+                      </div>
+                    </div>
+                    <h3>Safety Box</h3>
+                    <div class="wadah-sub">Limbah Benda Tajam</div>
+                    <ul class="wadah-list">
+                      <li>Jarum suntik</li>
+                      <li>Pisau bedah / scalpel</li>
+                      <li>Ampul kaca</li>
+                      <li>Fragment tajam lain</li>
+                    </ul>
+                    <div class="wadah-tag">Maks 3/4, jangan dibuka ulang</div>
+                  </article>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- SLIDE 11: APD & KASUS -->
           <section class="slide" aria-hidden="true">
             <div class="slide-inner">
               <div class="slide-head">
@@ -1471,7 +1828,7 @@
             </div>
           </section>
 
-          <!-- SLIDE 11: CHECKLIST -->
+          <!-- SLIDE 12: CHECKLIST -->
           <section class="slide" aria-hidden="true">
             <div class="slide-inner">
               <div class="slide-head">
@@ -1529,7 +1886,7 @@
             </div>
           </section>
 
-          <!-- SLIDE 12: DOKUMENTASI FOTO -->
+          <!-- SLIDE 13: DOKUMENTASI FOTO -->
           <section class="slide" aria-hidden="true">
             <div class="slide-inner">
               <div class="slide-head">
@@ -1579,7 +1936,7 @@
             </div>
           </section>
 
-          <!-- SLIDE 13: PENUTUP -->
+          <!-- SLIDE 14: PENUTUP -->
           <section class="slide" aria-hidden="true">
             <div class="slide-inner">
               <div class="slide-head">
@@ -1641,6 +1998,9 @@
 
        Bisa pakai file lokal relatif jika folder aset disamping index.html:
        hero: "assets/hero.jpg"
+
+       Catatan: slide "Kategori Wadah Sampah B3 Medis" sengaja
+       dibangun dengan vektor/CSS (tanpa foto) agar tetap tajam.
        ======================================================== */
     const IMAGE_URLS = {
       hero: "",
