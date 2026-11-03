@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Presentasi Limbah B3 Rumah Sakit — Cinematic Playful Geometric 16:9</title>
+  <title>Presentasi Limbah B3 Rumah Sakit — Agency Premium Cinematic 16:9</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,19 +12,19 @@
   <style>
     :root {
       --ink: #17131f;
-      --paper: #fff7ea;
-      --white: #fffdf7;
-      --muted: #5f5669;
+      --paper: #fff8ed;
+      --white: #fffdf8;
+      --muted: #625a69;
 
       --violet: #8b5cf6;
       --pink: #ec4899;
       --amber: #f59e0b;
       --mint: #34d399;
 
-      --border: 4px solid var(--ink);
+      --border: 3px solid var(--ink);
+      --shadow-sm: 6px 6px 0 var(--ink);
       --shadow: 10px 10px 0 var(--ink);
       --shadow-lg: 14px 14px 0 var(--ink);
-      --shadow-sm: 6px 6px 0 var(--ink);
       --radius: 26px;
     }
 
@@ -40,9 +40,9 @@
       height: 100%;
       overflow: hidden;
       background:
-        radial-gradient(circle at top left, rgba(139, 92, 246, 0.30), transparent 28%),
-        radial-gradient(circle at bottom right, rgba(52, 211, 153, 0.26), transparent 30%),
-        #140f1b;
+        radial-gradient(circle at 12% 18%, rgba(139, 92, 246, 0.24), transparent 28%),
+        radial-gradient(circle at 88% 82%, rgba(52, 211, 153, 0.20), transparent 30%),
+        #130f1a;
       font-family: "Space Grotesk", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       color: var(--ink);
     }
@@ -52,7 +52,7 @@
       height: 100%;
       display: grid;
       place-items: center;
-      padding: 1.2vmin;
+      padding: 1.1vmin;
     }
 
     .stage {
@@ -60,10 +60,10 @@
       width: min(100vw, calc(100vh * 16 / 9));
       aspect-ratio: 16 / 9;
       overflow: hidden;
-      border: 5px solid var(--ink);
+      border: 4px solid var(--ink);
       border-radius: 30px;
       background: var(--paper);
-      box-shadow: 24px 24px 0 rgba(0, 0, 0, 0.36);
+      box-shadow: 24px 24px 0 rgba(0, 0, 0, 0.32);
     }
 
     .canvas {
@@ -81,9 +81,9 @@
       position: absolute;
       inset: 0;
       background-image:
-        radial-gradient(circle, rgba(23, 19, 31, 0.09) 1.2px, transparent 1.2px),
-        linear-gradient(135deg, rgba(139, 92, 246, 0.08), transparent 35%, rgba(52, 211, 153, 0.09));
-      background-size: 22px 22px, cover;
+        radial-gradient(circle, rgba(23, 19, 31, 0.075) 1.1px, transparent 1.1px),
+        linear-gradient(135deg, rgba(139, 92, 246, 0.055), transparent 38%, rgba(52, 211, 153, 0.065));
+      background-size: 24px 24px, cover;
     }
 
     .scene {
@@ -101,21 +101,21 @@
 
     .layer.back {
       transform:
-        translate3d(calc(var(--mx) * -88px), calc(var(--my) * -58px), 0)
-        scale(1.06);
+        translate3d(calc(var(--mx) * -72px), calc(var(--my) * -46px), 0)
+        scale(1.045);
     }
 
     .layer.mid {
       transform:
-        translate3d(calc(var(--mx) * 56px), calc(var(--my) * 36px), 0)
-        rotate(calc(var(--mx) * 1.2deg))
-        scale(1.02);
+        translate3d(calc(var(--mx) * 42px), calc(var(--my) * 28px), 0)
+        rotate(calc(var(--mx) * 0.75deg))
+        scale(1.015);
     }
 
     .layer.front {
       transform:
-        translate3d(calc(var(--mx) * 118px), calc(var(--my) * 76px), 0)
-        rotate(calc(var(--mx) * -0.8deg));
+        translate3d(calc(var(--mx) * 92px), calc(var(--my) * 58px), 0)
+        rotate(calc(var(--mx) * -0.45deg));
     }
 
     .shape {
@@ -125,7 +125,7 @@
     }
 
     .circle { border-radius: 50%; }
-    .square { border-radius: 24px; }
+    .square { border-radius: 26px; }
     .pill { border-radius: 999px; }
 
     .overlay {
@@ -139,15 +139,15 @@
       position: absolute;
       inset: 0;
       box-shadow:
-        inset 0 0 180px rgba(23, 19, 31, 0.26),
-        inset 0 0 70px rgba(23, 19, 31, 0.14);
+        inset 0 0 170px rgba(23, 19, 31, 0.20),
+        inset 0 0 60px rgba(23, 19, 31, 0.10);
     }
 
     .sweep-wrap {
       position: absolute;
       inset: -30%;
-      transform: translate3d(calc(var(--mx) * -2%), calc(var(--my) * -1.2%), 0);
-      opacity: 0.28;
+      transform: translate3d(calc(var(--mx) * -1.6%), calc(var(--my) * -1%), 0);
+      opacity: 0.18;
       mix-blend-mode: screen;
     }
 
@@ -156,25 +156,25 @@
       height: 100%;
       background: linear-gradient(
         115deg,
-        transparent 0 38%,
-        rgba(255, 255, 255, 0.22) 45%,
-        transparent 52% 100%
+        transparent 0 39%,
+        rgba(255, 255, 255, 0.28) 46%,
+        transparent 53% 100%
       );
-      animation: sweepMove 14s linear infinite;
+      animation: sweepMove 18s linear infinite;
     }
 
     .grain {
       position: absolute;
       inset: 0;
-      opacity: 0.05;
+      opacity: 0.035;
       background-image: radial-gradient(circle, #17131f 1px, transparent 1px);
       background-size: 3px 3px;
       animation: grainMove 0.45s steps(2) infinite;
     }
 
     @keyframes sweepMove {
-      from { transform: translate3d(-28%, 0, 0) rotate(8deg); }
-      to { transform: translate3d(28%, 0, 0) rotate(8deg); }
+      from { transform: translate3d(-26%, 0, 0) rotate(8deg); }
+      to { transform: translate3d(26%, 0, 0) rotate(8deg); }
     }
 
     @keyframes grainMove {
@@ -191,14 +191,14 @@
       left: 0;
       right: 0;
       top: 0;
-      height: 72px;
+      height: 70px;
       display: flex;
       align-items: center;
       gap: 18px;
       padding: 0 28px;
       border-bottom: var(--border);
-      background: rgba(255, 247, 234, 0.92);
-      backdrop-filter: blur(10px);
+      background: rgba(255, 248, 237, 0.9);
+      backdrop-filter: blur(12px);
     }
 
     .brand {
@@ -207,13 +207,13 @@
       gap: 12px;
       font-family: "Fredoka", sans-serif;
       font-weight: 700;
-      font-size: 22px;
+      font-size: 21px;
       white-space: nowrap;
     }
 
     .brand-badge {
-      width: 46px;
-      height: 46px;
+      width: 44px;
+      height: 44px;
       border: var(--border);
       border-radius: 16px;
       background: var(--violet);
@@ -221,12 +221,12 @@
       display: grid;
       place-items: center;
       color: #fff;
-      font-size: 24px;
+      font-size: 22px;
     }
 
     .progress {
       flex: 1;
-      height: 20px;
+      height: 18px;
       border: var(--border);
       border-radius: 999px;
       background: #fff;
@@ -240,27 +240,27 @@
       height: 100%;
       background: repeating-linear-gradient(
         90deg,
-        var(--pink) 0 18px,
-        var(--amber) 18px 36px,
-        var(--mint) 36px 54px,
-        var(--violet) 54px 72px
+        var(--pink) 0 16px,
+        var(--amber) 16px 32px,
+        var(--mint) 32px 48px,
+        var(--violet) 48px 64px
       );
       transition: width 0.45s ease;
     }
 
     .nav-btn,
     .icon-btn {
-      width: 46px;
-      height: 46px;
+      width: 44px;
+      height: 44px;
       border: var(--border);
-      border-radius: 16px;
+      border-radius: 15px;
       background: #fff;
       box-shadow: var(--shadow-sm);
       display: grid;
       place-items: center;
       cursor: pointer;
       font-family: "Fredoka", sans-serif;
-      font-size: 20px;
+      font-size: 19px;
       font-weight: 700;
       transition: transform 0.16s ease, box-shadow 0.16s ease;
       color: var(--ink);
@@ -279,11 +279,11 @@
     }
 
     .counter {
-      min-width: 92px;
+      min-width: 88px;
       text-align: center;
       font-family: "Fredoka", sans-serif;
       font-weight: 700;
-      font-size: 17px;
+      font-size: 16px;
       border: var(--border);
       border-radius: 999px;
       padding: 8px 12px;
@@ -293,22 +293,24 @@
 
     .deck {
       position: absolute;
-      inset: 72px 0 0 0;
+      inset: 70px 0 0 0;
       z-index: 30;
-      perspective: 1700px;
+      perspective: 1800px;
     }
 
     .slide {
       position: absolute;
       inset: 0;
-      padding: 26px 52px 44px;
+      padding: 30px 54px 42px;
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
-      transform: translateX(70px) scale(0.98);
+      transform: translate3d(var(--tx, 56px), 18px, 0) scale(0.985);
+      filter: blur(3px);
       transition:
         opacity 0.55s ease,
-        transform 0.72s cubic-bezier(0.2, 0.8, 0.2, 1),
+        transform 0.78s cubic-bezier(0.2, 0.8, 0.2, 1),
+        filter 0.55s ease,
         visibility 0.55s ease;
       overflow: hidden;
     }
@@ -318,6 +320,7 @@
       visibility: visible;
       pointer-events: auto;
       transform: none;
+      filter: none;
     }
 
     .slide-inner {
@@ -327,9 +330,9 @@
       gap: 14px;
       transform-style: preserve-3d;
       transform:
-        translate3d(calc(var(--mx) * 16px), calc(var(--my) * 10px), 0)
-        rotateY(calc(var(--mx) * 0.5deg))
-        rotateX(calc(var(--my) * -0.32deg));
+        translate3d(calc(var(--mx) * 12px), calc(var(--my) * 8px), 0)
+        rotateY(calc(var(--mx) * 0.28deg))
+        rotateX(calc(var(--my) * -0.18deg));
       will-change: transform;
     }
 
@@ -343,9 +346,10 @@
 
     .slide-head p {
       max-width: 390px;
-      font-size: 16px;
+      font-size: 15px;
       color: var(--muted);
       margin: 0;
+      line-height: 1.45;
     }
 
     .body {
@@ -356,26 +360,26 @@
     }
 
     .body.stack {
-      grid-template-rows: 1fr auto;
+      grid-template-rows: minmax(0, 1fr) auto;
+    }
+
+    .body.closing {
+      grid-template-rows: minmax(0, 1fr) auto auto;
     }
 
     .body.rows-photo {
-      grid-template-rows: 1.35fr 0.85fr;
+      grid-template-rows: minmax(0, 1.25fr) minmax(0, 0.75fr);
     }
 
     .body.hero,
-    .body.split,
-    .body.check-layout {
-      grid-template-columns: 1.05fr 0.95fr;
+    .body.split {
+      grid-template-columns: 0.98fr 1.02fr;
       align-items: center;
     }
 
-    .body.split {
-      grid-template-columns: 1.02fr 0.98fr;
-    }
-
     .body.check-layout {
-      grid-template-columns: 1.15fr 0.85fr;
+      grid-template-columns: 1.12fr 0.88fr;
+      align-items: center;
     }
 
     .grid {
@@ -396,7 +400,7 @@
     .kicker {
       display: inline-block;
       font-family: "Fredoka", sans-serif;
-      font-size: 15px;
+      font-size: 14px;
       letter-spacing: 0.05em;
       text-transform: uppercase;
       padding: 7px 12px;
@@ -411,37 +415,37 @@
     h1 {
       margin: 0 0 12px;
       font-family: "Fredoka", sans-serif;
-      font-size: 56px;
+      font-size: 54px;
       line-height: 0.98;
-      letter-spacing: -1.5px;
+      letter-spacing: -1.4px;
     }
 
     h2 {
       margin: 0 0 10px;
       font-family: "Fredoka", sans-serif;
-      font-size: 38px;
+      font-size: 36px;
       line-height: 1.05;
-      letter-spacing: -0.9px;
+      letter-spacing: -0.8px;
     }
 
     h3 {
       margin: 0 0 8px;
       font-family: "Fredoka", sans-serif;
-      font-size: 19px;
+      font-size: 18px;
       line-height: 1.18;
     }
 
     p {
       margin: 0;
-      font-size: 15px;
+      font-size: 14.5px;
       line-height: 1.48;
     }
 
     .lead {
-      font-size: 18px;
+      font-size: 17.5px;
       line-height: 1.45;
       max-width: 720px;
-      color: #463f50;
+      color: #4b4355;
     }
 
     .muted { color: var(--muted); }
@@ -453,10 +457,10 @@
       box-decoration-break: clone;
     }
 
-    .hl-violet { background: rgba(139, 92, 246, 0.26); }
-    .hl-pink { background: rgba(236, 72, 153, 0.22); }
-    .hl-amber { background: rgba(245, 158, 11, 0.28); }
-    .hl-mint { background: rgba(52, 211, 153, 0.28); }
+    .hl-violet { background: rgba(139, 92, 246, 0.24); }
+    .hl-pink { background: rgba(236, 72, 153, 0.20); }
+    .hl-amber { background: rgba(245, 158, 11, 0.26); }
+    .hl-mint { background: rgba(52, 211, 153, 0.26); }
 
     .cta-row {
       display: flex;
@@ -467,11 +471,11 @@
 
     .btn {
       font-family: "Fredoka", sans-serif;
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 600;
       border: var(--border);
       border-radius: 999px;
-      padding: 12px 18px;
+      padding: 11px 18px;
       background: #fff;
       box-shadow: 7px 7px 0 var(--ink);
       cursor: pointer;
@@ -500,7 +504,7 @@
       border: var(--border);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding: 18px 16px 16px;
+      padding: 16px 15px 15px;
       overflow: hidden;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       --accent: var(--violet);
@@ -519,7 +523,7 @@
       left: 0;
       top: 0;
       width: 100%;
-      height: 10px;
+      height: 9px;
       border-bottom: var(--border);
       background: var(--accent);
     }
@@ -530,30 +534,34 @@
     .card.mint { --accent: var(--mint); }
 
     .icon {
-      width: 54px;
-      height: 54px;
+      width: 48px;
+      height: 48px;
       border: var(--border);
-      border-radius: 18px;
+      border-radius: 17px;
       background: var(--accent);
       box-shadow: var(--shadow-sm);
       display: grid;
       place-items: center;
-      margin: 12px 0 10px;
-      font-size: 26px;
+      margin: 10px 0 9px;
+      font-size: 23px;
       color: var(--ink);
       flex: 0 0 auto;
     }
 
     .icon-text {
       font-family: "Fredoka", sans-serif;
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 700;
     }
 
     .card p {
-      font-size: 14px;
-      line-height: 1.42;
-      color: #584f61;
+      font-size: 13.5px;
+      line-height: 1.38;
+      color: #5a5261;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .list {
@@ -562,12 +570,12 @@
       margin: 12px 0 0;
       display: grid;
       gap: 9px;
-      font-size: 15px;
+      font-size: 14.5px;
     }
 
     .list li {
       position: relative;
-      padding-left: 32px;
+      padding-left: 31px;
       line-height: 1.38;
       color: #4b4355;
     }
@@ -577,8 +585,8 @@
       position: absolute;
       left: 0;
       top: 1px;
-      width: 22px;
-      height: 22px;
+      width: 21px;
+      height: 21px;
       border: 3px solid var(--ink);
       border-radius: 8px;
       background: var(--mint);
@@ -586,16 +594,16 @@
       display: grid;
       place-items: center;
       font-weight: 900;
-      font-size: 13px;
+      font-size: 12px;
     }
 
     .note {
-      padding: 14px 16px;
+      padding: 13px 15px;
       border: var(--border);
       border-radius: 20px;
-      background: rgba(245, 158, 11, 0.16);
+      background: rgba(245, 158, 11, 0.14);
       box-shadow: 6px 6px 0 var(--ink);
-      font-size: 14px;
+      font-size: 13.5px;
       line-height: 1.42;
     }
 
@@ -612,29 +620,37 @@
     .num {
       display: block;
       font-family: "Fredoka", sans-serif;
-      font-size: 42px;
+      font-size: 40px;
       line-height: 1;
       font-weight: 700;
       color: var(--accent);
       margin-bottom: 8px;
-      text-shadow: 3px 3px 0 rgba(23, 19, 31, 0.12);
+      text-shadow: 3px 3px 0 rgba(23, 19, 31, 0.10);
       font-variant-numeric: tabular-nums;
-    }
-
-    .stack {
-      display: grid;
-      gap: 12px;
-      min-height: 0;
     }
 
     .tile {
       position: relative;
       border: var(--border);
-      border-radius: 26px;
+      border-radius: 28px;
       box-shadow: var(--shadow-lg);
       overflow: hidden;
       background: var(--white);
       min-height: 0;
+    }
+
+    .photo-parallax {
+      position: absolute;
+      inset: -6%;
+      transform: translate3d(calc(var(--mx) * -18px), calc(var(--my) * -12px), 0);
+      will-change: transform;
+    }
+
+    .photo-zoom {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      animation: kenburns 22s ease-in-out infinite alternate;
     }
 
     .tile img {
@@ -642,49 +658,53 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      transform:
-        scale(1.09)
-        translate3d(calc(var(--mx) * -18px), calc(var(--my) * -12px), 0);
-      will-change: transform;
+    }
+
+    @keyframes kenburns {
+      from { transform: scale(1.03) translate3d(0, 0, 0); }
+      to { transform: scale(1.12) translate3d(-1.4%, 1%, 0); }
     }
 
     .tile-label {
       position: absolute;
-      left: 14px;
-      right: 14px;
-      bottom: 14px;
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
       padding: 10px 12px;
       border: 3px solid var(--ink);
-      border-radius: 16px;
-      background: rgba(255, 253, 247, 0.94);
+      border-radius: 18px;
+      background: rgba(255, 253, 248, 0.94);
       box-shadow: 5px 5px 0 var(--ink);
       font-family: "Fredoka", sans-serif;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
       line-height: 1.2;
       transform: translate3d(calc(var(--mx) * 8px), calc(var(--my) * 5px), 0);
+      backdrop-filter: blur(8px);
     }
 
     .tile-label small {
       display: block;
       margin-top: 4px;
       font-family: "Space Grotesk", sans-serif;
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 500;
       color: var(--muted);
     }
 
-    .tape {
+    .sticker {
       position: absolute;
       top: -12px;
       left: 34px;
-      width: 110px;
-      height: 32px;
+      z-index: 2;
+      padding: 8px 14px;
       border: 3px solid var(--ink);
       background: var(--amber);
       box-shadow: 5px 5px 0 var(--ink);
+      font-family: "Fredoka", sans-serif;
+      font-size: 14px;
+      font-weight: 700;
       transform: rotate(-7deg);
-      z-index: 2;
     }
 
     .hero-media {
@@ -696,8 +716,8 @@
 
     .hero-tile {
       width: 100%;
-      max-width: 620px;
-      height: 550px;
+      height: 100%;
+      min-height: 520px;
     }
 
     .chip {
@@ -706,22 +726,22 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 10px 14px;
+      padding: 9px 13px;
       border: var(--border);
       border-radius: 999px;
       background: var(--white);
       box-shadow: 7px 7px 0 var(--ink);
       font-family: "Fredoka", sans-serif;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 700;
       white-space: nowrap;
-      transform: translate3d(calc(var(--mx) * var(--cx, 22px)), calc(var(--my) * var(--cy, 15px)), 0);
+      transform: translate3d(calc(var(--mx) * var(--cx, 20px)), calc(var(--my) * var(--cy, 14px)), 0);
       --accent: var(--violet);
     }
 
     .chip .dot {
-      width: 14px;
-      height: 14px;
+      width: 13px;
+      height: 13px;
       border: 3px solid var(--ink);
       border-radius: 50%;
       background: var(--accent);
@@ -729,7 +749,7 @@
 
     .quiz {
       margin-top: 12px;
-      padding: 16px;
+      padding: 14px;
       border: var(--border);
       border-radius: var(--radius);
       background: var(--white);
@@ -738,14 +758,14 @@
 
     .quiz-title {
       font-family: "Fredoka", sans-serif;
-      font-size: 21px;
+      font-size: 20px;
       font-weight: 700;
       margin-bottom: 10px;
     }
 
     .choices {
       display: grid;
-      gap: 9px;
+      gap: 8px;
     }
 
     .choice {
@@ -753,13 +773,13 @@
       align-items: center;
       gap: 10px;
       width: 100%;
-      padding: 9px 10px;
+      padding: 8px 10px;
       border: var(--border);
       border-radius: 16px;
       background: #fff;
       box-shadow: 5px 5px 0 var(--ink);
       cursor: pointer;
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 600;
       text-align: left;
       color: var(--ink);
@@ -785,8 +805,8 @@
     }
 
     .mark {
-      width: 30px;
-      height: 30px;
+      width: 29px;
+      height: 29px;
       border: var(--border);
       border-radius: 10px;
       background: var(--amber);
@@ -806,7 +826,7 @@
       border-radius: 16px;
       background: var(--paper);
       box-shadow: 5px 5px 0 var(--ink);
-      font-size: 13px;
+      font-size: 12.5px;
       line-height: 1.42;
     }
 
@@ -853,6 +873,13 @@
       flex: 0 0 auto;
     }
 
+    .check span {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
     .ring-card {
       text-align: center;
       justify-content: center;
@@ -861,20 +888,20 @@
 
     .ring-wrap {
       position: relative;
-      width: 210px;
-      height: 210px;
+      width: 205px;
+      height: 205px;
       margin: 10px auto 0;
     }
 
     .ring {
-      width: 210px;
-      height: 210px;
+      width: 205px;
+      height: 205px;
       transform: rotate(-90deg);
     }
 
     .ring-bg {
       fill: none;
-      stroke: rgba(23, 19, 31, 0.14);
+      stroke: rgba(23, 19, 31, 0.13);
       stroke-width: 12;
     }
 
@@ -896,10 +923,33 @@
 
     #ringText {
       font-family: "Fredoka", sans-serif;
-      font-size: 36px;
+      font-size: 35px;
       font-weight: 700;
       color: var(--mint);
       line-height: 1;
+    }
+
+    .column-stack {
+      display: grid;
+      grid-template-rows: minmax(220px, 1fr) auto;
+      gap: 12px;
+      height: 100%;
+      min-height: 0;
+    }
+
+    .mini-stack {
+      display: grid;
+      gap: 10px;
+      min-height: 0;
+    }
+
+    .mini-card {
+      padding: 12px 13px;
+      border-radius: 20px;
+    }
+
+    .mini-card p {
+      -webkit-line-clamp: 2;
     }
 
     .final-row {
@@ -911,7 +961,7 @@
 
     .thanks {
       font-family: "Fredoka", sans-serif;
-      font-size: 48px;
+      font-size: 46px;
       line-height: 1;
       margin: 0;
     }
@@ -927,8 +977,8 @@
       border-radius: 999px;
       background: var(--ink);
       color: var(--paper);
-      box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.22);
-      font-size: 15px;
+      box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.20);
+      font-size: 14.5px;
       line-height: 1.35;
       opacity: 0;
       pointer-events: none;
@@ -984,7 +1034,7 @@
       height: 20px;
       border: 3px solid var(--ink);
       border-radius: 5px;
-      box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.18);
+      box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.16);
       z-index: 80;
       pointer-events: none;
       animation: fall linear forwards;
@@ -998,6 +1048,24 @@
     @keyframes fall {
       to { transform: translateY(980px) rotate(720deg); opacity: 0; }
     }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(14px) scale(0.985); }
+      to { opacity: 1; transform: none; }
+    }
+
+    .slide.active .stagger > * {
+      animation: rise 0.62s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    }
+
+    .slide.active .stagger > *:nth-child(1) { animation-delay: 0.04s; }
+    .slide.active .stagger > *:nth-child(2) { animation-delay: 0.08s; }
+    .slide.active .stagger > *:nth-child(3) { animation-delay: 0.12s; }
+    .slide.active .stagger > *:nth-child(4) { animation-delay: 0.16s; }
+    .slide.active .stagger > *:nth-child(5) { animation-delay: 0.20s; }
+    .slide.active .stagger > *:nth-child(6) { animation-delay: 0.24s; }
+    .slide.active .stagger > *:nth-child(7) { animation-delay: 0.28s; }
+    .slide.active .stagger > *:nth-child(8) { animation-delay: 0.32s; }
 
     @media (prefers-reduced-motion: reduce) {
       * {
@@ -1016,22 +1084,21 @@
 
         <div class="scene" aria-hidden="true">
           <div class="layer back">
-            <div class="shape circle" style="width:260px;height:260px;background:var(--violet);left:-30px;top:110px;"></div>
-            <div class="shape square" style="width:170px;height:170px;background:var(--amber);right:70px;top:55px;transform:rotate(14deg);"></div>
-            <div class="shape pill" style="width:230px;height:86px;background:var(--pink);left:500px;bottom:20px;transform:rotate(-8deg);"></div>
-            <div class="shape circle" style="width:140px;height:140px;background:transparent;border:16px solid var(--mint);right:330px;bottom:120px;box-shadow:10px 10px 0 var(--ink);"></div>
+            <div class="shape circle" style="width:250px;height:250px;background:var(--violet);left:-20px;top:105px;opacity:.92;"></div>
+            <div class="shape square" style="width:160px;height:160px;background:var(--amber);right:70px;top:55px;transform:rotate(14deg);opacity:.92;"></div>
+            <div class="shape pill" style="width:220px;height:82px;background:var(--pink);left:500px;bottom:18px;transform:rotate(-8deg);opacity:.90;"></div>
+            <div class="shape circle" style="width:135px;height:135px;background:transparent;border:14px solid var(--mint);right:330px;bottom:120px;box-shadow:10px 10px 0 var(--ink);"></div>
           </div>
 
           <div class="layer mid">
-            <div class="shape circle" style="width:105px;height:105px;background:var(--mint);left:245px;top:545px;"></div>
-            <div class="shape square" style="width:88px;height:88px;background:var(--violet);right:210px;top:410px;transform:rotate(-12deg);"></div>
-            <div class="shape pill" style="width:160px;height:58px;background:var(--amber);left:1040px;top:150px;transform:rotate(10deg);"></div>
+            <div class="shape circle" style="width:92px;height:92px;background:var(--mint);left:245px;top:545px;opacity:.90;"></div>
+            <div class="shape square" style="width:78px;height:78px;background:var(--violet);right:210px;top:410px;transform:rotate(-12deg);opacity:.88;"></div>
+            <div class="shape pill" style="width:145px;height:52px;background:var(--amber);left:1040px;top:150px;transform:rotate(10deg);opacity:.88;"></div>
           </div>
 
           <div class="layer front">
-            <div class="shape circle" style="width:58px;height:58px;background:var(--pink);left:760px;top:120px;"></div>
-            <div class="shape square" style="width:52px;height:52px;background:var(--mint);right:520px;bottom:120px;transform:rotate(18deg);"></div>
-            <div class="shape circle" style="width:42px;height:42px;background:var(--violet);left:120px;bottom:180px;"></div>
+            <div class="shape circle" style="width:48px;height:48px;background:var(--pink);left:760px;top:120px;opacity:.90;"></div>
+            <div class="shape square" style="width:44px;height:44px;background:var(--mint);right:520px;bottom:120px;transform:rotate(18deg);opacity:.90;"></div>
           </div>
         </div>
 
@@ -1057,7 +1124,7 @@
             <div class="slide-inner">
               <div class="body hero">
                 <div>
-                  <span class="kicker">Cinematic Parallax • 16:9</span>
+                  <span class="kicker">Agency Premium • Cinematic 16:9</span>
                   <h1>
                     Limbah B3 <span class="hl hl-violet">Rumah Sakit</span><br />
                     <span class="hl hl-mint">Aman, Patuh, Berdampak</span>
@@ -1098,24 +1165,28 @@
 
                 <div class="hero-media">
                   <div class="tile hero-tile">
-                    <div class="tape"></div>
-                    <img data-img="hero" data-alt="Foto utama pengelolaan limbah B3 rumah sakit" />
+                    <div class="sticker">Foto Utama</div>
+                    <div class="photo-parallax">
+                      <div class="photo-zoom">
+                        <img data-img="hero" data-alt="Foto utama pengelolaan limbah B3 rumah sakit" />
+                      </div>
+                    </div>
                     <div class="tile-label">
                       Blok Foto Utama
                       <small>Edit IMAGE_URLS.hero untuk mengganti gambar ini.</small>
                     </div>
                   </div>
 
-                  <div class="chip" style="left:-8px; top:58px; --accent:var(--pink); --cx:28px; --cy:18px;">
+                  <div class="chip" style="left:-8px; top:58px; --accent:var(--pink); --cx:26px; --cy:16px;">
                     <span class="dot"></span><span>Infeksius</span>
                   </div>
-                  <div class="chip" style="right:-10px; top:126px; --accent:var(--amber); --cx:-24px; --cy:16px;">
+                  <div class="chip" style="right:-10px; top:126px; --accent:var(--amber); --cx:-22px; --cy:14px;">
                     <span class="dot"></span><span>Kimia</span>
                   </div>
-                  <div class="chip" style="left:12px; bottom:116px; --accent:var(--violet); --cx:22px; --cy:-18px;">
+                  <div class="chip" style="left:12px; bottom:116px; --accent:var(--violet); --cx:20px; --cy:-16px;">
                     <span class="dot"></span><span>Tajam</span>
                   </div>
-                  <div class="chip" style="right:24px; bottom:48px; --accent:var(--mint); --cx:-26px; --cy:-14px;">
+                  <div class="chip" style="right:24px; bottom:48px; --accent:var(--mint); --cx:-24px; --cy:-12px;">
                     <span class="dot"></span><span>Farmasi</span>
                   </div>
                 </div>
@@ -1135,7 +1206,7 @@
               </div>
 
               <div class="body">
-                <div class="grid grid-4 fill">
+                <div class="grid grid-4 fill stagger">
                   <div class="card violet"><div class="top-accent"></div><div class="icon"><span class="icon-text">01</span></div><h3>Pembuka</h3><p>Menguji persepsi awal tentang risiko limbah di RS.</p></div>
                   <div class="card mint"><div class="top-accent"></div><div class="icon"><span class="icon-text">02</span></div><h3>Definisi</h3><p>Memahami limbah B3 dan dasar hukum pengelolaannya.</p></div>
                   <div class="card amber"><div class="top-accent"></div><div class="icon"><span class="icon-text">03</span></div><h3>Sumber</h3><p>Mengenali asal limbah B3 di berbagai unit RS.</p></div>
@@ -1178,7 +1249,7 @@
                   </div>
                 </div>
 
-                <div class="grid grid-2 fill">
+                <div class="grid grid-2 fill stagger">
                   <div class="card violet"><div class="top-accent"></div><div class="icon">📄</div><h3>PP 22/2021</h3><p>Perlindungan dan pengelolaan lingkungan hidup.</p></div>
                   <div class="card mint"><div class="top-accent"></div><div class="icon">🌿</div><h3>Permen LHK</h3><p>Penyimpanan, pengangkutan, pengolahan, pemantauan.</p></div>
                   <div class="card amber"><div class="top-accent"></div><div class="icon">🏥</div><h3>Permenkes 7/2019</h3><p>Kesehatan lingkungan rumah sakit.</p></div>
@@ -1200,7 +1271,7 @@
               </div>
 
               <div class="body">
-                <div class="grid grid-3 fill">
+                <div class="grid grid-3 fill stagger">
                   <div class="card pink"><div class="top-accent"></div><div class="icon">🛏️</div><h3>Ruang Perawatan</h3><p>Kasa berdarah, sarung tangan terkontaminasi, selang infus, bahan habis pakai medis.</p></div>
                   <div class="card amber"><div class="top-accent"></div><div class="icon">🚑</div><h3>IGD & Poliklinik</h3><p>Spuit, jarum, ampul, limbah terkontaminasi darah/cairan tubuh.</p></div>
                   <div class="card violet"><div class="top-accent"></div><div class="icon">🔪</div><h3>Kamar Operasi</h3><p>Jaringan tubuh, benda tajam, material terkontaminasi tinggi.</p></div>
@@ -1224,7 +1295,7 @@
               </div>
 
               <div class="body">
-                <div class="grid grid-3 fill">
+                <div class="grid grid-3 fill stagger">
                   <div class="card pink"><div class="top-accent"></div><div class="icon">☣️</div><h3>Infektius</h3><p>Mengandung patogen yang dapat menyebabkan infeksi.</p></div>
                   <div class="card amber"><div class="top-accent"></div><div class="icon">🔥</div><h3>Mudah Menyala</h3><p>Dapat terbakar karena gesekan, panas, atau reaksi kimia.</p></div>
                   <div class="card violet"><div class="top-accent"></div><div class="icon">💥</div><h3>Mudah Meledak</h3><p>Reaktif terhadap tekanan, suhu, atau gesekan.</p></div>
@@ -1248,7 +1319,7 @@
               </div>
 
               <div class="body stack">
-                <div class="grid grid-3 fill">
+                <div class="grid grid-3 fill stagger">
                   <div class="card pink"><div class="top-accent"></div><div class="icon">🩺</div><h3>Kesehatan</h3><p>Luka tusuk, paparan darah, infeksi silang, keracunan, penyakit akibat kerja.</p></div>
                   <div class="card mint"><div class="top-accent"></div><div class="icon">🌍</div><h3>Lingkungan</h3><p>Pencemaran tanah, air, udara, residu berbahaya jika pembakaran tidak terkendali.</p></div>
                   <div class="card violet"><div class="top-accent"></div><div class="icon">⚖️</div><h3>Hukum & Reputasi</h3><p>Sanksi administratif, denda, gangguan operasional, menurunnya kepercayaan publik.</p></div>
@@ -1274,7 +1345,7 @@
               </div>
 
               <div class="body stack">
-                <div class="grid grid-4 fill">
+                <div class="grid grid-4 fill stagger">
                   <div class="card pink stat"><div class="top-accent"></div><span class="num" data-count="15" data-suffix="%">0%</span><h3>Limbah Berbahaya</h3><p>Sebagian limbah faskes dapat tergolong berbahaya.</p></div>
                   <div class="card mint stat"><div class="top-accent"></div><span class="num" data-count="85" data-suffix="%">0%</span><h3>Non-B3/Domestik</h3><p>Jika terpisah benar, tidak perlu masuk jalur B3.</p></div>
                   <div class="card violet stat"><div class="top-accent"></div><span class="num" data-count="3" data-suffix="">0</span><h3>Pilar Utama</h3><p>Pilah di sumber, wadah standar, pengolah berizin.</p></div>
@@ -1301,7 +1372,7 @@
               </div>
 
               <div class="body">
-                <div class="grid grid-3 fill">
+                <div class="grid grid-3 fill stagger">
                   <div class="card mint"><div class="top-accent"></div><div class="icon">1</div><h3>Pilah di Sumber</h3><p>Pemisahan awal menentukan seluruh rantai aman.</p></div>
                   <div class="card violet"><div class="top-accent"></div><div class="icon">2</div><h3>Wadah Standar</h3><p>Kantong kuning, safety box, wadah kimia tertutup.</p></div>
                   <div class="card amber"><div class="top-accent"></div><div class="icon">3</div><h3>Angkut Internal</h3><p>Rute dan jadwal jelas, hindari area publik.</p></div>
@@ -1325,22 +1396,34 @@
               </div>
 
               <div class="body rows-photo">
-                <div class="grid grid-3 fill">
+                <div class="grid grid-3 fill stagger">
                   <div class="tile">
-                    <img data-img="infectious" data-alt="Foto limbah infeksius kantong kuning" />
+                    <div class="photo-parallax">
+                      <div class="photo-zoom">
+                        <img data-img="infectious" data-alt="Foto limbah infeksius kantong kuning" />
+                      </div>
+                    </div>
                     <div class="tile-label">Kuning: Infeksius<small>Edit IMAGE_URLS.infectious</small></div>
                   </div>
                   <div class="tile">
-                    <img data-img="sharps" data-alt="Foto safety box benda tajam" />
+                    <div class="photo-parallax">
+                      <div class="photo-zoom">
+                        <img data-img="sharps" data-alt="Foto safety box benda tajam" />
+                      </div>
+                    </div>
                     <div class="tile-label">Safety Box: Tajam<small>Edit IMAGE_URLS.sharps</small></div>
                   </div>
                   <div class="tile">
-                    <img data-img="domestic" data-alt="Foto sampah domestik rumah sakit" />
+                    <div class="photo-parallax">
+                      <div class="photo-zoom">
+                        <img data-img="domestic" data-alt="Foto sampah domestik rumah sakit" />
+                      </div>
+                    </div>
                     <div class="tile-label">Hitam/Domestik<small>Edit IMAGE_URLS.domestic</small></div>
                   </div>
                 </div>
 
-                <div class="grid grid-3 fill">
+                <div class="grid grid-3 fill stagger">
                   <div class="card mint"><div class="top-accent"></div><div class="icon">☢️</div><h3>Merah/Radioaktif</h3><p>Khusus layanan radiologi/nuklir berizin dan pengawasan khusus.</p></div>
                   <div class="card amber"><div class="top-accent"></div><div class="icon">🧪</div><h3>Kimia & Farmasi</h3><p>Wadah tertutup, label, SDS, jangan campur sembarangan.</p></div>
                   <div class="card pink"><div class="top-accent"></div><div class="icon">🏷️</div><h3>Label & Simbol</h3><p>Jenis limbah, tanggal, unit penghasil, simbol bahaya, peringatan.</p></div>
@@ -1361,23 +1444,27 @@
               </div>
 
               <div class="body split">
-                <div class="grid grid-2 fill">
+                <div class="grid grid-2 fill stagger">
                   <div class="card violet"><div class="top-accent"></div><div class="icon">🧤</div><h3>Sarung Tangan</h3><p>Tahan tusuk, ganti jika robek/terkontaminasi.</p></div>
                   <div class="card mint"><div class="top-accent"></div><div class="icon">😷</div><h3>Masker</h3><p>Sesuai potensi aerosol, debu, atau uap kimia.</p></div>
                   <div class="card amber"><div class="top-accent"></div><div class="icon">🥼</div><h3>Gown/Apron</h3><p>Mencegah percikan menempel pada pakaian kerja.</p></div>
                   <div class="card pink"><div class="top-accent"></div><div class="icon">🥽</div><h3>Pelindung Mata</h3><p>Google/kacamata saat potensi terciprat.</p></div>
                 </div>
 
-                <div class="body stack" style="gap:12px;">
-                  <div class="tile" style="height:260px;">
-                    <img data-img="apd" data-alt="Foto petugas menggunakan APD" />
+                <div class="column-stack">
+                  <div class="tile">
+                    <div class="photo-parallax">
+                      <div class="photo-zoom">
+                        <img data-img="apd" data-alt="Foto petugas menggunakan APD" />
+                      </div>
+                    </div>
                     <div class="tile-label">Foto APD Petugas<small>Edit IMAGE_URLS.apd</small></div>
                   </div>
 
-                  <div class="stack">
-                    <div class="card pink"><div class="top-accent"></div><h3>Infeksius</h3><p>Amankan area, APD lengkap, serap + desinfektan, lapor.</p></div>
-                    <div class="card amber"><div class="top-accent"></div><h3>Kimia</h3><p>Cek label/SDS, ventilasi, absorbent netral, jangan campur.</p></div>
-                    <div class="card violet"><div class="top-accent"></div><h3>Benda Tajam</h3><p>Jangan pungut tangan kosong, pakai alat bantu, ke safety box.</p></div>
+                  <div class="mini-stack stagger">
+                    <div class="card pink mini-card"><div class="top-accent"></div><h3>Infeksius</h3><p>Amankan area, APD lengkap, serap + desinfektan, lapor.</p></div>
+                    <div class="card amber mini-card"><div class="top-accent"></div><h3>Kimia</h3><p>Cek label/SDS, ventilasi, absorbent netral, jangan campur.</p></div>
+                    <div class="card violet mini-card"><div class="top-accent"></div><h3>Benda Tajam</h3><p>Jangan pungut tangan kosong, pakai alat bantu, ke safety box.</p></div>
                   </div>
                 </div>
               </div>
@@ -1397,7 +1484,7 @@
 
               <div class="body check-layout">
                 <div>
-                  <div id="auditChecklist" class="checks">
+                  <div id="auditChecklist" class="checks stagger">
                     <label class="check"><input type="checkbox" /> <span>SOP pengelolaan limbah B3 tersedia dan mudah diakses.</span></label>
                     <label class="check"><input type="checkbox" /> <span>Petugas medis dan nonmedis mendapat pelatihan pemilahan limbah.</span></label>
                     <label class="check"><input type="checkbox" /> <span>Wadah limbah sesuai jenis: infeksius, tajam, domestik, kimia, farmasi.</span></label>
@@ -1454,21 +1541,37 @@
               </div>
 
               <div class="body">
-                <div class="grid grid-2 fill">
+                <div class="grid grid-2 fill stagger">
                   <div class="tile">
-                    <img data-img="tps" data-alt="Foto TPS limbah B3 rumah sakit" />
+                    <div class="photo-parallax">
+                      <div class="photo-zoom">
+                        <img data-img="tps" data-alt="Foto TPS limbah B3 rumah sakit" />
+                      </div>
+                    </div>
                     <div class="tile-label">TPS Limbah B3<small>Edit IMAGE_URLS.tps</small></div>
                   </div>
                   <div class="tile">
-                    <img data-img="lab" data-alt="Foto laboratorium rumah sakit" />
+                    <div class="photo-parallax">
+                      <div class="photo-zoom">
+                        <img data-img="lab" data-alt="Foto laboratorium rumah sakit" />
+                      </div>
+                    </div>
                     <div class="tile-label">Laboratorium<small>Edit IMAGE_URLS.lab</small></div>
                   </div>
                   <div class="tile">
-                    <img data-img="pharmacy" data-alt="Foto instalasi farmasi rumah sakit" />
+                    <div class="photo-parallax">
+                      <div class="photo-zoom">
+                        <img data-img="pharmacy" data-alt="Foto instalasi farmasi rumah sakit" />
+                      </div>
+                    </div>
                     <div class="tile-label">Farmasi<small>Edit IMAGE_URLS.pharmacy</small></div>
                   </div>
                   <div class="tile">
-                    <img data-img="audit" data-alt="Foto audit atau pelatihan pengelolaan limbah" />
+                    <div class="photo-parallax">
+                      <div class="photo-zoom">
+                        <img data-img="audit" data-alt="Foto audit atau pelatihan pengelolaan limbah" />
+                      </div>
+                    </div>
                     <div class="tile-label">Audit / Pelatihan<small>Edit IMAGE_URLS.audit</small></div>
                   </div>
                 </div>
@@ -1487,28 +1590,26 @@
                 <p>Dari kesadaran menjadi kebiasaan, dari kebiasaan menjadi budaya aman.</p>
               </div>
 
-              <div class="body stack">
-                <div class="grid grid-3 fill">
+              <div class="body closing">
+                <div class="grid grid-3 fill stagger">
                   <div class="card violet"><div class="top-accent"></div><div class="icon">🗑️</div><h3>Pilah Sejak Awal</h3><p>Kebiasaan kecil di ruang perawatan menentukan keselamatan besar di hilir.</p></div>
                   <div class="card mint"><div class="top-accent"></div><div class="icon">📝</div><h3>Dokumentasikan</h3><p>Jika tidak tercatat, sulit diaudit; jika sulit diaudit, sulit diperbaiki.</p></div>
                   <div class="card amber"><div class="top-accent"></div><div class="icon">🔁</div><h3>Perbaiki Terus</h3><p>Jadikan insiden dan temuan audit sebagai pembelajaran.</p></div>
                 </div>
 
-                <div>
-                  <div class="final-row">
-                    <div>
-                      <p class="thanks">Terima kasih</p>
-                      <p class="muted" style="margin-top:8px;">Silakan ganti blok gambar dengan foto asli RS Anda agar lebih kontekstual.</p>
-                    </div>
-                    <div class="note" style="margin-top:0;">
-                      <strong>Ajakan Aksi:</strong> Mulai dari satu unit: pilih 3 item checklist yang paling mungkin diperbaiki minggu ini.
-                    </div>
+                <div class="final-row">
+                  <div>
+                    <p class="thanks">Terima kasih</p>
+                    <p class="muted" style="margin-top:8px;">Silakan ganti blok gambar dengan foto asli RS Anda agar lebih kontekstual.</p>
                   </div>
+                  <div class="note" style="margin-top:0;">
+                    <strong>Ajakan Aksi:</strong> Mulai dari satu unit: pilih 3 item checklist yang paling mungkin diperbaiki minggu ini.
+                  </div>
+                </div>
 
-                  <div class="cta-row">
-                    <button class="btn primary" id="commitBtn">Saya Komit Perbaiki 🎉</button>
-                    <button class="btn pink" id="qaBtn">Buka Tanya Jawab</button>
-                  </div>
+                <div class="cta-row">
+                  <button class="btn primary" id="commitBtn">Saya Komit Perbaiki 🎉</button>
+                  <button class="btn pink" id="qaBtn">Buka Tanya Jawab</button>
                 </div>
               </div>
             </div>
@@ -1521,7 +1622,7 @@
           <div class="grain"></div>
         </div>
 
-        <div class="hint">Navigasi: ← → / spasi / swipe layar. Gerakkan mouse untuk efek parallax.</div>
+        <div class="hint">Navigasi: ← → / spasi / swipe layar. Gerakkan mouse untuk efek parallax cinematic.</div>
         <div class="dots" id="dots"></div>
         <div class="toast" id="toast"></div>
       </div>
@@ -1534,8 +1635,12 @@
        --------------------------------------------------------
        Tempel URL foto Anda pada salah satu atau semua key.
        Jika dibiarkan kosong "", akan muncul placeholder otomatis.
-       Contoh:
+
+       Bisa pakai URL online:
        hero: "https://example.com/foto.jpg"
+
+       Bisa pakai file lokal relatif jika folder aset disamping index.html:
+       hero: "assets/hero.jpg"
        ======================================================== */
     const IMAGE_URLS = {
       hero: "",
@@ -1565,14 +1670,14 @@
       const meta = PLACEHOLDER_META[key] || { label: key, color: "#8b5cf6" };
       const svg = `
 <svg xmlns='http://www.w3.org/2000/svg' width='1200' height='800' viewBox='0 0 1200 800'>
-  <rect width='1200' height='800' fill='#fffdf7'/>
-  <circle cx='180' cy='140' r='120' fill='${meta.color}' opacity='0.30'/>
-  <rect x='780' y='80' width='260' height='260' rx='42' fill='${meta.color}' opacity='0.22' transform='rotate(12 910 210)'/>
-  <rect x='120' y='520' width='360' height='130' rx='65' fill='${meta.color}' opacity='0.24' transform='rotate(-8 300 585)'/>
-  <circle cx='930' cy='610' r='90' fill='none' stroke='#17131f' stroke-width='10' opacity='0.18'/>
-  <rect x='40' y='40' width='1120' height='720' rx='36' fill='none' stroke='#17131f' stroke-width='8' opacity='0.18'/>
+  <rect width='1200' height='800' fill='#fffdf8'/>
+  <circle cx='180' cy='140' r='120' fill='${meta.color}' opacity='0.24'/>
+  <rect x='780' y='80' width='260' height='260' rx='42' fill='${meta.color}' opacity='0.18' transform='rotate(12 910 210)'/>
+  <rect x='120' y='520' width='360' height='130' rx='65' fill='${meta.color}' opacity='0.20' transform='rotate(-8 300 585)'/>
+  <circle cx='930' cy='610' r='90' fill='none' stroke='#17131f' stroke-width='10' opacity='0.14'/>
+  <rect x='40' y='40' width='1120' height='720' rx='36' fill='none' stroke='#17131f' stroke-width='8' opacity='0.14'/>
   <text x='600' y='390' text-anchor='middle' font-family='Arial, sans-serif' font-size='54' font-weight='700' fill='#17131f'>${meta.label}</text>
-  <text x='600' y='455' text-anchor='middle' font-family='Arial, sans-serif' font-size='28' fill='#5f5669'>Ganti lewat IMAGE_URLS.${key}</text>
+  <text x='600' y='455' text-anchor='middle' font-family='Arial, sans-serif' font-size='28' fill='#625a69'>Ganti lewat IMAGE_URLS.${key}</text>
 </svg>`;
       return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg.trim());
     }
@@ -1653,17 +1758,20 @@
     function cinematicLoop(now) {
       const t = now - startTime;
 
-      const autoX = Math.sin(t / 2600) * 0.58 + Math.sin(t / 1500) * 0.18;
-      const autoY = Math.cos(t / 3100) * 0.44 + Math.sin(t / 1900) * 0.14;
+      const autoX = Math.sin(t / 3200) * 0.48 + Math.sin(t / 1900) * 0.14;
+      const autoY = Math.cos(t / 3800) * 0.36 + Math.sin(t / 2300) * 0.10;
 
-      const blendX = clamp(targetX + autoX, -1.35, 1.35);
-      const blendY = clamp(targetY + autoY, -1.35, 1.35);
+      const blendX = clamp(targetX + autoX, -1.25, 1.25);
+      const blendY = clamp(targetY + autoY, -1.25, 1.25);
 
-      velX += (blendX - currentX) * 0.035;
-      velY += (blendY - currentY) * 0.035;
+      const stiffness = 0.038;
+      const damping = 0.88;
 
-      velX *= 0.90;
-      velY *= 0.90;
+      velX += (blendX - currentX) * stiffness;
+      velY += (blendY - currentY) * stiffness;
+
+      velX *= damping;
+      velY *= damping;
 
       currentX += velX;
       currentY += velY;
@@ -1723,8 +1831,10 @@
       index = Math.max(0, Math.min(slides.length - 1, index));
 
       slides.forEach((slide, i) => {
+        const dir = i < index ? -1 : 1;
+        slide.style.setProperty("--tx", `${dir * 56}px`);
         slide.classList.toggle("active", i === index);
-        slide.setAttribute("aria-hidden", i !== index ? "true" : "false");
+        slide.setAttribute("aria-hidden", i === index ? "false" : "true");
       });
 
       current = index;
