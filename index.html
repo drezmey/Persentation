@@ -1067,9 +1067,9 @@
     .slide.active .stagger > *:nth-child(7) { animation-delay: 0.28s; }
     .slide.active .stagger > *:nth-child(8) { animation-delay: 0.32s; }
 
-    /* ===== SLIDE KATEGORI WADAH SAMPAH B3 MEDIS ===== */
+    /* ===== SLIDE 10: KATEGORI WADAH + PRESENTER (LEFT/RIGHT BOTTOM) ===== */
     .wadah-slide .body {
-      grid-template-rows: minmax(0, 1fr);
+      grid-template-rows: minmax(0, 1fr) auto;
     }
 
     .wadah-board {
@@ -1087,9 +1087,9 @@
       flex-direction: column;
       background: var(--white);
       border: var(--border);
-      border-radius: 26px;
+      border-radius: 24px;
       box-shadow: var(--shadow);
-      padding: 24px 14px 14px;
+      padding: 22px 13px 13px;
       overflow: hidden;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
@@ -1105,7 +1105,7 @@
       left: 0;
       top: 0;
       width: 100%;
-      height: 10px;
+      height: 9px;
       border-bottom: var(--border);
       background: var(--accent);
     }
@@ -1117,17 +1117,18 @@
     .wadah-card.sharp { --accent: #f59e0b; --soft: rgba(245, 158, 11, 0.18); }
 
     .wadah-art {
-      height: 148px;
+      height: 124px;
       margin-bottom: 10px;
       border: 3px solid rgba(23, 19, 31, 0.12);
-      border-radius: 20px;
+      border-radius: 18px;
       background: var(--soft);
       display: flex;
       align-items: flex-end;
       justify-content: center;
-      gap: 12px;
-      padding: 14px;
+      gap: 10px;
+      padding: 12px;
       box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+      flex: 0 0 auto;
     }
 
     .bag,
@@ -1135,27 +1136,27 @@
     .safety {
       position: relative;
       border: 3px solid var(--ink);
-      box-shadow: 5px 5px 0 var(--ink);
+      box-shadow: 4px 4px 0 var(--ink);
       flex: 0 0 auto;
     }
 
     .bag {
-      width: 54px;
-      height: 78px;
-      border-radius: 16px 16px 12px 12px;
+      width: 48px;
+      height: 70px;
+      border-radius: 14px 14px 11px 11px;
       background: var(--accent);
     }
 
     .bag::before {
       content: "";
       position: absolute;
-      top: -14px;
-      left: 10px;
-      width: 32px;
-      height: 18px;
+      top: -12px;
+      left: 9px;
+      width: 28px;
+      height: 16px;
       border: 3px solid var(--ink);
       border-bottom: 0;
-      border-radius: 16px 16px 0 0;
+      border-radius: 14px 14px 0 0;
       background: var(--accent);
     }
 
@@ -1163,17 +1164,17 @@
       content: "";
       position: absolute;
       top: -2px;
-      left: 16px;
-      width: 20px;
-      height: 8px;
+      left: 14px;
+      width: 18px;
+      height: 7px;
       border: 3px solid var(--ink);
       border-radius: 999px;
       background: rgba(255, 255, 255, 0.55);
     }
 
     .bin {
-      width: 62px;
-      height: 74px;
+      width: 56px;
+      height: 66px;
       border-radius: 8px;
       background: var(--accent);
     }
@@ -1181,10 +1182,10 @@
     .bin::before {
       content: "";
       position: absolute;
-      top: -14px;
-      left: -7px;
-      width: 76px;
-      height: 16px;
+      top: -13px;
+      left: -6px;
+      width: 68px;
+      height: 15px;
       border: 3px solid var(--ink);
       border-radius: 8px;
       background: var(--accent);
@@ -1193,20 +1194,20 @@
     .bin::after {
       content: "";
       position: absolute;
-      top: 18px;
-      left: 13px;
-      width: 36px;
+      top: 16px;
+      left: 12px;
+      width: 32px;
       height: 4px;
       border-radius: 999px;
       background: rgba(23, 19, 31, 0.20);
       box-shadow:
-        0 14px 0 rgba(23, 19, 31, 0.20),
-        0 28px 0 rgba(23, 19, 31, 0.20);
+        0 13px 0 rgba(23, 19, 31, 0.20),
+        0 26px 0 rgba(23, 19, 31, 0.20);
     }
 
     .safety {
-      width: 92px;
-      height: 74px;
+      width: 84px;
+      height: 66px;
       border-radius: 10px;
       background: #fde047;
     }
@@ -1214,10 +1215,10 @@
     .safety::before {
       content: "";
       position: absolute;
-      top: -16px;
-      left: 24px;
-      width: 42px;
-      height: 16px;
+      top: -15px;
+      left: 22px;
+      width: 38px;
+      height: 15px;
       border: 3px solid var(--ink);
       border-bottom: 0;
       border-radius: 10px 10px 0 0;
@@ -1227,10 +1228,10 @@
     .safety::after {
       content: "SAFETY BOX";
       position: absolute;
-      left: 8px;
-      bottom: 7px;
+      left: 7px;
+      bottom: 6px;
       font-family: "Fredoka", sans-serif;
-      font-size: 9px;
+      font-size: 8.5px;
       font-weight: 700;
       letter-spacing: 0.02em;
       color: var(--ink);
@@ -1241,28 +1242,28 @@
       inset: 0;
       display: grid;
       place-items: center;
-      font-size: 25px;
+      font-size: 22px;
       line-height: 1;
       filter: drop-shadow(2px 2px 0 rgba(23, 19, 31, 0.20));
       pointer-events: none;
     }
 
     .safety .art-icon {
-      inset: 8px 0 16px;
-      font-size: 24px;
+      inset: 7px 0 15px;
+      font-size: 21px;
     }
 
     .sharp-tools {
       display: grid;
-      gap: 8px;
-      font-size: 24px;
+      gap: 7px;
+      font-size: 21px;
       filter: drop-shadow(2px 2px 0 rgba(23, 19, 31, 0.18));
     }
 
     .wadah-card h3 {
       margin: 0;
       font-family: "Fredoka", sans-serif;
-      font-size: 22px;
+      font-size: 20px;
       line-height: 1;
       letter-spacing: -0.4px;
     }
@@ -1270,26 +1271,26 @@
     .wadah-sub {
       margin-top: 5px;
       font-family: "Fredoka", sans-serif;
-      font-size: 12.5px;
+      font-size: 12px;
       font-weight: 700;
       line-height: 1.22;
       color: var(--ink);
     }
 
     .wadah-list {
-      margin: 9px 0 0;
+      margin: 8px 0 0;
       padding: 0;
       list-style: none;
       display: grid;
-      gap: 5px;
-      font-size: 12.5px;
-      line-height: 1.28;
+      gap: 4px;
+      font-size: 12px;
+      line-height: 1.26;
       color: #5a5261;
     }
 
     .wadah-list li {
       position: relative;
-      padding-left: 14px;
+      padding-left: 13px;
     }
 
     .wadah-list li::before {
@@ -1303,13 +1304,13 @@
     .wadah-tag {
       margin-top: auto;
       align-self: flex-start;
-      padding: 6px 9px;
+      padding: 5px 8px;
       border: 3px solid var(--ink);
       border-radius: 999px;
       background: var(--accent);
       box-shadow: 3px 3px 0 var(--ink);
       font-family: "Fredoka", sans-serif;
-      font-size: 10.5px;
+      font-size: 10px;
       font-weight: 700;
       color: var(--ink);
       white-space: nowrap;
@@ -1322,6 +1323,42 @@
     .wadah-card.ungu .wadah-tag,
     .wadah-card.coklat .wadah-tag {
       color: #fff;
+    }
+
+    /* strip presenter: kiri = foto, tengah = catatan, kanan = foto (rata bawah) */
+    .wadah-presenters {
+      display: grid;
+      grid-template-columns: 250px minmax(0, 1fr) 250px;
+      align-items: end;
+      gap: 20px;
+      min-height: 0;
+    }
+
+    .presenter {
+      position: relative;
+      width: 250px;
+      height: 250px;
+      align-self: end;
+      overflow: hidden;
+      will-change: transform;
+      pointer-events: none;
+    }
+
+    .presenter.left  { transform: translate3d(calc(var(--mx) * -7px), 0, 0); }
+    .presenter.right { transform: translate3d(calc(var(--mx) *  7px), 0, 0); }
+
+    .presenter img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: bottom center;
+      filter: drop-shadow(7px 8px 0 rgba(23, 19, 31, 0.82));
+    }
+
+    .presenter-note {
+      align-self: end;
+      margin-bottom: 2px;
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1681,7 +1718,7 @@
                 </div>
 
                 <div class="grid grid-3 fill stagger">
-                  <div class="card mint"><div class="top-accent"></div><div class="icon"></div><h3>Pilah di Titik Hasil</h3><p>Letakkan wadah dekat sumber, bukan jauh di ujung koridor.</p></div>
+                  <div class="card mint"><div class="top-accent"></div><div class="icon">🎯</div><h3>Pilah di Titik Hasil</h3><p>Letakkan wadah dekat sumber, bukan jauh di ujung koridor.</p></div>
                   <div class="card amber"><div class="top-accent"></div><div class="icon">🚫</div><h3>Jangan Campur</h3><p>Satu benda tajam/infeksius ke kantong domestik = satu kantong jadi B3.</p></div>
                   <div class="card pink"><div class="top-accent"></div><div class="icon">🏷️</div><h3>Label & Tanggal</h3><p>Jenis limbah, tanggal, unit penghasil, simbol bahaya, peringatan.</p></div>
                 </div>
@@ -1689,7 +1726,7 @@
             </div>
           </section>
 
-          <!-- SLIDE 10: KATEGORI WADAH SAMPAH B3 MEDIS (BARU) -->
+          <!-- SLIDE 10: KATEGORI WADAH + PRESENTER KIRI-KANAN BAWAH -->
           <section class="slide" aria-hidden="true">
             <div class="slide-inner wadah-slide">
               <div class="slide-head">
@@ -1698,8 +1735,8 @@
                   <h2>Kategori Wadah Sampah B3 Medis</h2>
                 </div>
                 <p>
-                  Versi slide-ready dari infografis wadah B3: 5 kategori warna,
-                  dibangun dengan vektor/CSS agar tajam, tidak terpotong, dan ikut parallax.
+                  5 kategori warna wadah di atas; dua presenter di pojok kiri‑kanan bawah.
+                  Kartu disusun agar tidak tertutup gambar.
                 </p>
               </div>
 
@@ -1784,6 +1821,22 @@
                     </ul>
                     <div class="wadah-tag">Maks 3/4, jangan dibuka ulang</div>
                   </article>
+                </div>
+
+                <div class="wadah-presenters">
+                  <div class="presenter left">
+                    <img data-img="presenterLeft" data-alt="Presenter kiri" />
+                  </div>
+
+                  <div class="note presenter-note">
+                    <strong>Pesan kunci:</strong> Kenali warna wadah sejak di sumber. Satu kesalahan
+                    pemilahan dapat mengubah seluruh rantai menjadi berisiko — pastikan wadah, label,
+                    dan pelatihan berjalan seiring.
+                  </div>
+
+                  <div class="presenter right">
+                    <img data-img="presenterRight" data-alt="Presenter kanan" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -1999,8 +2052,12 @@
        Bisa pakai file lokal relatif jika folder aset disamping index.html:
        hero: "assets/hero.jpg"
 
-       Catatan: slide "Kategori Wadah Sampah B3 Medis" sengaja
-       dibangun dengan vektor/CSS (tanpa foto) agar tetap tajam.
+       PRESENTER (slide 10):
+       presenterLeft  -> foto presenter pojok KIRI bawah (menunjuk ke kanan)
+       presenterRight -> foto presenter pojok KANAN bawah (menunjuk ke kiri)
+       Saran: pakai PNG dengan background TRANSPARAN agar terlihat seperti
+       stiker dengan hard shadow. Jika background putih, masih tetap tampil
+       (menjadi seperti foto yang ditempel), hanya shadow mengikuti kotak.
        ======================================================== */
     const IMAGE_URLS = {
       hero: "",
@@ -2011,7 +2068,9 @@
       tps: "",
       lab: "",
       pharmacy: "",
-      audit: ""
+      audit: "",
+      presenterLeft: "",
+      presenterRight: ""
     };
 
     const PLACEHOLDER_META = {
@@ -2023,10 +2082,32 @@
       tps: { label: "TPS Limbah B3", color: "#f59e0b" },
       lab: { label: "Laboratorium", color: "#8b5cf6" },
       pharmacy: { label: "Farmasi", color: "#34d399" },
-      audit: { label: "Audit / Pelatihan", color: "#ec4899" }
+      audit: { label: "Audit / Pelatihan", color: "#ec4899" },
+      presenterLeft: { label: "Presenter 1", color: "#8b5cf6" },
+      presenterRight: { label: "Presenter 2", color: "#ec4899" }
     };
 
+    function presenterPlaceholder(key, color) {
+      const emoji = key === "presenterLeft" ? "🧑‍⚕️" : "🧕";
+      const label = key === "presenterLeft" ? "Presenter 1" : "Presenter 2";
+      const varName = key;
+      const svg = `
+<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'>
+  <rect x='14' y='14' width='372' height='372' rx='34' fill='#fffdf8' stroke='#17131f' stroke-width='7'/>
+  <circle cx='200' cy='150' r='80' fill='${color}' fill-opacity='0.18'/>
+  <text x='200' y='182' text-anchor='middle' font-size='104'>${emoji}</text>
+  <text x='200' y='292' text-anchor='middle' font-family='Arial, sans-serif' font-size='30' font-weight='700' fill='#17131f'>${label}</text>
+  <text x='200' y='328' text-anchor='middle' font-family='Arial, sans-serif' font-size='17' fill='#625a69'>isi IMAGE_URLS.${varName}</text>
+</svg>`;
+      return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg.trim());
+    }
+
     function placeholderFor(key) {
+      if (key === "presenterLeft" || key === "presenterRight") {
+        const meta = PLACEHOLDER_META[key];
+        return presenterPlaceholder(key, meta.color);
+      }
+
       const meta = PLACEHOLDER_META[key] || { label: key, color: "#8b5cf6" };
       const svg = `
 <svg xmlns='http://www.w3.org/2000/svg' width='1200' height='800' viewBox='0 0 1200 800'>
