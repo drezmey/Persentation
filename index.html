@@ -22,9 +22,9 @@
       --mint: #34d399;
 
       --border: 4px solid var(--ink);
-      --shadow: 12px 12px 0 var(--ink);
-      --shadow-sm: 7px 7px 0 var(--ink);
-      --radius: 30px;
+      --shadow: 10px 10px 0 var(--ink);
+      --shadow-sm: 6px 6px 0 var(--ink);
+      --radius: 26px;
     }
 
     * {
@@ -39,9 +39,9 @@
       height: 100%;
       overflow: hidden;
       background:
-        radial-gradient(circle at top left, rgba(139, 92, 246, 0.25), transparent 28%),
-        radial-gradient(circle at bottom right, rgba(52, 211, 153, 0.22), transparent 30%),
-        #17111f;
+        radial-gradient(circle at top left, rgba(139, 92, 246, 0.28), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(52, 211, 153, 0.24), transparent 30%),
+        #16101d;
       font-family: "Space Grotesk", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       color: var(--ink);
     }
@@ -51,7 +51,7 @@
       height: 100%;
       display: grid;
       place-items: center;
-      padding: 2vmin;
+      padding: 1.5vmin;
     }
 
     .stage {
@@ -60,9 +60,9 @@
       aspect-ratio: 16 / 9;
       overflow: hidden;
       border: 5px solid var(--ink);
-      border-radius: 34px;
+      border-radius: 30px;
       background: var(--paper);
-      box-shadow: 26px 26px 0 rgba(0, 0, 0, 0.38);
+      box-shadow: 22px 22px 0 rgba(0, 0, 0, 0.35);
     }
 
     .canvas {
@@ -72,30 +72,35 @@
       width: 1600px;
       height: 900px;
       transform-origin: top left;
-      --px: 0;
-      --py: 0;
+      --mx: 0;
+      --my: 0;
     }
 
     .paper {
       position: absolute;
       inset: 0;
       background-image:
-        radial-gradient(circle, rgba(23, 19, 31, 0.09) 1.4px, transparent 1.4px),
+        radial-gradient(circle, rgba(23, 19, 31, 0.09) 1.3px, transparent 1.3px),
         linear-gradient(135deg, rgba(139, 92, 246, 0.08), transparent 35%, rgba(52, 211, 153, 0.09));
-      background-size: 24px 24px, cover;
+      background-size: 22px 22px, cover;
     }
 
-    .layer {
+    .parallax-bg {
       position: absolute;
-      inset: -140px;
+      inset: 0;
       pointer-events: none;
+      z-index: 1;
+    }
+
+    .p-layer {
+      position: absolute;
+      inset: -160px;
       transform: translate3d(
-        calc(var(--px) * var(--depth, 0) * 1px),
-        calc(var(--py) * var(--depth, 0) * 1px),
+        calc(var(--mx) * var(--tx, 0px)),
+        calc(var(--my) * var(--ty, 0px)),
         0
       );
       will-change: transform;
-      z-index: 1;
     }
 
     .shape {
@@ -105,7 +110,7 @@
     }
 
     .circle { border-radius: 50%; }
-    .square { border-radius: 26px; }
+    .square { border-radius: 24px; }
     .pill { border-radius: 999px; }
 
     .topbar {
@@ -114,31 +119,31 @@
       left: 0;
       right: 0;
       top: 0;
-      height: 88px;
+      height: 72px;
       display: flex;
       align-items: center;
-      gap: 24px;
-      padding: 0 34px;
+      gap: 18px;
+      padding: 0 28px;
       border-bottom: var(--border);
-      background: rgba(255, 247, 234, 0.9);
+      background: rgba(255, 247, 234, 0.92);
       backdrop-filter: blur(10px);
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
       font-family: "Fredoka", sans-serif;
       font-weight: 700;
-      font-size: 26px;
+      font-size: 22px;
       white-space: nowrap;
     }
 
     .brand-badge {
-      width: 54px;
-      height: 54px;
+      width: 46px;
+      height: 46px;
       border: var(--border);
-      border-radius: 18px;
+      border-radius: 16px;
       background: var(--violet);
       box-shadow: var(--shadow-sm);
       display: grid;
@@ -148,11 +153,11 @@
 
     .progress {
       flex: 1;
-      height: 24px;
+      height: 20px;
       border: var(--border);
       border-radius: 999px;
       background: #fff;
-      box-shadow: 6px 6px 0 var(--ink);
+      box-shadow: 5px 5px 0 var(--ink);
       overflow: hidden;
       min-width: 120px;
     }
@@ -162,27 +167,27 @@
       height: 100%;
       background: repeating-linear-gradient(
         90deg,
-        var(--pink) 0 22px,
-        var(--amber) 22px 44px,
-        var(--mint) 44px 66px,
-        var(--violet) 66px 88px
+        var(--pink) 0 18px,
+        var(--amber) 18px 36px,
+        var(--mint) 36px 54px,
+        var(--violet) 54px 72px
       );
       transition: width 0.45s ease;
     }
 
     .nav-btn,
     .icon-btn {
-      width: 54px;
-      height: 54px;
+      width: 46px;
+      height: 46px;
       border: var(--border);
-      border-radius: 18px;
+      border-radius: 16px;
       background: #fff;
       box-shadow: var(--shadow-sm);
       display: grid;
       place-items: center;
       cursor: pointer;
       font-family: "Fredoka", sans-serif;
-      font-size: 24px;
+      font-size: 20px;
       font-weight: 700;
       transition: transform 0.16s ease, box-shadow 0.16s ease;
       color: var(--ink);
@@ -191,31 +196,31 @@
     .nav-btn:hover,
     .icon-btn:hover {
       transform: translate(-2px, -2px);
-      box-shadow: 9px 9px 0 var(--ink);
+      box-shadow: 8px 8px 0 var(--ink);
     }
 
     .nav-btn:active,
     .icon-btn:active {
-      transform: translate(5px, 5px);
+      transform: translate(4px, 4px);
       box-shadow: 2px 2px 0 var(--ink);
     }
 
     .counter {
-      min-width: 104px;
+      min-width: 92px;
       text-align: center;
       font-family: "Fredoka", sans-serif;
       font-weight: 700;
-      font-size: 20px;
+      font-size: 17px;
       border: var(--border);
       border-radius: 999px;
-      padding: 10px 14px;
+      padding: 8px 12px;
       background: var(--mint);
-      box-shadow: 6px 6px 0 var(--ink);
+      box-shadow: 5px 5px 0 var(--ink);
     }
 
     .deck {
       position: absolute;
-      inset: 88px 0 0 0;
+      inset: 72px 0 0 0;
       z-index: 20;
       perspective: 1600px;
     }
@@ -223,15 +228,15 @@
     .slide {
       position: absolute;
       inset: 0;
-      padding: 46px 70px 72px;
+      padding: 28px 54px 48px;
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
-      transform: translateX(80px) rotateY(8deg) scale(0.97);
+      transform: translateX(70px) scale(0.98);
       transition:
-        opacity 0.55s ease,
-        transform 0.72s cubic-bezier(0.2, 0.8, 0.2, 1),
-        visibility 0.55s ease;
+        opacity 0.5s ease,
+        transform 0.65s cubic-bezier(0.2, 0.8, 0.2, 1),
+        visibility 0.5s ease;
       overflow: hidden;
     }
 
@@ -242,58 +247,68 @@
       transform: none;
     }
 
-    .wrap {
+    .slide-inner {
       width: 100%;
       height: 100%;
+      display: grid;
+      align-content: center;
+      gap: 16px;
+      transform: translate3d(
+        calc(var(--mx) * var(--sx, 10px)),
+        calc(var(--my) * var(--sy, 7px)),
+        0
+      );
+      will-change: transform;
     }
 
     .kicker {
       display: inline-block;
       font-family: "Fredoka", sans-serif;
-      font-size: 18px;
-      letter-spacing: 0.06em;
+      font-size: 15px;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
-      padding: 8px 14px;
+      padding: 7px 12px;
       border: var(--border);
       border-radius: 999px;
       background: var(--amber);
-      box-shadow: 6px 6px 0 var(--ink);
-      margin-bottom: 18px;
+      box-shadow: 5px 5px 0 var(--ink);
+      margin-bottom: 10px;
+      width: fit-content;
     }
 
     h1 {
-      margin: 0 0 18px;
+      margin: 0 0 12px;
       font-family: "Fredoka", sans-serif;
-      font-size: 72px;
+      font-size: 58px;
       line-height: 0.98;
-      letter-spacing: -2px;
+      letter-spacing: -1.6px;
     }
 
     h2 {
-      margin: 0 0 14px;
+      margin: 0 0 10px;
       font-family: "Fredoka", sans-serif;
-      font-size: 48px;
+      font-size: 40px;
       line-height: 1.05;
       letter-spacing: -1px;
     }
 
     h3 {
-      margin: 0 0 10px;
+      margin: 0 0 8px;
       font-family: "Fredoka", sans-serif;
-      font-size: 25px;
+      font-size: 20px;
       line-height: 1.18;
     }
 
     p {
       margin: 0;
-      font-size: 20px;
-      line-height: 1.55;
+      font-size: 16px;
+      line-height: 1.5;
     }
 
     .lead {
-      font-size: 24px;
-      line-height: 1.5;
-      max-width: 760px;
+      font-size: 19px;
+      line-height: 1.45;
+      max-width: 720px;
       color: #463f50;
     }
 
@@ -302,8 +317,8 @@
     }
 
     .hl {
-      padding: 0 0.12em;
-      border-radius: 0.25em;
+      padding: 0 0.1em;
+      border-radius: 0.22em;
       -webkit-box-decoration-break: clone;
       box-decoration-break: clone;
     }
@@ -316,19 +331,19 @@
     .cta-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 24px;
+      gap: 12px;
+      margin-top: 16px;
     }
 
     .btn {
       font-family: "Fredoka", sans-serif;
-      font-size: 20px;
+      font-size: 17px;
       font-weight: 600;
       border: var(--border);
       border-radius: 999px;
-      padding: 14px 22px;
+      padding: 12px 18px;
       background: #fff;
-      box-shadow: 8px 8px 0 var(--ink);
+      box-shadow: 7px 7px 0 var(--ink);
       cursor: pointer;
       transition: transform 0.16s ease, box-shadow 0.16s ease;
       color: var(--ink);
@@ -336,12 +351,12 @@
 
     .btn:hover {
       transform: translate(-2px, -2px);
-      box-shadow: 10px 10px 0 var(--ink);
+      box-shadow: 9px 9px 0 var(--ink);
     }
 
     .btn:active {
-      transform: translate(5px, 5px);
-      box-shadow: 3px 3px 0 var(--ink);
+      transform: translate(4px, 4px);
+      box-shadow: 2px 2px 0 var(--ink);
     }
 
     .btn.primary { background: var(--mint); }
@@ -350,8 +365,8 @@
     .btn.amber { background: var(--amber); }
 
     .svg-icon {
-      width: 34px;
-      height: 34px;
+      width: 30px;
+      height: 30px;
       fill: none;
       stroke: currentColor;
       stroke-width: 3;
@@ -362,15 +377,15 @@
 
     .hero {
       display: grid;
-      grid-template-columns: 1.03fr 0.97fr;
-      gap: 54px;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 38px;
       align-items: center;
       height: 100%;
     }
 
     .quiz {
-      margin-top: 24px;
-      padding: 24px;
+      margin-top: 14px;
+      padding: 18px;
       border: var(--border);
       border-radius: var(--radius);
       background: var(--white);
@@ -379,28 +394,28 @@
 
     .quiz-title {
       font-family: "Fredoka", sans-serif;
-      font-size: 26px;
+      font-size: 22px;
       font-weight: 700;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
     .choices {
       display: grid;
-      gap: 14px;
+      gap: 10px;
     }
 
     .choice {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
       width: 100%;
-      padding: 14px 16px;
+      padding: 10px 12px;
       border: var(--border);
-      border-radius: 22px;
+      border-radius: 18px;
       background: #fff;
-      box-shadow: 6px 6px 0 var(--ink);
+      box-shadow: 5px 5px 0 var(--ink);
       cursor: pointer;
-      font-size: 19px;
+      font-size: 15px;
       font-weight: 600;
       text-align: left;
       color: var(--ink);
@@ -409,7 +424,7 @@
 
     .choice:hover {
       transform: translate(-2px, -2px);
-      box-shadow: 8px 8px 0 var(--ink);
+      box-shadow: 7px 7px 0 var(--ink);
     }
 
     .choice:disabled {
@@ -426,10 +441,10 @@
     }
 
     .mark {
-      width: 40px;
-      height: 40px;
+      width: 34px;
+      height: 34px;
       border: var(--border);
-      border-radius: 14px;
+      border-radius: 12px;
       background: var(--amber);
       box-shadow: 4px 4px 0 var(--ink);
       display: grid;
@@ -441,14 +456,14 @@
 
     .feedback {
       display: none;
-      margin-top: 16px;
-      padding: 16px 18px;
+      margin-top: 12px;
+      padding: 12px 14px;
       border: var(--border);
-      border-radius: 22px;
+      border-radius: 18px;
       background: var(--paper);
-      box-shadow: 6px 6px 0 var(--ink);
-      font-size: 18px;
-      line-height: 1.5;
+      box-shadow: 5px 5px 0 var(--ink);
+      font-size: 14px;
+      line-height: 1.45;
     }
 
     .feedback.show {
@@ -456,42 +471,43 @@
       animation: popIn 0.35s ease;
     }
 
-    .feedback.good { border-left: 10px solid var(--mint); }
-    .feedback.bad { border-left: 10px solid var(--pink); }
+    .feedback.good { border-left: 8px solid var(--mint); }
+    .feedback.bad { border-left: 8px solid var(--pink); }
 
     .visual {
       position: relative;
-      height: 620px;
+      height: 100%;
       display: grid;
       place-items: center;
     }
 
     .hero-svg {
-      width: 560px;
-      height: 560px;
+      width: 500px;
+      height: 500px;
       animation: float 6.5s ease-in-out infinite;
+      filter: drop-shadow(10px 10px 0 rgba(23, 19, 31, 0.12));
     }
 
     .chip {
       position: absolute;
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 12px 16px;
+      gap: 8px;
+      padding: 10px 14px;
       border: var(--border);
       border-radius: 999px;
       background: var(--white);
-      box-shadow: 8px 8px 0 var(--ink);
+      box-shadow: 7px 7px 0 var(--ink);
       font-family: "Fredoka", sans-serif;
-      font-size: 18px;
+      font-size: 15px;
       font-weight: 600;
       white-space: nowrap;
       --accent: var(--violet);
     }
 
     .chip .dot {
-      width: 18px;
-      height: 18px;
+      width: 14px;
+      height: 14px;
       border: 3px solid var(--ink);
       border-radius: 50%;
       background: var(--accent);
@@ -501,19 +517,19 @@
       display: flex;
       justify-content: space-between;
       align-items: end;
-      gap: 30px;
-      margin-bottom: 28px;
+      gap: 24px;
+      margin-bottom: 12px;
     }
 
     .slide-head p {
-      max-width: 430px;
-      font-size: 19px;
+      max-width: 390px;
+      font-size: 16px;
       color: var(--muted);
     }
 
     .grid {
       display: grid;
-      gap: 24px;
+      gap: 14px;
     }
 
     .grid-2 { grid-template-columns: repeat(2, 1fr); }
@@ -526,15 +542,16 @@
       border: var(--border);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding: 26px 24px 24px;
+      padding: 18px 16px 16px;
       overflow: hidden;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       --accent: var(--violet);
+      min-height: 132px;
     }
 
     .card:hover {
       transform: translate(-3px, -3px);
-      box-shadow: 15px 15px 0 var(--ink);
+      box-shadow: 13px 13px 0 var(--ink);
     }
 
     .card .top-accent {
@@ -542,7 +559,7 @@
       left: 0;
       top: 0;
       width: 100%;
-      height: 12px;
+      height: 10px;
       border-bottom: var(--border);
       background: var(--accent);
     }
@@ -553,35 +570,35 @@
     .card.mint { --accent: var(--mint); }
 
     .icon {
-      width: 72px;
-      height: 72px;
+      width: 54px;
+      height: 54px;
       border: var(--border);
-      border-radius: 22px;
+      border-radius: 18px;
       background: var(--accent);
       box-shadow: var(--shadow-sm);
       display: grid;
       place-items: center;
-      margin: 20px 0 16px;
+      margin: 12px 0 10px;
       color: var(--ink);
     }
 
     .icon-text {
       font-family: "Fredoka", sans-serif;
-      font-size: 28px;
+      font-size: 22px;
       font-weight: 700;
       color: var(--ink);
     }
 
     .card p {
-      font-size: 18px;
-      line-height: 1.5;
+      font-size: 14px;
+      line-height: 1.45;
       color: #584f61;
     }
 
     .split {
       display: grid;
       grid-template-columns: 1.02fr 0.98fr;
-      gap: 44px;
+      gap: 34px;
       align-items: center;
       height: 100%;
     }
@@ -589,16 +606,16 @@
     .list {
       list-style: none;
       padding: 0;
-      margin: 20px 0 0;
+      margin: 14px 0 0;
       display: grid;
-      gap: 14px;
-      font-size: 20px;
+      gap: 10px;
+      font-size: 16px;
     }
 
     .list li {
       position: relative;
-      padding-left: 42px;
-      line-height: 1.45;
+      padding-left: 34px;
+      line-height: 1.4;
       color: #4b4355;
     }
 
@@ -607,27 +624,27 @@
       position: absolute;
       left: 0;
       top: 1px;
-      width: 30px;
-      height: 30px;
+      width: 24px;
+      height: 24px;
       border: 3px solid var(--ink);
-      border-radius: 11px;
+      border-radius: 9px;
       background: var(--mint);
-      box-shadow: 4px 4px 0 var(--ink);
+      box-shadow: 3px 3px 0 var(--ink);
       display: grid;
       place-items: center;
       font-weight: 900;
-      font-size: 17px;
+      font-size: 14px;
     }
 
     .note {
-      margin-top: 22px;
-      padding: 20px 22px;
+      margin-top: 14px;
+      padding: 14px 16px;
       border: var(--border);
-      border-radius: 24px;
+      border-radius: 20px;
       background: rgba(245, 158, 11, 0.16);
-      box-shadow: 8px 8px 0 var(--ink);
-      font-size: 18px;
-      line-height: 1.5;
+      box-shadow: 6px 6px 0 var(--ink);
+      font-size: 14px;
+      line-height: 1.45;
     }
 
     .note strong {
@@ -636,45 +653,51 @@
 
     .stat {
       text-align: center;
-      padding: 30px 20px;
+      padding: 20px 14px;
+      min-height: 180px;
     }
 
     .num {
       display: block;
       font-family: "Fredoka", sans-serif;
-      font-size: 58px;
+      font-size: 44px;
       line-height: 1;
       font-weight: 700;
       color: var(--accent);
-      margin-bottom: 10px;
-      text-shadow: 4px 4px 0 rgba(23, 19, 31, 0.12);
+      margin-bottom: 8px;
+      text-shadow: 3px 3px 0 rgba(23, 19, 31, 0.12);
       font-variant-numeric: tabular-nums;
     }
 
     .stack {
       display: grid;
-      gap: 18px;
+      gap: 12px;
     }
 
     .check-layout {
       display: grid;
       grid-template-columns: 1.15fr 0.85fr;
-      gap: 44px;
+      gap: 34px;
       align-items: center;
       height: 100%;
     }
 
+    .checks {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
     .check {
       display: flex;
-      gap: 14px;
+      gap: 10px;
       align-items: flex-start;
-      padding: 11px 14px;
+      padding: 8px 10px;
       border: var(--border);
-      border-radius: 20px;
+      border-radius: 16px;
       background: var(--white);
-      box-shadow: 6px 6px 0 var(--ink);
-      margin-bottom: 10px;
-      font-size: 17px;
+      box-shadow: 5px 5px 0 var(--ink);
+      font-size: 14px;
       line-height: 1.35;
       cursor: pointer;
       transition: transform 0.16s ease, box-shadow 0.16s ease;
@@ -682,45 +705,46 @@
 
     .check:hover {
       transform: translate(-2px, -2px);
-      box-shadow: 8px 8px 0 var(--ink);
+      box-shadow: 7px 7px 0 var(--ink);
     }
 
     .check input {
-      width: 24px;
-      height: 24px;
+      width: 18px;
+      height: 18px;
       margin-top: 1px;
       accent-color: var(--mint);
       flex: 0 0 auto;
     }
 
     .ring-card {
-      padding: 34px;
+      padding: 20px;
       text-align: center;
+      min-height: auto;
     }
 
     .ring-wrap {
       position: relative;
-      width: 260px;
-      height: 260px;
-      margin: 18px auto 0;
+      width: 220px;
+      height: 220px;
+      margin: 12px auto 0;
     }
 
     .ring {
-      width: 260px;
-      height: 260px;
+      width: 220px;
+      height: 220px;
       transform: rotate(-90deg);
     }
 
     .ring-bg {
       fill: none;
       stroke: rgba(23, 19, 31, 0.14);
-      stroke-width: 14;
+      stroke-width: 12;
     }
 
     .ring-fg {
       fill: none;
       stroke: url(#ringGrad);
-      stroke-width: 14;
+      stroke-width: 12;
       stroke-linecap: round;
       transition: stroke-dashoffset 0.55s ease;
     }
@@ -735,7 +759,7 @@
 
     #ringText {
       font-family: "Fredoka", sans-serif;
-      font-size: 46px;
+      font-size: 38px;
       font-weight: 700;
       color: var(--mint);
       line-height: 1;
@@ -744,14 +768,14 @@
     .final-row {
       display: grid;
       grid-template-columns: 0.9fr 1.1fr;
-      gap: 40px;
+      gap: 28px;
       align-items: center;
-      margin-top: 28px;
+      margin-top: 16px;
     }
 
     .thanks {
       font-family: "Fredoka", sans-serif;
-      font-size: 64px;
+      font-size: 52px;
       line-height: 1;
       margin: 0;
     }
@@ -759,21 +783,21 @@
     .toast {
       position: absolute;
       left: 50%;
-      bottom: 34px;
-      transform: translate(-50%, 20px);
+      bottom: 26px;
+      transform: translate(-50%, 18px);
       z-index: 60;
-      padding: 16px 22px;
+      padding: 12px 18px;
       border: var(--border);
       border-radius: 999px;
       background: var(--ink);
       color: var(--paper);
-      box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.25);
-      font-size: 18px;
-      line-height: 1.4;
+      box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.22);
+      font-size: 15px;
+      line-height: 1.35;
       opacity: 0;
       pointer-events: none;
       transition: 0.3s ease;
-      max-width: 980px;
+      max-width: 900px;
       text-align: center;
     }
 
@@ -784,25 +808,25 @@
 
     .hint {
       position: absolute;
-      left: 34px;
-      bottom: 24px;
+      left: 28px;
+      bottom: 18px;
       z-index: 25;
-      font-size: 16px;
+      font-size: 14px;
       color: #6b6375;
     }
 
     .dots {
       position: absolute;
-      right: 34px;
-      bottom: 26px;
+      right: 28px;
+      bottom: 20px;
       display: flex;
-      gap: 9px;
+      gap: 8px;
       z-index: 25;
     }
 
     .dot-btn {
-      width: 15px;
-      height: 15px;
+      width: 13px;
+      height: 13px;
       border: 3px solid var(--ink);
       border-radius: 50%;
       background: #fff;
@@ -820,8 +844,8 @@
     .confetti {
       position: absolute;
       top: -40px;
-      width: 16px;
-      height: 22px;
+      width: 14px;
+      height: 20px;
       border: 3px solid var(--ink);
       border-radius: 5px;
       box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.18);
@@ -832,16 +856,16 @@
 
     @keyframes float {
       0%, 100% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-18px) rotate(1.5deg); }
+      50% { transform: translateY(-14px) rotate(1.2deg); }
     }
 
     @keyframes popIn {
-      from { opacity: 0; transform: translateY(10px) scale(0.98); }
+      from { opacity: 0; transform: translateY(8px) scale(0.98); }
       to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     @keyframes fall {
-      to { transform: translateY(1000px) rotate(720deg); opacity: 0; }
+      to { transform: translateY(980px) rotate(720deg); opacity: 0; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -854,11 +878,10 @@
   </style>
 </head>
 <body>
-  <!-- SVG DEFS + ICONS -->
   <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden;">
     <defs>
       <filter id="hardShadow" x="-30%" y="-30%" width="180%" height="180%">
-        <feDropShadow dx="10" dy="10" stdDeviation="0" flood-color="#17131f" flood-opacity="1" />
+        <feDropShadow dx="8" dy="8" stdDeviation="0" flood-color="#17131f" flood-opacity="1" />
       </filter>
     </defs>
 
@@ -1013,21 +1036,26 @@
       <div class="canvas" id="canvas">
         <div class="paper"></div>
 
-        <!-- PARALLAX DECOR LAYER 1 -->
-        <div class="layer" style="--depth: 22;">
-          <div class="shape circle" style="width:260px;height:260px;background:var(--violet);left:-50px;top:120px;"></div>
-          <div class="shape square" style="width:170px;height:170px;background:var(--amber);right:90px;top:70px;transform:rotate(14deg);"></div>
-          <div class="shape pill" style="width:230px;height:90px;background:var(--pink);left:520px;bottom:40px;transform:rotate(-8deg);"></div>
-          <svg class="shape" style="width:150px;height:130px;right:360px;bottom:120px;border:none;box-shadow:none;" viewBox="0 0 100 100">
-            <polygon points="50,6 96,94 4,94" fill="var(--mint)" stroke="var(--ink)" stroke-width="7" stroke-linejoin="round" filter="url(#hardShadow)" />
-          </svg>
-        </div>
+        <div class="parallax-bg" aria-hidden="true">
+          <div class="p-layer" style="--tx:-82px; --ty:54px;">
+            <div class="shape circle" style="width:250px;height:250px;background:var(--violet);left:-40px;top:110px;"></div>
+            <div class="shape square" style="width:160px;height:160px;background:var(--amber);right:80px;top:58px;transform:rotate(14deg);"></div>
+            <div class="shape pill" style="width:220px;height:82px;background:var(--pink);left:500px;bottom:34px;transform:rotate(-8deg);"></div>
+            <svg class="shape" style="width:140px;height:120px;right:340px;bottom:110px;border:none;box-shadow:none;" viewBox="0 0 100 100">
+              <polygon points="50,6 96,94 4,94" fill="var(--mint)" stroke="var(--ink)" stroke-width="7" stroke-linejoin="round" filter="url(#hardShadow)" />
+            </svg>
+          </div>
 
-        <!-- PARALLAX DECOR LAYER 2 -->
-        <div class="layer" style="--depth: 52;">
-          <div class="shape circle" style="width:110px;height:110px;background:var(--mint);left:260px;top:560px;"></div>
-          <div class="shape square" style="width:90px;height:90px;background:var(--violet);right:220px;top:430px;transform:rotate(-12deg);"></div>
-          <div class="shape circle" style="width:140px;height:140px;background:transparent;border:16px solid var(--pink);left:1160px;top:120px;box-shadow:10px 10px 0 var(--ink);"></div>
+          <div class="p-layer" style="--tx:56px; --ty:-42px;">
+            <div class="shape circle" style="width:100px;height:100px;background:var(--mint);left:245px;top:545px;"></div>
+            <div class="shape square" style="width:84px;height:84px;background:var(--violet);right:210px;top:410px;transform:rotate(-12deg);"></div>
+            <div class="shape circle" style="width:130px;height:130px;background:transparent;border:14px solid var(--pink);left:1150px;top:110px;box-shadow:9px 9px 0 var(--ink);"></div>
+          </div>
+
+          <div class="p-layer" style="--tx:24px; --ty:18px;">
+            <div class="shape circle" style="width:58px;height:58px;background:var(--amber);left:760px;top:120px;"></div>
+            <div class="shape square" style="width:52px;height:52px;background:var(--mint);right:520px;bottom:120px;transform:rotate(18deg);"></div>
+          </div>
         </div>
 
         <header class="topbar">
@@ -1049,9 +1077,8 @@
         </header>
 
         <main class="deck">
-          <!-- SLIDE 1: INTRO -->
           <section class="slide active" data-title="Pembuka" aria-hidden="false">
-            <div class="wrap hero">
+            <div class="slide-inner hero" style="--sx:14px; --sy:10px;">
               <div>
                 <span class="kicker">Playful Geometric • 16:9</span>
                 <h1>
@@ -1126,25 +1153,24 @@
                   </g>
                 </svg>
 
-                <div class="chip" style="left:-10px; top:60px; --accent:var(--pink); animation: float 5.2s ease-in-out infinite;">
+                <div class="chip" style="left:-6px; top:58px; --accent:var(--pink); animation: float 5.2s ease-in-out infinite;">
                   <span class="dot"></span><span>Infeksius</span>
                 </div>
-                <div class="chip" style="right:-20px; top:130px; --accent:var(--amber); animation: float 5.8s ease-in-out infinite 0.5s;">
+                <div class="chip" style="right:-12px; top:126px; --accent:var(--amber); animation: float 5.8s ease-in-out infinite 0.5s;">
                   <span class="dot"></span><span>Kimia</span>
                 </div>
-                <div class="chip" style="left:10px; bottom:120px; --accent:var(--violet); animation: float 6.2s ease-in-out infinite 1s;">
+                <div class="chip" style="left:10px; bottom:116px; --accent:var(--violet); animation: float 6.2s ease-in-out infinite 1s;">
                   <span class="dot"></span><span>Tajam</span>
                 </div>
-                <div class="chip" style="right:30px; bottom:50px; --accent:var(--mint); animation: float 5.4s ease-in-out infinite 1.5s;">
+                <div class="chip" style="right:24px; bottom:48px; --accent:var(--mint); animation: float 5.4s ease-in-out infinite 1.5s;">
                   <span class="dot"></span><span>Farmasi</span>
                 </div>
               </div>
             </div>
           </section>
 
-          <!-- SLIDE 2: AGENDA -->
           <section class="slide" data-title="Agenda" aria-hidden="true">
-            <div class="wrap">
+            <div class="slide-inner" style="--sx:10px; --sy:7px;">
               <div class="slide-head">
                 <div>
                   <span class="kicker">Agenda</span>
@@ -1166,13 +1192,12 @@
             </div>
           </section>
 
-          <!-- SLIDE 3: DEFINISI -->
           <section class="slide" data-title="Definisi" aria-hidden="true">
-            <div class="wrap split">
+            <div class="slide-inner split" style="--sx:12px; --sy:8px;">
               <div>
                 <span class="kicker">Dasar Pemahaman</span>
                 <h2>Apa itu Limbah B3 RS?</h2>
-                <p class="lead" style="margin-top:14px;">
+                <p class="lead" style="margin-top:10px;">
                   Limbah B3 adalah limbah yang mengandung atau terkontaminasi bahan berbahaya
                   dan/atau beracun yang karena sifat, konsentrasi, dan/atau jumlahnya dapat
                   mencemarkan lingkungan, membahayakan kesehatan manusia, atau menimbulkan penyakit.
@@ -1197,9 +1222,8 @@
             </div>
           </section>
 
-          <!-- SLIDE 4: SUMBER -->
           <section class="slide" data-title="Sumber" aria-hidden="true">
-            <div class="wrap">
+            <div class="slide-inner" style="--sx:10px; --sy:7px;">
               <div class="slide-head">
                 <div>
                   <span class="kicker">Sumber Timbulan</span>
@@ -1219,9 +1243,8 @@
             </div>
           </section>
 
-          <!-- SLIDE 5: KARAKTERISTIK -->
           <section class="slide" data-title="Karakteristik" aria-hidden="true">
-            <div class="wrap">
+            <div class="slide-inner" style="--sx:10px; --sy:7px;">
               <div class="slide-head">
                 <div>
                   <span class="kicker">Sifat Bahaya</span>
@@ -1241,9 +1264,8 @@
             </div>
           </section>
 
-          <!-- SLIDE 6: DAMPAK -->
           <section class="slide" data-title="Dampak" aria-hidden="true">
-            <div class="wrap">
+            <div class="slide-inner" style="--sx:10px; --sy:7px;">
               <div class="slide-head">
                 <div>
                   <span class="kicker">Mengapa Penting?</span>
@@ -1258,16 +1280,15 @@
                 <div class="card violet"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#scale"></use></svg></div><h3>Hukum & Reputasi</h3><p>Sanksi administratif, denda, gangguan operasional, menurunnya kepercayaan publik.</p></div>
               </div>
 
-              <div class="note" style="margin-top:28px;">
+              <div class="note" style="margin-top:18px;">
                 <strong>Pesan Kunci:</strong> Pengelolaan limbah B3 bukan hanya urusan IPSRS atau sanitasi,
                 tetapi tanggung jawab bersama: dokter, perawat, laboran, farmasi, petugas kebersihan, hingga manajemen.
               </div>
             </div>
           </section>
 
-          <!-- SLIDE 7: DATA -->
           <section class="slide" data-title="Data" aria-hidden="true">
-            <div class="wrap">
+            <div class="slide-inner" style="--sx:10px; --sy:7px;">
               <div class="slide-head">
                 <div>
                   <span class="kicker">Data & Gambaran Umum</span>
@@ -1290,9 +1311,8 @@
             </div>
           </section>
 
-          <!-- SLIDE 8: ALUR -->
           <section class="slide" data-title="Alur" aria-hidden="true">
-            <div class="wrap">
+            <div class="slide-inner" style="--sx:10px; --sy:7px;">
               <div class="slide-head">
                 <div>
                   <span class="kicker">Sistem Pengelolaan</span>
@@ -1312,9 +1332,8 @@
             </div>
           </section>
 
-          <!-- SLIDE 9: PEMILAHAN -->
           <section class="slide" data-title="Pemilahan" aria-hidden="true">
-            <div class="wrap">
+            <div class="slide-inner" style="--sx:10px; --sy:7px;">
               <div class="slide-head">
                 <div>
                   <span class="kicker">Praktik Lapangan</span>
@@ -1334,13 +1353,12 @@
             </div>
           </section>
 
-          <!-- SLIDE 10: APD & KASUS -->
           <section class="slide" data-title="APD & Kasus" aria-hidden="true">
-            <div class="wrap split">
+            <div class="slide-inner split" style="--sx:12px; --sy:8px;">
               <div>
                 <span class="kicker">Perlindungan Petugas</span>
                 <h2>APD Minimum</h2>
-                <div class="grid grid-2" style="margin-top:22px;">
+                <div class="grid grid-2" style="margin-top:14px;">
                   <div class="card violet"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#glove"></use></svg></div><h3>Sarung Tangan</h3><p>Tahan tusuk, ganti jika robek/terkontaminasi.</p></div>
                   <div class="card mint"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#mask"></use></svg></div><h3>Masker</h3><p>Sesuai potensi aerosol, debu, atau uap kimia.</p></div>
                   <div class="card amber"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#gown"></use></svg></div><h3>Gown/Apron</h3><p>Mencegah percikan menempel pada pakaian kerja.</p></div>
@@ -1351,7 +1369,7 @@
               <div>
                 <span class="kicker">Tanggap Insiden</span>
                 <h2>Skenario Cepat</h2>
-                <div class="stack" style="margin-top:22px;">
+                <div class="stack" style="margin-top:14px;">
                   <div class="card pink"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#biohazard"></use></svg></div><h3>Infeksius</h3><p>Amankan area, APD lengkap, serap + desinfektan, lapor.</p></div>
                   <div class="card amber"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#flask"></use></svg></div><h3>Kimia</h3><p>Cek label/SDS, ventilasi, absorbent netral, jangan campur.</p></div>
                   <div class="card violet"><div class="top-accent"></div><div class="icon"><svg class="svg-icon"><use href="#box"></use></svg></div><h3>Benda Tajam</h3><p>Jangan pungut tangan kosong, pakai alat bantu, ke safety box.</p></div>
@@ -1360,15 +1378,14 @@
             </div>
           </section>
 
-          <!-- SLIDE 11: CHECKLIST -->
           <section class="slide" data-title="Checklist" aria-hidden="true">
-            <div class="wrap check-layout">
+            <div class="slide-inner check-layout" style="--sx:10px; --sy:7px;">
               <div>
                 <span class="kicker">Evaluasi Mandiri</span>
                 <h2>Checklist Kepatuhan</h2>
-                <p class="muted" style="margin-top:8px;">Centang item yang sudah berjalan di unit Anda.</p>
+                <p class="muted" style="margin-top:6px;">Centang item yang sudah berjalan di unit Anda.</p>
 
-                <div id="auditChecklist" style="margin-top:20px;">
+                <div id="auditChecklist" class="checks">
                   <label class="check"><input type="checkbox" /> <span>SOP pengelolaan limbah B3 tersedia dan mudah diakses.</span></label>
                   <label class="check"><input type="checkbox" /> <span>Petugas medis dan nonmedis mendapat pelatihan pemilahan limbah.</span></label>
                   <label class="check"><input type="checkbox" /> <span>Wadah limbah sesuai jenis: infeksius, tajam, domestik, kimia, farmasi.</span></label>
@@ -1384,7 +1401,7 @@
 
               <div class="card mint ring-card">
                 <div class="top-accent"></div>
-                <div class="icon" style="margin:0 auto 10px;"><svg class="svg-icon"><use href="#clipboard"></use></svg></div>
+                <div class="icon" style="margin:0 auto 8px;"><svg class="svg-icon"><use href="#clipboard"></use></svg></div>
                 <h3>Skor Kepatuhan</h3>
                 <div class="ring-wrap">
                   <svg class="ring" viewBox="0 0 200 200" aria-hidden="true">
@@ -1394,8 +1411,8 @@
                         <stop offset="100%" stop-color="#8b5cf6" />
                       </linearGradient>
                     </defs>
-                    <circle class="ring-bg" cx="100" cy="100" r="85"></circle>
-                    <circle id="ringFg" class="ring-fg" cx="100" cy="100" r="85"></circle>
+                    <circle class="ring-bg" cx="100" cy="100" r="82"></circle>
+                    <circle id="ringFg" class="ring-fg" cx="100" cy="100" r="82"></circle>
                   </svg>
                   <div class="ring-center">
                     <div>
@@ -1404,7 +1421,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="note" style="margin-top:22px;text-align:left;">
+                <div class="note" style="margin-top:14px;text-align:left;">
                   <strong>Cara Pakai:</strong> Gunakan checklist ini sebagai template audit internal.
                   Isi persen sesuai hasil penilaian, lalu buat tindak lanjut untuk item yang belum centang.
                 </div>
@@ -1412,9 +1429,8 @@
             </div>
           </section>
 
-          <!-- SLIDE 12: PENUTUP -->
           <section class="slide" data-title="Penutup" aria-hidden="true">
-            <div class="wrap">
+            <div class="slide-inner" style="--sx:10px; --sy:7px;">
               <div class="slide-head">
                 <div>
                   <span class="kicker">Penutup</span>
@@ -1432,7 +1448,7 @@
               <div class="final-row">
                 <div>
                   <p class="thanks">Terima kasih</p>
-                  <p class="muted" style="margin-top:10px;">Silakan ganti ilustrasi dengan foto asli RS Anda agar lebih kontekstual.</p>
+                  <p class="muted" style="margin-top:8px;">Silakan ganti ilustrasi dengan foto asli RS Anda agar lebih kontekstual.</p>
                 </div>
                 <div class="note" style="margin-top:0;">
                   <strong>Ajakan Aksi:</strong> Mulai dari satu unit: pilih 3 item checklist yang paling mungkin diperbaiki minggu ini.
@@ -1476,37 +1492,49 @@
     fitCanvas();
     window.addEventListener("resize", fitCanvas);
 
-    // Parallax
+    let mx = 0;
+    let my = 0;
     let targetX = 0;
     let targetY = 0;
-    let currentX = 0;
-    let currentY = 0;
+    let lastMove = 0;
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    stage.addEventListener("mousemove", (e) => {
+    function clamp(value, min, max) {
+      return Math.max(min, Math.min(max, value));
+    }
+
+    stage.addEventListener("pointermove", (e) => {
       const rect = stage.getBoundingClientRect();
       targetX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
       targetY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+      lastMove = performance.now();
     });
 
-    stage.addEventListener("mouseleave", () => {
+    stage.addEventListener("pointerleave", () => {
       targetX = 0;
       targetY = 0;
     });
 
-    function animateParallax() {
-      currentX += (targetX - currentX) * 0.08;
-      currentY += (targetY - currentY) * 0.08;
-      canvas.style.setProperty("--px", currentX.toFixed(4));
-      canvas.style.setProperty("--py", currentY.toFixed(4));
+    function animateParallax(now) {
+      const autoX = Math.sin(now / 2400) * 0.42;
+      const autoY = Math.cos(now / 3000) * 0.34;
+
+      const blendedX = clamp(targetX + autoX, -1.35, 1.35);
+      const blendedY = clamp(targetY + autoY, -1.35, 1.35);
+
+      mx += (blendedX - mx) * 0.075;
+      my += (blendedY - my) * 0.075;
+
+      canvas.style.setProperty("--mx", mx.toFixed(4));
+      canvas.style.setProperty("--my", my.toFixed(4));
+
       requestAnimationFrame(animateParallax);
     }
 
     if (!reduceMotion) {
-      animateParallax();
+      requestAnimationFrame(animateParallax);
     }
 
-    // Dots
     slides.forEach((_, i) => {
       const btn = document.createElement("button");
       btn.className = "dot-btn" + (i === 0 ? " active" : "");
@@ -1586,7 +1614,6 @@
       if (e.key === "End") goTo(slides.length - 1);
     });
 
-    // Swipe
     let startX = null;
     stage.addEventListener("touchstart", (e) => {
       startX = e.touches[0].clientX;
@@ -1602,7 +1629,6 @@
       startX = null;
     });
 
-    // Fullscreen
     btnFull.addEventListener("click", async () => {
       try {
         if (!document.fullscreenElement) {
@@ -1616,7 +1642,6 @@
       }
     });
 
-    // Intro quiz
     const choices = document.querySelectorAll(".choice");
     const introFeedback = document.getElementById("introFeedback");
 
@@ -1655,11 +1680,10 @@
       showToast("Coba lempar ke audiens: “Kapan terakhir kali kita melihat tumpahan atau pemilahan yang keliru di RS ini?”");
     });
 
-    // Checklist ring
     const checks = document.querySelectorAll("#auditChecklist input");
     const ringFg = document.getElementById("ringFg");
     const ringText = document.getElementById("ringText");
-    const circumference = 2 * Math.PI * 85;
+    const circumference = 2 * Math.PI * 82;
 
     ringFg.style.strokeDasharray = circumference;
     ringFg.style.strokeDashoffset = circumference;
@@ -1675,7 +1699,6 @@
     checks.forEach((c) => c.addEventListener("change", updateAudit));
     updateAudit();
 
-    // Confetti
     function celebrate() {
       const colors = ["#8b5cf6", "#ec4899", "#f59e0b", "#34d399", "#ffffff"];
       for (let i = 0; i < 90; i++) {
@@ -1700,7 +1723,6 @@
       showToast("Silakan berbagi: bagian mana dari alur limbah yang paling sering terlewat di unit Anda?");
     });
 
-    // Init
     goTo(0);
   </script>
 </body>
