@@ -28,16 +28,10 @@
       --radius: 26px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
+    html, body {
+      margin: 0; padding: 0; width: 100%; height: 100%;
       overflow: hidden;
       background:
         radial-gradient(circle at 12% 18%, rgba(139, 92, 246, 0.24), transparent 28%),
@@ -47,13 +41,7 @@
       color: var(--ink);
     }
 
-    .frame {
-      width: 100%;
-      height: 100%;
-      display: grid;
-      place-items: center;
-      padding: 1.1vmin;
-    }
+    .frame { width: 100%; height: 100%; display: grid; place-items: center; padding: 1.1vmin; }
 
     .stage {
       position: relative;
@@ -67,1306 +55,237 @@
     }
 
     .canvas {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 1600px;
-      height: 900px;
+      position: absolute; left: 0; top: 0;
+      width: 1600px; height: 900px;
       transform-origin: top left;
-      --mx: 0;
-      --my: 0;
+      --mx: 0; --my: 0;
     }
 
     .paper {
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       background-image:
         radial-gradient(circle, rgba(23, 19, 31, 0.075) 1.1px, transparent 1.1px),
         linear-gradient(135deg, rgba(139, 92, 246, 0.055), transparent 38%, rgba(52, 211, 153, 0.065));
       background-size: 24px 24px, cover;
     }
 
-    .scene {
-      position: absolute;
-      inset: -180px;
-      pointer-events: none;
-      z-index: 1;
-    }
+    .scene { position: absolute; inset: -180px; pointer-events: none; z-index: 1; }
+    .layer { position: absolute; inset: 0; will-change: transform; }
+    .layer.back  { transform: translate3d(calc(var(--mx) * -72px), calc(var(--my) * -46px), 0) scale(1.045); }
+    .layer.mid   { transform: translate3d(calc(var(--mx) * 42px), calc(var(--my) * 28px), 0) rotate(calc(var(--mx) * 0.75deg)) scale(1.015); }
+    .layer.front { transform: translate3d(calc(var(--mx) * 92px), calc(var(--my) * 58px), 0) rotate(calc(var(--mx) * -0.45deg)); }
 
-    .layer {
-      position: absolute;
-      inset: 0;
-      will-change: transform;
-    }
-
-    .layer.back {
-      transform:
-        translate3d(calc(var(--mx) * -72px), calc(var(--my) * -46px), 0)
-        scale(1.045);
-    }
-
-    .layer.mid {
-      transform:
-        translate3d(calc(var(--mx) * 42px), calc(var(--my) * 28px), 0)
-        rotate(calc(var(--mx) * 0.75deg))
-        scale(1.015);
-    }
-
-    .layer.front {
-      transform:
-        translate3d(calc(var(--mx) * 92px), calc(var(--my) * 58px), 0)
-        rotate(calc(var(--mx) * -0.45deg));
-    }
-
-    .shape {
-      position: absolute;
-      border: var(--border);
-      box-shadow: var(--shadow);
-    }
-
+    .shape { position: absolute; border: var(--border); box-shadow: var(--shadow); }
     .circle { border-radius: 50%; }
     .square { border-radius: 26px; }
     .pill { border-radius: 999px; }
 
-    .overlay {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 45;
-    }
+    .overlay { position: absolute; inset: 0; pointer-events: none; z-index: 45; }
+    .vignette { position: absolute; inset: 0; box-shadow: inset 0 0 170px rgba(23,19,31,0.20), inset 0 0 60px rgba(23,19,31,0.10); }
+    .sweep-wrap { position: absolute; inset: -30%; transform: translate3d(calc(var(--mx) * -1.6%), calc(var(--my) * -1%), 0); opacity: 0.18; mix-blend-mode: screen; }
+    .sweep { width: 100%; height: 100%; background: linear-gradient(115deg, transparent 0 39%, rgba(255,255,255,0.28) 46%, transparent 53% 100%); animation: sweepMove 18s linear infinite; }
+    .grain { position: absolute; inset: 0; opacity: 0.035; background-image: radial-gradient(circle, #17131f 1px, transparent 1px); background-size: 3px 3px; animation: grainMove 0.45s steps(2) infinite; }
 
-    .vignette {
-      position: absolute;
-      inset: 0;
-      box-shadow:
-        inset 0 0 170px rgba(23, 19, 31, 0.20),
-        inset 0 0 60px rgba(23, 19, 31, 0.10);
-    }
+    @keyframes sweepMove { from { transform: translate3d(-26%,0,0) rotate(8deg);} to { transform: translate3d(26%,0,0) rotate(8deg);} }
+    @keyframes grainMove { 0%{transform:translate(0,0)}25%{transform:translate(-1px,1px)}50%{transform:translate(1px,-1px)}75%{transform:translate(-1px,-1px)}100%{transform:translate(1px,1px)} }
 
-    .sweep-wrap {
-      position: absolute;
-      inset: -30%;
-      transform: translate3d(calc(var(--mx) * -1.6%), calc(var(--my) * -1%), 0);
-      opacity: 0.18;
-      mix-blend-mode: screen;
-    }
+    .topbar { position: absolute; z-index: 50; left:0; right:0; top:0; height:70px; display:flex; align-items:center; gap:18px; padding:0 28px; border-bottom: var(--border); background: rgba(255,248,237,0.9); backdrop-filter: blur(12px); }
+    .brand { display:flex; align-items:center; gap:12px; font-family:"Fredoka",sans-serif; font-weight:700; font-size:21px; white-space:nowrap; }
+    .brand-badge { width:44px; height:44px; border:var(--border); border-radius:16px; background:var(--violet); box-shadow:var(--shadow-sm); display:grid; place-items:center; color:#fff; font-size:22px; }
+    .progress { flex:1; height:18px; border:var(--border); border-radius:999px; background:#fff; box-shadow:5px 5px 0 var(--ink); overflow:hidden; min-width:120px; }
+    #bar { width:0%; height:100%; background: repeating-linear-gradient(90deg, var(--pink) 0 16px, var(--amber) 16px 32px, var(--mint) 32px 48px, var(--violet) 48px 64px); transition: width 0.45s ease; }
+    .nav-btn, .icon-btn { width:44px; height:44px; border:var(--border); border-radius:15px; background:#fff; box-shadow:var(--shadow-sm); display:grid; place-items:center; cursor:pointer; font-family:"Fredoka",sans-serif; font-size:19px; font-weight:700; transition: transform 0.16s ease, box-shadow 0.16s ease; color:var(--ink); }
+    .nav-btn:hover, .icon-btn:hover { transform: translate(-2px,-2px); box-shadow:8px 8px 0 var(--ink); }
+    .nav-btn:active, .icon-btn:active { transform: translate(4px,4px); box-shadow:2px 2px 0 var(--ink); }
+    .counter { min-width:88px; text-align:center; font-family:"Fredoka",sans-serif; font-weight:700; font-size:16px; border:var(--border); border-radius:999px; padding:8px 12px; background:var(--mint); box-shadow:5px 5px 0 var(--ink); }
 
-    .sweep {
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(
-        115deg,
-        transparent 0 39%,
-        rgba(255, 255, 255, 0.28) 46%,
-        transparent 53% 100%
-      );
-      animation: sweepMove 18s linear infinite;
-    }
+    .deck { position:absolute; inset:70px 0 0 0; z-index:30; perspective:1800px; }
+    .slide { position:absolute; inset:0; padding:30px 54px 42px; opacity:0; visibility:hidden; pointer-events:none; transform: translate3d(var(--tx,56px),18px,0) scale(0.985); filter: blur(3px); transition: opacity 0.55s ease, transform 0.78s cubic-bezier(0.2,0.8,0.2,1), filter 0.55s ease, visibility 0.55s ease; overflow:hidden; }
+    .slide.active { opacity:1; visibility:visible; pointer-events:auto; transform:none; filter:none; }
 
-    .grain {
-      position: absolute;
-      inset: 0;
-      opacity: 0.035;
-      background-image: radial-gradient(circle, #17131f 1px, transparent 1px);
-      background-size: 3px 3px;
-      animation: grainMove 0.45s steps(2) infinite;
-    }
+    .slide-inner { height:100%; display:flex; flex-direction:column; gap:14px; transform-style:preserve-3d; transform: translate3d(calc(var(--mx)*12px),calc(var(--my)*8px),0) rotateY(calc(var(--mx)*0.28deg)) rotateX(calc(var(--my)*-0.18deg)); will-change:transform; }
+    .slide-head { flex:0 0 auto; display:flex; justify-content:space-between; align-items:end; gap:24px; }
+    .slide-head p { max-width:390px; font-size:15px; color:var(--muted); margin:0; line-height:1.45; }
 
-    @keyframes sweepMove {
-      from { transform: translate3d(-26%, 0, 0) rotate(8deg); }
-      to { transform: translate3d(26%, 0, 0) rotate(8deg); }
-    }
+    .body { flex:1 1 auto; min-height:0; display:grid; gap:14px; }
+    .body.stack { grid-template-rows: minmax(0,1fr) auto; }
+    .body.closing { grid-template-rows: minmax(0,1fr) auto auto; }
+    .body.rows-photo { grid-template-rows: minmax(0,1.25fr) minmax(0,0.75fr); }
+    .body.hero, .body.split { grid-template-columns: 0.98fr 1.02fr; align-items:center; }
+    .body.check-layout { grid-template-columns: 1.12fr 0.88fr; align-items:center; }
 
-    @keyframes grainMove {
-      0% { transform: translate(0, 0); }
-      25% { transform: translate(-1px, 1px); }
-      50% { transform: translate(1px, -1px); }
-      75% { transform: translate(-1px, -1px); }
-      100% { transform: translate(1px, 1px); }
-    }
+    .grid { display:grid; gap:14px; min-height:0; }
+    .grid.fill { height:100%; grid-auto-rows: minmax(0,1fr); }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0,1fr)); }
 
-    .topbar {
-      position: absolute;
-      z-index: 50;
-      left: 0;
-      right: 0;
-      top: 0;
-      height: 70px;
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      padding: 0 28px;
-      border-bottom: var(--border);
-      background: rgba(255, 248, 237, 0.9);
-      backdrop-filter: blur(12px);
-    }
+    .kicker { display:inline-block; font-family:"Fredoka",sans-serif; font-size:14px; letter-spacing:0.05em; text-transform:uppercase; padding:7px 12px; border:var(--border); border-radius:999px; background:var(--amber); box-shadow:5px 5px 0 var(--ink); margin-bottom:10px; width:fit-content; }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-family: "Fredoka", sans-serif;
-      font-weight: 700;
-      font-size: 21px;
-      white-space: nowrap;
-    }
-
-    .brand-badge {
-      width: 44px;
-      height: 44px;
-      border: var(--border);
-      border-radius: 16px;
-      background: var(--violet);
-      box-shadow: var(--shadow-sm);
-      display: grid;
-      place-items: center;
-      color: #fff;
-      font-size: 22px;
-    }
-
-    .progress {
-      flex: 1;
-      height: 18px;
-      border: var(--border);
-      border-radius: 999px;
-      background: #fff;
-      box-shadow: 5px 5px 0 var(--ink);
-      overflow: hidden;
-      min-width: 120px;
-    }
-
-    #bar {
-      width: 0%;
-      height: 100%;
-      background: repeating-linear-gradient(
-        90deg,
-        var(--pink) 0 16px,
-        var(--amber) 16px 32px,
-        var(--mint) 32px 48px,
-        var(--violet) 48px 64px
-      );
-      transition: width 0.45s ease;
-    }
-
-    .nav-btn,
-    .icon-btn {
-      width: 44px;
-      height: 44px;
-      border: var(--border);
-      border-radius: 15px;
-      background: #fff;
-      box-shadow: var(--shadow-sm);
-      display: grid;
-      place-items: center;
-      cursor: pointer;
-      font-family: "Fredoka", sans-serif;
-      font-size: 19px;
-      font-weight: 700;
-      transition: transform 0.16s ease, box-shadow 0.16s ease;
-      color: var(--ink);
-    }
-
-    .nav-btn:hover,
-    .icon-btn:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: 8px 8px 0 var(--ink);
-    }
-
-    .nav-btn:active,
-    .icon-btn:active {
-      transform: translate(4px, 4px);
-      box-shadow: 2px 2px 0 var(--ink);
-    }
-
-    .counter {
-      min-width: 88px;
-      text-align: center;
-      font-family: "Fredoka", sans-serif;
-      font-weight: 700;
-      font-size: 16px;
-      border: var(--border);
-      border-radius: 999px;
-      padding: 8px 12px;
-      background: var(--mint);
-      box-shadow: 5px 5px 0 var(--ink);
-    }
-
-    .deck {
-      position: absolute;
-      inset: 70px 0 0 0;
-      z-index: 30;
-      perspective: 1800px;
-    }
-
-    .slide {
-      position: absolute;
-      inset: 0;
-      padding: 30px 54px 42px;
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-      transform: translate3d(var(--tx, 56px), 18px, 0) scale(0.985);
-      filter: blur(3px);
-      transition:
-        opacity 0.55s ease,
-        transform 0.78s cubic-bezier(0.2, 0.8, 0.2, 1),
-        filter 0.55s ease,
-        visibility 0.55s ease;
-      overflow: hidden;
-    }
-
-    .slide.active {
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
-      transform: none;
-      filter: none;
-    }
-
-    .slide-inner {
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      transform-style: preserve-3d;
-      transform:
-        translate3d(calc(var(--mx) * 12px), calc(var(--my) * 8px), 0)
-        rotateY(calc(var(--mx) * 0.28deg))
-        rotateX(calc(var(--my) * -0.18deg));
-      will-change: transform;
-    }
-
-    .slide-head {
-      flex: 0 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 24px;
-    }
-
-    .slide-head p {
-      max-width: 390px;
-      font-size: 15px;
-      color: var(--muted);
-      margin: 0;
-      line-height: 1.45;
-    }
-
-    .body {
-      flex: 1 1 auto;
-      min-height: 0;
-      display: grid;
-      gap: 14px;
-    }
-
-    .body.stack {
-      grid-template-rows: minmax(0, 1fr) auto;
-    }
-
-    .body.closing {
-      grid-template-rows: minmax(0, 1fr) auto auto;
-    }
-
-    .body.rows-photo {
-      grid-template-rows: minmax(0, 1.25fr) minmax(0, 0.75fr);
-    }
-
-    .body.hero,
-    .body.split {
-      grid-template-columns: 0.98fr 1.02fr;
-      align-items: center;
-    }
-
-    .body.check-layout {
-      grid-template-columns: 1.12fr 0.88fr;
-      align-items: center;
-    }
-
-    .grid {
-      display: grid;
-      gap: 14px;
-      min-height: 0;
-    }
-
-    .grid.fill {
-      height: 100%;
-      grid-auto-rows: minmax(0, 1fr);
-    }
-
-    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-
-    .kicker {
-      display: inline-block;
-      font-family: "Fredoka", sans-serif;
-      font-size: 14px;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      padding: 7px 12px;
-      border: var(--border);
-      border-radius: 999px;
-      background: var(--amber);
-      box-shadow: 5px 5px 0 var(--ink);
-      margin-bottom: 10px;
-      width: fit-content;
-    }
-
-    h1 {
-      margin: 0 0 12px;
-      font-family: "Fredoka", sans-serif;
-      font-size: 54px;
-      line-height: 0.98;
-      letter-spacing: -1.4px;
-    }
-
-    h2 {
-      margin: 0 0 10px;
-      font-family: "Fredoka", sans-serif;
-      font-size: 36px;
-      line-height: 1.05;
-      letter-spacing: -0.8px;
-    }
-
-    h3 {
-      margin: 0 0 8px;
-      font-family: "Fredoka", sans-serif;
-      font-size: 18px;
-      line-height: 1.18;
-    }
-
-    p {
-      margin: 0;
-      font-size: 14.5px;
-      line-height: 1.48;
-    }
-
-    .lead {
-      font-size: 17.5px;
-      line-height: 1.45;
-      max-width: 720px;
-      color: #4b4355;
-    }
-
+    h1 { margin:0 0 12px; font-family:"Fredoka",sans-serif; font-size:54px; line-height:0.98; letter-spacing:-1.4px; }
+    h2 { margin:0 0 10px; font-family:"Fredoka",sans-serif; font-size:36px; line-height:1.05; letter-spacing:-0.8px; }
+    h3 { margin:0 0 8px; font-family:"Fredoka",sans-serif; font-size:18px; line-height:1.18; }
+    p { margin:0; font-size:14.5px; line-height:1.48; }
+    .lead { font-size:17.5px; line-height:1.45; max-width:720px; color:#4b4355; }
     .muted { color: var(--muted); }
+    .hl { padding:0 0.1em; border-radius:0.22em; -webkit-box-decoration-break:clone; box-decoration-break:clone; }
+    .hl-violet { background: rgba(139,92,246,0.24); }
+    .hl-pink { background: rgba(236,72,153,0.20); }
+    .hl-amber { background: rgba(245,158,11,0.26); }
+    .hl-mint { background: rgba(52,211,153,0.26); }
 
-    .hl {
-      padding: 0 0.1em;
-      border-radius: 0.22em;
-      -webkit-box-decoration-break: clone;
-      box-decoration-break: clone;
-    }
-
-    .hl-violet { background: rgba(139, 92, 246, 0.24); }
-    .hl-pink { background: rgba(236, 72, 153, 0.20); }
-    .hl-amber { background: rgba(245, 158, 11, 0.26); }
-    .hl-mint { background: rgba(52, 211, 153, 0.26); }
-
-    .cta-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 14px;
-    }
-
-    .btn {
-      font-family: "Fredoka", sans-serif;
-      font-size: 16px;
-      font-weight: 600;
-      border: var(--border);
-      border-radius: 999px;
-      padding: 11px 18px;
-      background: #fff;
-      box-shadow: 7px 7px 0 var(--ink);
-      cursor: pointer;
-      transition: transform 0.16s ease, box-shadow 0.16s ease;
-      color: var(--ink);
-    }
-
-    .btn:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: 9px 9px 0 var(--ink);
-    }
-
-    .btn:active {
-      transform: translate(4px, 4px);
-      box-shadow: 2px 2px 0 var(--ink);
-    }
-
+    .cta-row { display:flex; flex-wrap:wrap; gap:12px; margin-top:14px; }
+    .btn { font-family:"Fredoka",sans-serif; font-size:16px; font-weight:600; border:var(--border); border-radius:999px; padding:11px 18px; background:#fff; box-shadow:7px 7px 0 var(--ink); cursor:pointer; transition: transform 0.16s ease, box-shadow 0.16s ease; color:var(--ink); }
+    .btn:hover { transform: translate(-2px,-2px); box-shadow:9px 9px 0 var(--ink); }
+    .btn:active { transform: translate(4px,4px); box-shadow:2px 2px 0 var(--ink); }
     .btn.primary { background: var(--mint); }
-    .btn.violet { background: var(--violet); color: #fff; }
-    .btn.pink { background: var(--pink); color: #fff; }
+    .btn.violet { background: var(--violet); color:#fff; }
+    .btn.pink { background: var(--pink); color:#fff; }
     .btn.amber { background: var(--amber); }
 
-    .card {
-      position: relative;
-      background: var(--white);
-      border: var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 16px 15px 15px;
-      overflow: hidden;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      --accent: var(--violet);
-      min-height: 0;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .card:hover {
-      transform: translate(-3px, -3px);
-      box-shadow: 13px 13px 0 var(--ink);
-    }
-
-    .card .top-accent {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 9px;
-      border-bottom: var(--border);
-      background: var(--accent);
-    }
-
+    .card { position:relative; background:var(--white); border:var(--border); border-radius:var(--radius); box-shadow:var(--shadow); padding:16px 15px 15px; overflow:hidden; transition: transform 0.2s ease, box-shadow 0.2s ease; --accent: var(--violet); min-height:0; display:flex; flex-direction:column; }
+    .card:hover { transform: translate(-3px,-3px); box-shadow:13px 13px 0 var(--ink); }
+    .card .top-accent { position:absolute; left:0; top:0; width:100%; height:9px; border-bottom:var(--border); background:var(--accent); }
     .card.violet { --accent: var(--violet); }
     .card.pink { --accent: var(--pink); }
     .card.amber { --accent: var(--amber); }
     .card.mint { --accent: var(--mint); }
-
-    .icon {
-      width: 48px;
-      height: 48px;
-      border: var(--border);
-      border-radius: 17px;
-      background: var(--accent);
-      box-shadow: var(--shadow-sm);
-      display: grid;
-      place-items: center;
-      margin: 10px 0 9px;
-      font-size: 23px;
-      color: var(--ink);
-      flex: 0 0 auto;
-    }
-
-    .icon-text {
-      font-family: "Fredoka", sans-serif;
-      font-size: 20px;
-      font-weight: 700;
-    }
-
-    .card p {
-      font-size: 13.5px;
-      line-height: 1.38;
-      color: #5a5261;
-      display: -webkit-box;
-      -webkit-line-clamp: 4;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    .list {
-      list-style: none;
-      padding: 0;
-      margin: 12px 0 0;
-      display: grid;
-      gap: 9px;
-      font-size: 14.5px;
-    }
-
-    .list li {
-      position: relative;
-      padding-left: 31px;
-      line-height: 1.38;
-      color: #4b4355;
-    }
-
-    .list li::before {
-      content: "✓";
-      position: absolute;
-      left: 0;
-      top: 1px;
-      width: 21px;
-      height: 21px;
-      border: 3px solid var(--ink);
-      border-radius: 8px;
-      background: var(--mint);
-      box-shadow: 3px 3px 0 var(--ink);
-      display: grid;
-      place-items: center;
-      font-weight: 900;
-      font-size: 12px;
-    }
-
-    .note {
-      padding: 13px 15px;
-      border: var(--border);
-      border-radius: 20px;
-      background: rgba(245, 158, 11, 0.14);
-      box-shadow: 6px 6px 0 var(--ink);
-      font-size: 13.5px;
-      line-height: 1.42;
-    }
-
-    .note strong {
-      font-family: "Fredoka", sans-serif;
-    }
-
-    .stat {
-      text-align: center;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .num {
-      display: block;
-      font-family: "Fredoka", sans-serif;
-      font-size: 40px;
-      line-height: 1;
-      font-weight: 700;
-      color: var(--accent);
-      margin-bottom: 8px;
-      text-shadow: 3px 3px 0 rgba(23, 19, 31, 0.10);
-      font-variant-numeric: tabular-nums;
-    }
-
-    .tile {
-      position: relative;
-      border: var(--border);
-      border-radius: 28px;
-      box-shadow: var(--shadow-lg);
-      overflow: hidden;
-      background: var(--white);
-      min-height: 0;
-    }
-
-    .photo-parallax {
-      position: absolute;
-      inset: -6%;
-      transform: translate3d(calc(var(--mx) * -18px), calc(var(--my) * -12px), 0);
-      will-change: transform;
-    }
-
-    .photo-zoom {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      animation: kenburns 22s ease-in-out infinite alternate;
-    }
-
-    .tile img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    @keyframes kenburns {
-      from { transform: scale(1.03) translate3d(0, 0, 0); }
-      to { transform: scale(1.12) translate3d(-1.4%, 1%, 0); }
-    }
-
-    .tile-label {
-      position: absolute;
-      left: 16px;
-      right: 16px;
-      bottom: 16px;
-      padding: 10px 12px;
-      border: 3px solid var(--ink);
-      border-radius: 18px;
-      background: rgba(255, 253, 248, 0.94);
-      box-shadow: 5px 5px 0 var(--ink);
-      font-family: "Fredoka", sans-serif;
-      font-size: 15px;
-      font-weight: 700;
-      line-height: 1.2;
-      transform: translate3d(calc(var(--mx) * 8px), calc(var(--my) * 5px), 0);
-      backdrop-filter: blur(8px);
-    }
-
-    .tile-label small {
-      display: block;
-      margin-top: 4px;
-      font-family: "Space Grotesk", sans-serif;
-      font-size: 11.5px;
-      font-weight: 500;
-      color: var(--muted);
-    }
-
-    .sticker {
-      position: absolute;
-      top: -12px;
-      left: 34px;
-      z-index: 2;
-      padding: 8px 14px;
-      border: 3px solid var(--ink);
-      background: var(--amber);
-      box-shadow: 5px 5px 0 var(--ink);
-      font-family: "Fredoka", sans-serif;
-      font-size: 14px;
-      font-weight: 700;
-      transform: rotate(-7deg);
-    }
-
-    .hero-media {
-      position: relative;
-      height: 100%;
-      display: grid;
-      place-items: center;
-    }
-
-    .hero-tile {
-      width: 100%;
-      height: 100%;
-      min-height: 520px;
-    }
-
-    .chip {
-      position: absolute;
-      z-index: 3;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 9px 13px;
-      border: var(--border);
-      border-radius: 999px;
-      background: var(--white);
-      box-shadow: 7px 7px 0 var(--ink);
-      font-family: "Fredoka", sans-serif;
-      font-size: 14px;
-      font-weight: 700;
-      white-space: nowrap;
-      transform: translate3d(calc(var(--mx) * var(--cx, 20px)), calc(var(--my) * var(--cy, 14px)), 0);
-      --accent: var(--violet);
-    }
-
-    .chip .dot {
-      width: 13px;
-      height: 13px;
-      border: 3px solid var(--ink);
-      border-radius: 50%;
-      background: var(--accent);
-    }
-
-    .quiz {
-      margin-top: 12px;
-      padding: 14px;
-      border: var(--border);
-      border-radius: var(--radius);
-      background: var(--white);
-      box-shadow: var(--shadow);
-    }
-
-    .quiz-title {
-      font-family: "Fredoka", sans-serif;
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-
-    .choices {
-      display: grid;
-      gap: 8px;
-    }
-
-    .choice {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      width: 100%;
-      padding: 8px 10px;
-      border: var(--border);
-      border-radius: 16px;
-      background: #fff;
-      box-shadow: 5px 5px 0 var(--ink);
-      cursor: pointer;
-      font-size: 13.5px;
-      font-weight: 600;
-      text-align: left;
-      color: var(--ink);
-      transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.2s ease;
-    }
-
-    .choice:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: 7px 7px 0 var(--ink);
-    }
-
-    .choice:disabled {
-      cursor: default;
-      opacity: 0.96;
-    }
-
-    .choice.correct {
-      background: rgba(52, 211, 153, 0.22);
-    }
-
-    .choice.wrong {
-      background: rgba(236, 72, 153, 0.18);
-    }
-
-    .mark {
-      width: 29px;
-      height: 29px;
-      border: var(--border);
-      border-radius: 10px;
-      background: var(--amber);
-      box-shadow: 3px 3px 0 var(--ink);
-      display: grid;
-      place-items: center;
-      font-family: "Fredoka", sans-serif;
-      font-weight: 700;
-      flex: 0 0 auto;
-    }
-
-    .feedback {
-      display: none;
-      margin-top: 10px;
-      padding: 10px 12px;
-      border: var(--border);
-      border-radius: 16px;
-      background: var(--paper);
-      box-shadow: 5px 5px 0 var(--ink);
-      font-size: 12.5px;
-      line-height: 1.42;
-    }
-
-    .feedback.show {
-      display: block;
-      animation: popIn 0.35s ease;
-    }
-
-    .feedback.good { border-left: 8px solid var(--mint); }
-    .feedback.bad { border-left: 8px solid var(--pink); }
-
-    .checks {
-      display: grid;
-      gap: 8px;
-      min-height: 0;
-      overflow: hidden;
-    }
-
-    .check {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      padding: 7px 9px;
-      border: var(--border);
-      border-radius: 14px;
-      background: var(--white);
-      box-shadow: 5px 5px 0 var(--ink);
-      font-size: 13px;
-      line-height: 1.32;
-      cursor: pointer;
-      transition: transform 0.16s ease, box-shadow 0.16s ease;
-    }
-
-    .check:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: 7px 7px 0 var(--ink);
-    }
-
-    .check input {
-      width: 17px;
-      height: 17px;
-      margin-top: 1px;
-      accent-color: var(--mint);
-      flex: 0 0 auto;
-    }
-
-    .check span {
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    .ring-card {
-      text-align: center;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .ring-wrap {
-      position: relative;
-      width: 205px;
-      height: 205px;
-      margin: 10px auto 0;
-    }
-
-    .ring {
-      width: 205px;
-      height: 205px;
-      transform: rotate(-90deg);
-    }
-
-    .ring-bg {
-      fill: none;
-      stroke: rgba(23, 19, 31, 0.13);
-      stroke-width: 12;
-    }
-
-    .ring-fg {
-      fill: none;
-      stroke: url(#ringGrad);
-      stroke-width: 12;
-      stroke-linecap: round;
-      transition: stroke-dashoffset 0.55s ease;
-    }
-
-    .ring-center {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      text-align: center;
-    }
-
-    #ringText {
-      font-family: "Fredoka", sans-serif;
-      font-size: 35px;
-      font-weight: 700;
-      color: var(--mint);
-      line-height: 1;
-    }
-
-    .column-stack {
-      display: grid;
-      grid-template-rows: minmax(220px, 1fr) auto;
-      gap: 12px;
-      height: 100%;
-      min-height: 0;
-    }
-
-    .mini-stack {
-      display: grid;
-      gap: 10px;
-      min-height: 0;
-    }
-
-    .mini-card {
-      padding: 12px 13px;
-      border-radius: 20px;
-    }
-
-    .mini-card p {
-      -webkit-line-clamp: 2;
-    }
-
-    .final-row {
-      display: grid;
-      grid-template-columns: 0.9fr 1.1fr;
-      gap: 24px;
-      align-items: center;
-    }
-
-    .thanks {
-      font-family: "Fredoka", sans-serif;
-      font-size: 46px;
-      line-height: 1;
-      margin: 0;
-    }
-
-    .toast {
-      position: absolute;
-      left: 50%;
-      bottom: 24px;
-      transform: translate(-50%, 18px);
-      z-index: 70;
-      padding: 12px 18px;
-      border: var(--border);
-      border-radius: 999px;
-      background: var(--ink);
-      color: var(--paper);
-      box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.20);
-      font-size: 14.5px;
-      line-height: 1.35;
-      opacity: 0;
-      pointer-events: none;
-      transition: 0.3s ease;
-      max-width: 900px;
-      text-align: center;
-    }
-
-    .toast.show {
-      opacity: 1;
-      transform: translate(-50%, 0);
-    }
-
-    .hint {
-      position: absolute;
-      left: 28px;
-      bottom: 16px;
-      z-index: 55;
-      font-size: 13px;
-      color: #6b6375;
-    }
-
-    .dots {
-      position: absolute;
-      right: 28px;
-      bottom: 18px;
-      display: flex;
-      gap: 7px;
-      z-index: 55;
-    }
-
-    .dot-btn {
-      width: 12px;
-      height: 12px;
-      border: 3px solid var(--ink);
-      border-radius: 50%;
-      background: #fff;
-      cursor: pointer;
-      box-shadow: 3px 3px 0 var(--ink);
-      padding: 0;
-      transition: transform 0.16s ease, background 0.2s ease;
-    }
-
-    .dot-btn.active {
-      background: var(--pink);
-      transform: scale(1.18);
-    }
-
-    .confetti {
-      position: absolute;
-      top: -40px;
-      width: 14px;
-      height: 20px;
-      border: 3px solid var(--ink);
-      border-radius: 5px;
-      box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.16);
-      z-index: 80;
-      pointer-events: none;
-      animation: fall linear forwards;
-    }
-
-    @keyframes popIn {
-      from { opacity: 0; transform: translateY(8px) scale(0.98); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
-    }
-
-    @keyframes fall {
-      to { transform: translateY(980px) rotate(720deg); opacity: 0; }
-    }
-
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(14px) scale(0.985); }
-      to { opacity: 1; transform: none; }
-    }
-
-    .slide.active .stagger > * {
-      animation: rise 0.62s cubic-bezier(0.2, 0.8, 0.2, 1) both;
-    }
-
-    .slide.active .stagger > *:nth-child(1) { animation-delay: 0.04s; }
-    .slide.active .stagger > *:nth-child(2) { animation-delay: 0.08s; }
-    .slide.active .stagger > *:nth-child(3) { animation-delay: 0.12s; }
-    .slide.active .stagger > *:nth-child(4) { animation-delay: 0.16s; }
-    .slide.active .stagger > *:nth-child(5) { animation-delay: 0.20s; }
-    .slide.active .stagger > *:nth-child(6) { animation-delay: 0.24s; }
-    .slide.active .stagger > *:nth-child(7) { animation-delay: 0.28s; }
-    .slide.active .stagger > *:nth-child(8) { animation-delay: 0.32s; }
-
-    /* ===== SLIDE 10: KATEGORI WADAH + PRESENTER (LEFT/RIGHT BOTTOM) ===== */
-    .wadah-slide .body {
-      grid-template-rows: minmax(0, 1fr) auto;
-    }
-
-    .wadah-board {
-      min-height: 0;
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .wadah-card {
-      position: relative;
-      min-width: 0;
-      min-height: 0;
-      display: flex;
-      flex-direction: column;
-      background: var(--white);
-      border: var(--border);
-      border-radius: 24px;
-      box-shadow: var(--shadow);
-      padding: 22px 13px 13px;
-      overflow: hidden;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .wadah-card:hover {
-      transform: translate(-3px, -3px);
-      box-shadow: 13px 13px 0 var(--ink);
-    }
-
-    .wadah-card::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 9px;
-      border-bottom: var(--border);
-      background: var(--accent);
-    }
-
-    .wadah-card.kuning { --accent: #facc15; --soft: rgba(250, 204, 21, 0.20); }
-    .wadah-card.merah { --accent: #ef4444; --soft: rgba(239, 68, 68, 0.16); }
-    .wadah-card.ungu { --accent: #a855f7; --soft: rgba(168, 85, 247, 0.16); }
-    .wadah-card.coklat { --accent: #92400e; --soft: rgba(146, 64, 14, 0.14); }
-    .wadah-card.sharp { --accent: #f59e0b; --soft: rgba(245, 158, 11, 0.18); }
-
-    .wadah-art {
-      height: 124px;
-      margin-bottom: 10px;
-      border: 3px solid rgba(23, 19, 31, 0.12);
-      border-radius: 18px;
-      background: var(--soft);
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      gap: 10px;
-      padding: 12px;
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
-      flex: 0 0 auto;
-    }
-
-    .bag,
-    .bin,
-    .safety {
-      position: relative;
-      border: 3px solid var(--ink);
-      box-shadow: 4px 4px 0 var(--ink);
-      flex: 0 0 auto;
-    }
-
-    .bag {
-      width: 48px;
-      height: 70px;
-      border-radius: 14px 14px 11px 11px;
-      background: var(--accent);
-    }
-
-    .bag::before {
-      content: "";
-      position: absolute;
-      top: -12px;
-      left: 9px;
-      width: 28px;
-      height: 16px;
-      border: 3px solid var(--ink);
-      border-bottom: 0;
-      border-radius: 14px 14px 0 0;
-      background: var(--accent);
-    }
-
-    .bag::after {
-      content: "";
-      position: absolute;
-      top: -2px;
-      left: 14px;
-      width: 18px;
-      height: 7px;
-      border: 3px solid var(--ink);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.55);
-    }
-
-    .bin {
-      width: 56px;
-      height: 66px;
-      border-radius: 8px;
-      background: var(--accent);
-    }
-
-    .bin::before {
-      content: "";
-      position: absolute;
-      top: -13px;
-      left: -6px;
-      width: 68px;
-      height: 15px;
-      border: 3px solid var(--ink);
-      border-radius: 8px;
-      background: var(--accent);
-    }
-
-    .bin::after {
-      content: "";
-      position: absolute;
-      top: 16px;
-      left: 12px;
-      width: 32px;
-      height: 4px;
-      border-radius: 999px;
-      background: rgba(23, 19, 31, 0.20);
-      box-shadow:
-        0 13px 0 rgba(23, 19, 31, 0.20),
-        0 26px 0 rgba(23, 19, 31, 0.20);
-    }
-
-    .safety {
-      width: 84px;
-      height: 66px;
-      border-radius: 10px;
-      background: #fde047;
-    }
-
-    .safety::before {
-      content: "";
-      position: absolute;
-      top: -15px;
-      left: 22px;
-      width: 38px;
-      height: 15px;
-      border: 3px solid var(--ink);
-      border-bottom: 0;
-      border-radius: 10px 10px 0 0;
-      background: #fde047;
-    }
-
-    .safety::after {
-      content: "SAFETY BOX";
-      position: absolute;
-      left: 7px;
-      bottom: 6px;
-      font-family: "Fredoka", sans-serif;
-      font-size: 8.5px;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      color: var(--ink);
-    }
-
-    .art-icon {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      font-size: 22px;
-      line-height: 1;
-      filter: drop-shadow(2px 2px 0 rgba(23, 19, 31, 0.20));
-      pointer-events: none;
-    }
-
-    .safety .art-icon {
-      inset: 7px 0 15px;
-      font-size: 21px;
-    }
-
-    .sharp-tools {
-      display: grid;
-      gap: 7px;
-      font-size: 21px;
-      filter: drop-shadow(2px 2px 0 rgba(23, 19, 31, 0.18));
-    }
-
-    .wadah-card h3 {
-      margin: 0;
-      font-family: "Fredoka", sans-serif;
-      font-size: 20px;
-      line-height: 1;
-      letter-spacing: -0.4px;
-    }
-
-    .wadah-sub {
-      margin-top: 5px;
-      font-family: "Fredoka", sans-serif;
-      font-size: 12px;
-      font-weight: 700;
-      line-height: 1.22;
-      color: var(--ink);
-    }
-
-    .wadah-list {
-      margin: 8px 0 0;
-      padding: 0;
-      list-style: none;
-      display: grid;
-      gap: 4px;
-      font-size: 12px;
-      line-height: 1.26;
-      color: #5a5261;
-    }
-
-    .wadah-list li {
-      position: relative;
-      padding-left: 13px;
-    }
-
-    .wadah-list li::before {
-      content: "•";
-      position: absolute;
-      left: 1px;
-      color: var(--accent);
-      font-weight: 900;
-    }
-
-    .wadah-tag {
-      margin-top: auto;
-      align-self: flex-start;
-      padding: 5px 8px;
-      border: 3px solid var(--ink);
-      border-radius: 999px;
-      background: var(--accent);
-      box-shadow: 3px 3px 0 var(--ink);
-      font-family: "Fredoka", sans-serif;
-      font-size: 10px;
-      font-weight: 700;
-      color: var(--ink);
-      white-space: nowrap;
-      max-width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .wadah-card.merah .wadah-tag,
-    .wadah-card.ungu .wadah-tag,
-    .wadah-card.coklat .wadah-tag {
-      color: #fff;
-    }
-
-    /* strip presenter: kiri = foto, tengah = catatan, kanan = foto (rata bawah) */
-    .wadah-presenters {
-      display: grid;
-      grid-template-columns: 250px minmax(0, 1fr) 250px;
-      align-items: end;
-      gap: 20px;
-      min-height: 0;
-    }
-
-    .presenter {
-      position: relative;
-      width: 250px;
-      height: 250px;
-      align-self: end;
-      overflow: hidden;
-      will-change: transform;
-      pointer-events: none;
-    }
-
-    .presenter.left  { transform: translate3d(calc(var(--mx) * -7px), 0, 0); }
-    .presenter.right { transform: translate3d(calc(var(--mx) *  7px), 0, 0); }
-
-    .presenter img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      object-position: bottom center;
-      filter: drop-shadow(7px 8px 0 rgba(23, 19, 31, 0.82));
-    }
-
-    .presenter-note {
-      align-self: end;
-      margin-bottom: 2px;
-    }
+    .icon { width:48px; height:48px; border:var(--border); border-radius:17px; background:var(--accent); box-shadow:var(--shadow-sm); display:grid; place-items:center; margin:10px 0 9px; font-size:23px; color:var(--ink); flex:0 0 auto; }
+    .icon-text { font-family:"Fredoka",sans-serif; font-size:20px; font-weight:700; }
+    .card p { font-size:13.5px; line-height:1.38; color:#5a5261; display:-webkit-box; -webkit-line-clamp:4; -webkit-box-orient:vertical; overflow:hidden; }
+
+    .list { list-style:none; padding:0; margin:12px 0 0; display:grid; gap:9px; font-size:14.5px; }
+    .list li { position:relative; padding-left:31px; line-height:1.38; color:#4b4355; }
+    .list li::before { content:"✓"; position:absolute; left:0; top:1px; width:21px; height:21px; border:3px solid var(--ink); border-radius:8px; background:var(--mint); box-shadow:3px 3px 0 var(--ink); display:grid; place-items:center; font-weight:900; font-size:12px; }
+
+    .note { padding:13px 15px; border:var(--border); border-radius:20px; background:rgba(245,158,11,0.14); box-shadow:6px 6px 0 var(--ink); font-size:13.5px; line-height:1.42; }
+    .note strong { font-family:"Fredoka",sans-serif; }
+
+    .stat { text-align:center; justify-content:center; align-items:center; }
+    .num { display:block; font-family:"Fredoka",sans-serif; font-size:40px; line-height:1; font-weight:700; color:var(--accent); margin-bottom:8px; text-shadow:3px 3px 0 rgba(23,19,31,0.10); font-variant-numeric:tabular-nums; }
+
+    .tile { position:relative; border:var(--border); border-radius:28px; box-shadow:var(--shadow-lg); overflow:hidden; background:var(--white); min-height:0; }
+    .photo-parallax { position:absolute; inset:-6%; transform: translate3d(calc(var(--mx)*-18px),calc(var(--my)*-12px),0); will-change:transform; }
+    .photo-zoom { width:100%; height:100%; overflow:hidden; animation: kenburns 22s ease-in-out infinite alternate; }
+    .tile img { width:100%; height:100%; object-fit:cover; display:block; }
+    @keyframes kenburns { from { transform: scale(1.03) translate3d(0,0,0);} to { transform: scale(1.12) translate3d(-1.4%,1%,0);} }
+    .tile-label { position:absolute; left:16px; right:16px; bottom:16px; padding:10px 12px; border:3px solid var(--ink); border-radius:18px; background:rgba(255,253,248,0.94); box-shadow:5px 5px 0 var(--ink); font-family:"Fredoka",sans-serif; font-size:15px; font-weight:700; line-height:1.2; transform: translate3d(calc(var(--mx)*8px),calc(var(--my)*5px),0); backdrop-filter: blur(8px); }
+    .tile-label small { display:block; margin-top:4px; font-family:"Space Grotesk",sans-serif; font-size:11.5px; font-weight:500; color:var(--muted); }
+    .sticker { position:absolute; top:-12px; left:34px; z-index:2; padding:8px 14px; border:3px solid var(--ink); background:var(--amber); box-shadow:5px 5px 0 var(--ink); font-family:"Fredoka",sans-serif; font-size:14px; font-weight:700; transform: rotate(-7deg); }
+
+    .hero-media { position:relative; height:100%; display:grid; place-items:center; }
+    .hero-tile { width:100%; height:100%; min-height:520px; }
+
+    .chip { position:absolute; z-index:3; display:flex; align-items:center; gap:8px; padding:9px 13px; border:var(--border); border-radius:999px; background:var(--white); box-shadow:7px 7px 0 var(--ink); font-family:"Fredoka",sans-serif; font-size:14px; font-weight:700; white-space:nowrap; transform: translate3d(calc(var(--mx)*var(--cx,20px)),calc(var(--my)*var(--cy,14px)),0); --accent: var(--violet); }
+    .chip .dot { width:13px; height:13px; border:3px solid var(--ink); border-radius:50%; background:var(--accent); }
+
+    .quiz { margin-top:12px; padding:14px; border:var(--border); border-radius:var(--radius); background:var(--white); box-shadow:var(--shadow); }
+    .quiz-title { font-family:"Fredoka",sans-serif; font-size:20px; font-weight:700; margin-bottom:10px; }
+    .choices { display:grid; gap:8px; }
+    .choice { display:flex; align-items:center; gap:10px; width:100%; padding:8px 10px; border:var(--border); border-radius:16px; background:#fff; box-shadow:5px 5px 0 var(--ink); cursor:pointer; font-size:13.5px; font-weight:600; text-align:left; color:var(--ink); transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.2s ease; }
+    .choice:hover { transform: translate(-2px,-2px); box-shadow:7px 7px 0 var(--ink); }
+    .choice:disabled { cursor:default; opacity:0.96; }
+    .choice.correct { background: rgba(52,211,153,0.22); }
+    .choice.wrong { background: rgba(236,72,153,0.18); }
+    .mark { width:29px; height:29px; border:var(--border); border-radius:10px; background:var(--amber); box-shadow:3px 3px 0 var(--ink); display:grid; place-items:center; font-family:"Fredoka",sans-serif; font-weight:700; flex:0 0 auto; }
+    .feedback { display:none; margin-top:10px; padding:10px 12px; border:var(--border); border-radius:16px; background:var(--paper); box-shadow:5px 5px 0 var(--ink); font-size:12.5px; line-height:1.42; }
+    .feedback.show { display:block; animation: popIn 0.35s ease; }
+    .feedback.good { border-left:8px solid var(--mint); }
+    .feedback.bad { border-left:8px solid var(--pink); }
+
+    .checks { display:grid; gap:8px; min-height:0; overflow:hidden; }
+    .check { display:flex; gap:10px; align-items:flex-start; padding:7px 9px; border:var(--border); border-radius:14px; background:var(--white); box-shadow:5px 5px 0 var(--ink); font-size:13px; line-height:1.32; cursor:pointer; transition: transform 0.16s ease, box-shadow 0.16s ease; }
+    .check:hover { transform: translate(-2px,-2px); box-shadow:7px 7px 0 var(--ink); }
+    .check input { width:17px; height:17px; margin-top:1px; accent-color:var(--mint); flex:0 0 auto; }
+    .check span { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+
+    .ring-card { text-align:center; justify-content:center; align-items:center; }
+    .ring-wrap { position:relative; width:205px; height:205px; margin:10px auto 0; }
+    .ring { width:205px; height:205px; transform: rotate(-90deg); }
+    .ring-bg { fill:none; stroke:rgba(23,19,31,0.13); stroke-width:12; }
+    .ring-fg { fill:none; stroke:url(#ringGrad); stroke-width:12; stroke-linecap:round; transition: stroke-dashoffset 0.55s ease; }
+    .ring-center { position:absolute; inset:0; display:grid; place-items:center; text-align:center; }
+    #ringText { font-family:"Fredoka",sans-serif; font-size:35px; font-weight:700; color:var(--mint); line-height:1; }
+
+    .column-stack { display:grid; grid-template-rows: minmax(220px,1fr) auto; gap:12px; height:100%; min-height:0; }
+    .mini-stack { display:grid; gap:10px; min-height:0; }
+    .mini-card { padding:12px 13px; border-radius:20px; }
+    .mini-card p { -webkit-line-clamp:2; }
+    .final-row { display:grid; grid-template-columns: 0.9fr 1.1fr; gap:24px; align-items:center; }
+    .thanks { font-family:"Fredoka",sans-serif; font-size:46px; line-height:1; margin:0; }
+
+    .toast { position:absolute; left:50%; bottom:24px; transform: translate(-50%,18px); z-index:70; padding:12px 18px; border:var(--border); border-radius:999px; background:var(--ink); color:var(--paper); box-shadow:8px 8px 0 rgba(0,0,0,0.20); font-size:14.5px; line-height:1.35; opacity:0; pointer-events:none; transition:0.3s ease; max-width:900px; text-align:center; }
+    .toast.show { opacity:1; transform: translate(-50%,0); }
+    .hint { position:absolute; left:28px; bottom:16px; z-index:55; font-size:13px; color:#6b6375; }
+    .dots { position:absolute; right:28px; bottom:18px; display:flex; gap:7px; z-index:55; }
+    .dot-btn { width:12px; height:12px; border:3px solid var(--ink); border-radius:50%; background:#fff; cursor:pointer; box-shadow:3px 3px 0 var(--ink); padding:0; transition: transform 0.16s ease, background 0.2s ease; }
+    .dot-btn.active { background: var(--pink); transform: scale(1.18); }
+    .confetti { position:absolute; top:-40px; width:14px; height:20px; border:3px solid var(--ink); border-radius:5px; box-shadow:4px 4px 0 rgba(0,0,0,0.16); z-index:80; pointer-events:none; animation: fall linear forwards; }
+
+    @keyframes popIn { from { opacity:0; transform: translateY(8px) scale(0.98);} to { opacity:1; transform:none;} }
+    @keyframes fall { to { transform: translateY(980px) rotate(720deg); opacity:0;} }
+    @keyframes rise { from { opacity:0; transform: translateY(14px) scale(0.985);} to { opacity:1; transform:none;} }
+    .slide.active .stagger > * { animation: rise 0.62s cubic-bezier(0.2,0.8,0.2,1) both; }
+    .slide.active .stagger > *:nth-child(1){animation-delay:0.04s}
+    .slide.active .stagger > *:nth-child(2){animation-delay:0.08s}
+    .slide.active .stagger > *:nth-child(3){animation-delay:0.12s}
+    .slide.active .stagger > *:nth-child(4){animation-delay:0.16s}
+    .slide.active .stagger > *:nth-child(5){animation-delay:0.20s}
+    .slide.active .stagger > *:nth-child(6){animation-delay:0.24s}
+    .slide.active .stagger > *:nth-child(7){animation-delay:0.28s}
+    .slide.active .stagger > *:nth-child(8){animation-delay:0.32s}
+
+    /* ===== SLIDE 10: KATEGORI WADAH + PRESENTER ===== */
+    .wadah-slide .body { grid-template-rows: minmax(0,1fr) auto; }
+    .wadah-board { min-height:0; display:grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap:14px; }
+    .wadah-card { position:relative; min-width:0; min-height:0; display:flex; flex-direction:column; background:var(--white); border:var(--border); border-radius:24px; box-shadow:var(--shadow); padding:22px 13px 13px; overflow:hidden; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .wadah-card:hover { transform: translate(-3px,-3px); box-shadow:13px 13px 0 var(--ink); }
+    .wadah-card::before { content:""; position:absolute; left:0; top:0; width:100%; height:9px; border-bottom:var(--border); background:var(--accent); }
+    .wadah-card.kuning { --accent:#facc15; --soft:rgba(250,204,21,0.20); }
+    .wadah-card.merah { --accent:#ef4444; --soft:rgba(239,68,68,0.16); }
+    .wadah-card.ungu { --accent:#a855f7; --soft:rgba(168,85,247,0.16); }
+    .wadah-card.coklat { --accent:#92400e; --soft:rgba(146,64,14,0.14); }
+    .wadah-card.sharp { --accent:#f59e0b; --soft:rgba(245,158,11,0.18); }
+    .wadah-art { height:124px; margin-bottom:10px; border:3px solid rgba(23,19,31,0.12); border-radius:18px; background:var(--soft); display:flex; align-items:flex-end; justify-content:center; gap:10px; padding:12px; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.35); flex:0 0 auto; }
+    .bag, .bin, .safety { position:relative; border:3px solid var(--ink); box-shadow:4px 4px 0 var(--ink); flex:0 0 auto; }
+    .bag { width:48px; height:70px; border-radius:14px 14px 11px 11px; background:var(--accent); }
+    .bag::before { content:""; position:absolute; top:-12px; left:9px; width:28px; height:16px; border:3px solid var(--ink); border-bottom:0; border-radius:14px 14px 0 0; background:var(--accent); }
+    .bag::after { content:""; position:absolute; top:-2px; left:14px; width:18px; height:7px; border:3px solid var(--ink); border-radius:999px; background:rgba(255,255,255,0.55); }
+    .bin { width:56px; height:66px; border-radius:8px; background:var(--accent); }
+    .bin::before { content:""; position:absolute; top:-13px; left:-6px; width:68px; height:15px; border:3px solid var(--ink); border-radius:8px; background:var(--accent); }
+    .bin::after { content:""; position:absolute; top:16px; left:12px; width:32px; height:4px; border-radius:999px; background:rgba(23,19,31,0.20); box-shadow:0 13px 0 rgba(23,19,31,0.20), 0 26px 0 rgba(23,19,31,0.20); }
+    .safety { width:84px; height:66px; border-radius:10px; background:#fde047; }
+    .safety::before { content:""; position:absolute; top:-15px; left:22px; width:38px; height:15px; border:3px solid var(--ink); border-bottom:0; border-radius:10px 10px 0 0; background:#fde047; }
+    .safety::after { content:"SAFETY BOX"; position:absolute; left:7px; bottom:6px; font-family:"Fredoka",sans-serif; font-size:8.5px; font-weight:700; letter-spacing:0.02em; color:var(--ink); }
+    .art-icon { position:absolute; inset:0; display:grid; place-items:center; font-size:22px; line-height:1; filter: drop-shadow(2px 2px 0 rgba(23,19,31,0.20)); pointer-events:none; }
+    .safety .art-icon { inset:7px 0 15px; font-size:21px; }
+    .sharp-tools { display:grid; gap:7px; font-size:21px; filter: drop-shadow(2px 2px 0 rgba(23,19,31,0.18)); }
+    .wadah-card h3 { margin:0; font-family:"Fredoka",sans-serif; font-size:20px; line-height:1; letter-spacing:-0.4px; }
+    .wadah-sub { margin-top:5px; font-family:"Fredoka",sans-serif; font-size:12px; font-weight:700; line-height:1.22; color:var(--ink); }
+    .wadah-list { margin:8px 0 0; padding:0; list-style:none; display:grid; gap:4px; font-size:12px; line-height:1.26; color:#5a5261; }
+    .wadah-list li { position:relative; padding-left:13px; }
+    .wadah-list li::before { content:"•"; position:absolute; left:1px; color:var(--accent); font-weight:900; }
+    .wadah-tag { margin-top:auto; align-self:flex-start; padding:5px 8px; border:3px solid var(--ink); border-radius:999px; background:var(--accent); box-shadow:3px 3px 0 var(--ink); font-family:"Fredoka",sans-serif; font-size:10px; font-weight:700; color:var(--ink); white-space:nowrap; max-width:100%; overflow:hidden; text-overflow:ellipsis; }
+    .wadah-card.merah .wadah-tag, .wadah-card.ungu .wadah-tag, .wadah-card.coklat .wadah-tag { color:#fff; }
+    .wadah-presenters { display:grid; grid-template-columns: 250px minmax(0,1fr) 250px; align-items:end; gap:20px; min-height:0; }
+    .presenter { position:relative; width:250px; height:250px; align-self:end; overflow:hidden; will-change:transform; pointer-events:none; }
+    .presenter.left  { transform: translate3d(calc(var(--mx)*-7px),0,0); }
+    .presenter.right { transform: translate3d(calc(var(--mx)*7px),0,0); }
+    .presenter img { display:block; width:100%; height:100%; object-fit:contain; object-position:bottom center; filter: drop-shadow(7px 8px 0 rgba(23,19,31,0.82)); }
+    .presenter-note { align-self:end; margin-bottom:2px; }
+
+    /* ===== HASIL MINI POLL: GAMBAR BENAR/SALAH DI SLIDE 1 ===== */
+    .hero-tile.result-active .photo-zoom { animation: none; }
+    .hero-tile.result-active img { object-fit: contain; object-position: center bottom; padding: 24px 28px 12px; filter: drop-shadow(8px 10px 0 rgba(23,19,31,0.78)); }
+    .hero-tile.result-correct { box-shadow: 14px 14px 0 var(--ink), 0 0 0 6px rgba(52,211,153,0.22); }
+    .hero-tile.result-wrong { box-shadow: 14px 14px 0 var(--ink), 0 0 0 6px rgba(236,72,153,0.20); }
+    .hero-tile.result-active .sticker { background: var(--result-color, var(--amber)); color: var(--ink); }
+    .hero-tile.result-correct .sticker { background: var(--mint); }
+    .hero-tile.result-wrong .sticker { background: var(--pink); color: #fff; }
+    .hero-tile.result-active .tile-label { background: rgba(255,253,248,0.96); }
 
     @media (prefers-reduced-motion: reduce) {
-      * {
-        animation-duration: 0.001ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.001ms !important;
-      }
+      * { animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; }
     }
   </style>
 </head>
@@ -1383,13 +302,11 @@
             <div class="shape pill" style="width:220px;height:82px;background:var(--pink);left:500px;bottom:18px;transform:rotate(-8deg);opacity:.90;"></div>
             <div class="shape circle" style="width:135px;height:135px;background:transparent;border:14px solid var(--mint);right:330px;bottom:120px;box-shadow:10px 10px 0 var(--ink);"></div>
           </div>
-
           <div class="layer mid">
             <div class="shape circle" style="width:92px;height:92px;background:var(--mint);left:245px;top:545px;opacity:.90;"></div>
             <div class="shape square" style="width:78px;height:78px;background:var(--violet);right:210px;top:410px;transform:rotate(-12deg);opacity:.88;"></div>
             <div class="shape pill" style="width:145px;height:52px;background:var(--amber);left:1040px;top:150px;transform:rotate(10deg);opacity:.88;"></div>
           </div>
-
           <div class="layer front">
             <div class="shape circle" style="width:48px;height:48px;background:var(--pink);left:760px;top:120px;opacity:.90;"></div>
             <div class="shape square" style="width:44px;height:44px;background:var(--mint);right:520px;bottom:120px;transform:rotate(18deg);opacity:.90;"></div>
@@ -1401,11 +318,7 @@
             <div class="brand-badge">☣️</div>
             <span>Limbah B3 RS</span>
           </div>
-
-          <div class="progress" aria-label="Progres presentasi">
-            <div id="bar"></div>
-          </div>
-
+          <div class="progress" aria-label="Progres presentasi"><div id="bar"></div></div>
           <button class="nav-btn" id="btnPrev" aria-label="Slide sebelumnya">◀</button>
           <div class="counter" id="counter">1 / 14</div>
           <button class="nav-btn" id="btnNext" aria-label="Slide berikutnya">▶</button>
@@ -1427,30 +340,16 @@
                     Sebelum masuk materi, uji insting Anda: manakah yang
                     <strong>wajib</strong> masuk ke pengelolaan limbah B3/infeksius?
                   </p>
-
                   <div class="quiz">
                     <div class="quiz-title">Mini Poll Pembuka</div>
                     <div class="choices">
-                      <button class="choice" data-correct="false">
-                        <span class="mark">A</span>
-                        <span>💊 Obat belum kedaluwarsa, kemasan bersih</span>
-                      </button>
-                      <button class="choice" data-correct="true">
-                        <span class="mark">B</span>
-                        <span>💉 Spuit bekas pakai terkontaminasi darah</span>
-                      </button>
-                      <button class="choice" data-correct="false">
-                        <span class="mark">C</span>
-                        <span>🍽️ Sisa makanan pasien</span>
-                      </button>
-                      <button class="choice" data-correct="false">
-                        <span class="mark">D</span>
-                        <span>📄 Kertas HVS bersih</span>
-                      </button>
+                      <button class="choice" data-correct="false"><span class="mark">A</span><span>💊 Obat belum kedaluwarsa, kemasan bersih</span></button>
+                      <button class="choice" data-correct="true"><span class="mark">B</span><span>💉 Spuit bekas pakai terkontaminasi darah</span></button>
+                      <button class="choice" data-correct="false"><span class="mark">C</span><span>🍽️ Sisa makanan pasien</span></button>
+                      <button class="choice" data-correct="false"><span class="mark">D</span><span>📄 Kertas HVS bersih</span></button>
                     </div>
                     <div id="introFeedback" class="feedback"></div>
                   </div>
-
                   <div class="cta-row">
                     <button class="btn primary" id="startBtn">Mulai Presentasi →</button>
                     <button class="btn" id="askBtn">Pantik Diskusi</button>
@@ -1467,22 +366,13 @@
                     </div>
                     <div class="tile-label">
                       Blok Foto Utama
-                      <small>Edit IMAGE_URLS.hero untuk mengganti gambar ini.</small>
+                      <small>Edit RESULT_IMAGES.initial untuk mengganti gambar ini.</small>
                     </div>
                   </div>
-
-                  <div class="chip" style="left:-8px; top:58px; --accent:var(--pink); --cx:26px; --cy:16px;">
-                    <span class="dot"></span><span>Infeksius</span>
-                  </div>
-                  <div class="chip" style="right:-10px; top:126px; --accent:var(--amber); --cx:-22px; --cy:14px;">
-                    <span class="dot"></span><span>Kimia</span>
-                  </div>
-                  <div class="chip" style="left:12px; bottom:116px; --accent:var(--violet); --cx:20px; --cy:-16px;">
-                    <span class="dot"></span><span>Tajam</span>
-                  </div>
-                  <div class="chip" style="right:24px; bottom:48px; --accent:var(--mint); --cx:-24px; --cy:-12px;">
-                    <span class="dot"></span><span>Farmasi</span>
-                  </div>
+                  <div class="chip" style="left:-8px; top:58px; --accent:var(--pink); --cx:26px; --cy:16px;"><span class="dot"></span><span>Infeksius</span></div>
+                  <div class="chip" style="right:-10px; top:126px; --accent:var(--amber); --cx:-22px; --cy:14px;"><span class="dot"></span><span>Kimia</span></div>
+                  <div class="chip" style="left:12px; bottom:116px; --accent:var(--violet); --cx:20px; --cy:-16px;"><span class="dot"></span><span>Tajam</span></div>
+                  <div class="chip" style="right:24px; bottom:48px; --accent:var(--mint); --cx:-24px; --cy:-12px;"><span class="dot"></span><span>Farmasi</span></div>
                 </div>
               </div>
             </div>
@@ -1492,13 +382,9 @@
           <section class="slide" aria-hidden="true">
             <div class="slide-inner">
               <div class="slide-head">
-                <div>
-                  <span class="kicker">Agenda</span>
-                  <h2>Apa yang akan kita bahas?</h2>
-                </div>
+                <div><span class="kicker">Agenda</span><h2>Apa yang akan kita bahas?</h2></div>
                 <p>Dari pemahaman dasar hingga aksi nyata di lapangan.</p>
               </div>
-
               <div class="body">
                 <div class="grid grid-4 fill stagger">
                   <div class="card violet"><div class="top-accent"></div><div class="icon"><span class="icon-text">01</span></div><h3>Pembuka</h3><p>Menguji persepsi awal tentang risiko limbah di RS.</p></div>
@@ -1518,31 +404,19 @@
           <section class="slide" aria-hidden="true">
             <div class="slide-inner">
               <div class="slide-head">
-                <div>
-                  <span class="kicker">Dasar Pemahaman</span>
-                  <h2>Apa itu Limbah B3 RS?</h2>
-                </div>
+                <div><span class="kicker">Dasar Pemahaman</span><h2>Apa itu Limbah B3 RS?</h2></div>
                 <p>Bukan sekadar sampah medis; ada kriteria sifat, konsentrasi, dan jumlah.</p>
               </div>
-
               <div class="body split">
                 <div>
-                  <p class="lead">
-                    Limbah B3 adalah limbah yang mengandung atau terkontaminasi bahan berbahaya
-                    dan/atau beracun yang karena sifat, konsentrasi, dan/atau jumlahnya dapat
-                    mencemarkan lingkungan, membahayakan kesehatan manusia, atau menimbulkan penyakit.
-                  </p>
+                  <p class="lead">Limbah B3 adalah limbah yang mengandung atau terkontaminasi bahan berbahaya dan/atau beracun yang karena sifat, konsentrasi, dan/atau jumlahnya dapat mencemarkan lingkungan, membahayakan kesehatan manusia, atau menimbulkan penyakit.</p>
                   <ul class="list">
                     <li>Dapat berasal dari layanan medis, penunjang medis, dan operasional tertentu.</li>
                     <li>Tidak semua sampah RS adalah B3; sampah domestik perlu dipisahkan sejak sumber.</li>
                     <li>Kesalahan pemilahan dapat membuat limbah biasa berpotensi menjadi berbahaya.</li>
                   </ul>
-                  <div class="note">
-                    <strong>Catatan Regulasi:</strong> Rujuk peraturan terbaru: PP 22/2021, Permen LHK
-                    terkait limbah B3, Permenkes 7/2019, serta SOP internal rumah sakit.
-                  </div>
+                  <div class="note"><strong>Catatan Regulasi:</strong> Rujuk peraturan terbaru: PP 22/2021, Permen LHK terkait limbah B3, Permenkes 7/2019, serta SOP internal rumah sakit.</div>
                 </div>
-
                 <div class="grid grid-2 fill stagger">
                   <div class="card violet"><div class="top-accent"></div><div class="icon">📄</div><h3>PP 22/2021</h3><p>Perlindungan dan pengelolaan lingkungan hidup.</p></div>
                   <div class="card mint"><div class="top-accent"></div><div class="icon">🌿</div><h3>Permen LHK</h3><p>Penyimpanan, pengangkutan, pengolahan, pemantauan.</p></div>
@@ -1557,13 +431,9 @@
           <section class="slide" aria-hidden="true">
             <div class="slide-inner">
               <div class="slide-head">
-                <div>
-                  <span class="kicker">Sumber Timbulan</span>
-                  <h2>Sumber Limbah B3 RS</h2>
-                </div>
+                <div><span class="kicker">Sumber Timbulan</span><h2>Sumber Limbah B3 RS</h2></div>
                 <p>Setiap unit memiliki profil risiko berbeda.</p>
               </div>
-
               <div class="body">
                 <div class="grid grid-3 fill stagger">
                   <div class="card pink"><div class="top-accent"></div><div class="icon">🛏️</div><h3>Ruang Perawatan</h3><p>Kasa berdarah, sarung tangan terkontaminasi, selang infus, bahan habis pakai medis.</p></div>
@@ -1581,13 +451,9 @@
           <section class="slide" aria-hidden="true">
             <div class="slide-inner">
               <div class="slide-head">
-                <div>
-                  <span class="kicker">Sifat Bahaya</span>
-                  <h2>Karakteristik Bahaya</h2>
-                </div>
+                <div><span class="kicker">Sifat Bahaya</span><h2>Karakteristik Bahaya</h2></div>
                 <p>Karakter menentukan pemilahan, penyimpanan, dan penanganan.</p>
               </div>
-
               <div class="body">
                 <div class="grid grid-3 fill stagger">
                   <div class="card pink"><div class="top-accent"></div><div class="icon">☣️</div><h3>Infektius</h3><p>Mengandung patogen yang dapat menyebabkan infeksi.</p></div>
@@ -1605,24 +471,16 @@
           <section class="slide" aria-hidden="true">
             <div class="slide-inner">
               <div class="slide-head">
-                <div>
-                  <span class="kicker">Mengapa Penting?</span>
-                  <h2>Dampak Jika Salah Kelola</h2>
-                </div>
+                <div><span class="kicker">Mengapa Penting?</span><h2>Dampak Jika Salah Kelola</h2></div>
                 <p>Risikonya berlapis: manusia, lingkungan, dan institusi.</p>
               </div>
-
               <div class="body stack">
                 <div class="grid grid-3 fill stagger">
                   <div class="card pink"><div class="top-accent"></div><div class="icon">🩺</div><h3>Kesehatan</h3><p>Luka tusuk, paparan darah, infeksi silang, keracunan, penyakit akibat kerja.</p></div>
                   <div class="card mint"><div class="top-accent"></div><div class="icon">🌍</div><h3>Lingkungan</h3><p>Pencemaran tanah, air, udara, residu berbahaya jika pembakaran tidak terkendali.</p></div>
                   <div class="card violet"><div class="top-accent"></div><div class="icon">⚖️</div><h3>Hukum & Reputasi</h3><p>Sanksi administratif, denda, gangguan operasional, menurunnya kepercayaan publik.</p></div>
                 </div>
-
-                <div class="note">
-                  <strong>Pesan Kunci:</strong> Pengelolaan limbah B3 bukan hanya urusan IPSRS atau sanitasi,
-                  tetapi tanggung jawab bersama: dokter, perawat, laboran, farmasi, petugas kebersihan, hingga manajemen.
-                </div>
+                <div class="note"><strong>Pesan Kunci:</strong> Pengelolaan limbah B3 bukan hanya urusan IPSRS atau sanitasi, tetapi tanggung jawab bersama: dokter, perawat, laboran, farmasi, petugas kebersihan, hingga manajemen.</div>
               </div>
             </div>
           </section>
@@ -1631,13 +489,9 @@
           <section class="slide" aria-hidden="true">
             <div class="slide-inner">
               <div class="slide-head">
-                <div>
-                  <span class="kicker">Data & Gambaran Umum</span>
-                  <h2>Angka yang Perlu Diingat</h2>
-                </div>
+                <div><span class="kicker">Data & Gambaran Umum</span><h2>Angka yang Perlu Diingat</h2></div>
                 <p>Contoh gambaran umum untuk memantik kesadaran.</p>
               </div>
-
               <div class="body stack">
                 <div class="grid grid-4 fill stagger">
                   <div class="card pink stat"><div class="top-accent"></div><span class="num" data-count="15" data-suffix="%">0%</span><h3>Limbah Berbahaya</h3><p>Sebagian limbah faskes dapat tergolong berbahaya.</p></div>
@@ -1645,11 +499,7 @@
                   <div class="card violet stat"><div class="top-accent"></div><span class="num" data-count="3" data-suffix="">0</span><h3>Pilar Utama</h3><p>Pilah di sumber, wadah standar, pengolah berizin.</p></div>
                   <div class="card amber stat"><div class="top-accent"></div><span class="num" data-count="100" data-suffix="%">0%</span><h3>Terdokumentasi</h3><p>Manifest, log TPS, pelatihan, insiden, verifikasi.</p></div>
                 </div>
-
-                <div class="note">
-                  <strong>Catatan:</strong> Proporsi limbah dapat berbeda antar rumah sakit tergantung jenis layanan,
-                  volume pasien, kebijakan pemilahan, dan audit internal. Gunakan data lokal RS Anda sebagai bukti paling kuat.
-                </div>
+                <div class="note"><strong>Catatan:</strong> Proporsi limbah dapat berbeda antar rumah sakit tergantung jenis layanan, volume pasien, kebijakan pemilahan, dan audit internal. Gunakan data lokal RS Anda sebagai bukti paling kuat.</div>
               </div>
             </div>
           </section>
@@ -1658,13 +508,9 @@
           <section class="slide" aria-hidden="true">
             <div class="slide-inner">
               <div class="slide-head">
-                <div>
-                  <span class="kicker">Sistem Pengelolaan</span>
-                  <h2>Alur Pengelolaan Limbah B3</h2>
-                </div>
+                <div><span class="kicker">Sistem Pengelolaan</span><h2>Alur Pengelolaan Limbah B3</h2></div>
                 <p>Putus di satu titik, risiko meningkat di titik berikutnya.</p>
               </div>
-
               <div class="body">
                 <div class="grid grid-3 fill stagger">
                   <div class="card mint"><div class="top-accent"></div><div class="icon">1</div><h3>Pilah di Sumber</h3><p>Pemisahan awal menentukan seluruh rantai aman.</p></div>
@@ -1682,41 +528,15 @@
           <section class="slide" aria-hidden="true">
             <div class="slide-inner">
               <div class="slide-head">
-                <div>
-                  <span class="kicker">Praktik Lapangan</span>
-                  <h2>Pemilahan di Sumber</h2>
-                </div>
+                <div><span class="kicker">Praktik Lapangan</span><h2>Pemilahan di Sumber</h2></div>
                 <p>Blok gambar di bawah bisa Anda ganti dengan foto asli RS Anda.</p>
               </div>
-
               <div class="body rows-photo">
                 <div class="grid grid-3 fill stagger">
-                  <div class="tile">
-                    <div class="photo-parallax">
-                      <div class="photo-zoom">
-                        <img data-img="infectious" data-alt="Foto limbah infeksius kantong kuning" />
-                      </div>
-                    </div>
-                    <div class="tile-label">Kuning: Infeksius<small>Edit IMAGE_URLS.infectious</small></div>
-                  </div>
-                  <div class="tile">
-                    <div class="photo-parallax">
-                      <div class="photo-zoom">
-                        <img data-img="sharps" data-alt="Foto safety box benda tajam" />
-                      </div>
-                    </div>
-                    <div class="tile-label">Safety Box: Tajam<small>Edit IMAGE_URLS.sharps</small></div>
-                  </div>
-                  <div class="tile">
-                    <div class="photo-parallax">
-                      <div class="photo-zoom">
-                        <img data-img="domestic" data-alt="Foto sampah domestik rumah sakit" />
-                      </div>
-                    </div>
-                    <div class="tile-label">Hitam/Domestik<small>Edit IMAGE_URLS.domestic</small></div>
-                  </div>
+                  <div class="tile"><div class="photo-parallax"><div class="photo-zoom"><img data-img="infectious" data-alt="Foto limbah infeksius kantong kuning" /></div></div><div class="tile-label">Kuning: Infeksius<small>Edit IMAGE_URLS.infectious</small></div></div>
+                  <div class="tile"><div class="photo-parallax"><div class="photo-zoom"><img data-img="sharps" data-alt="Foto safety box benda tajam" /></div></div><div class="tile-label">Safety Box: Tajam<small>Edit IMAGE_URLS.sharps</small></div></div>
+                  <div class="tile"><div class="photo-parallax"><div class="photo-zoom"><img data-img="domestic" data-alt="Foto sampah domestik rumah sakit" /></div></div><div class="tile-label">Hitam/Domestik<small>Edit IMAGE_URLS.domestic</small></div></div>
                 </div>
-
                 <div class="grid grid-3 fill stagger">
                   <div class="card mint"><div class="top-accent"></div><div class="icon">🎯</div><h3>Pilah di Titik Hasil</h3><p>Letakkan wadah dekat sumber, bukan jauh di ujung koridor.</p></div>
                   <div class="card amber"><div class="top-accent"></div><div class="icon">🚫</div><h3>Jangan Campur</h3><p>Satu benda tajam/infeksius ke kantong domestik = satu kantong jadi B3.</p></div>
@@ -1726,117 +546,50 @@
             </div>
           </section>
 
-          <!-- SLIDE 10: KATEGORI WADAH + PRESENTER KIRI-KANAN BAWAH -->
+          <!-- SLIDE 10: KATEGORI WADAH + PRESENTER -->
           <section class="slide" aria-hidden="true">
             <div class="slide-inner wadah-slide">
               <div class="slide-head">
-                <div>
-                  <span class="kicker">Katalog Warna Wadah</span>
-                  <h2>Kategori Wadah Sampah B3 Medis</h2>
-                </div>
-                <p>
-                  5 kategori warna wadah di atas; dua presenter di pojok kiri‑kanan bawah.
-                  Kartu disusun agar tidak tertutup gambar.
-                </p>
+                <div><span class="kicker">Katalog Warna Wadah</span><h2>Kategori Wadah Sampah B3 Medis</h2></div>
+                <p>5 kategori warna wadah di atas; dua presenter di pojok kiri‑kanan bawah. Kartu disusun agar tidak tertutup gambar.</p>
               </div>
-
               <div class="body">
                 <div class="wadah-board stagger">
                   <article class="wadah-card kuning">
-                    <div class="wadah-art">
-                      <div class="bag"><span class="art-icon">☣️</span></div>
-                      <div class="bin"><span class="art-icon">☣️</span></div>
-                    </div>
-                    <h3>Kuning</h3>
-                    <div class="wadah-sub">Limbah Infeksius & Patologis</div>
-                    <ul class="wadah-list">
-                      <li>Perban berdarah</li>
-                      <li>Kasa & balutan</li>
-                      <li>Cairan tubuh</li>
-                      <li>Jaringan / patologi</li>
-                    </ul>
+                    <div class="wadah-art"><div class="bag"><span class="art-icon">☣️</span></div><div class="bin"><span class="art-icon">☣️</span></div></div>
+                    <h3>Kuning</h3><div class="wadah-sub">Limbah Infeksius & Patologis</div>
+                    <ul class="wadah-list"><li>Perban berdarah</li><li>Kasa & balutan</li><li>Cairan tubuh</li><li>Jaringan / patologi</li></ul>
                     <div class="wadah-tag">Kantong + tempat sampah kuning</div>
                   </article>
-
                   <article class="wadah-card merah">
-                    <div class="wadah-art">
-                      <div class="bag"><span class="art-icon">☢️</span></div>
-                      <div class="bin"><span class="art-icon">☢️</span></div>
-                    </div>
-                    <h3>Merah</h3>
-                    <div class="wadah-sub">Limbah Radioaktif</div>
-                    <ul class="wadah-list">
-                      <li>Terkontaminasi radioterapi</li>
-                      <li>Sumber tertutup</li>
-                      <li>Material radiologi / nuklir</li>
-                    </ul>
+                    <div class="wadah-art"><div class="bag"><span class="art-icon">☢️</span></div><div class="bin"><span class="art-icon">☢️</span></div></div>
+                    <h3>Merah</h3><div class="wadah-sub">Limbah Radioaktif</div>
+                    <ul class="wadah-list"><li>Terkontaminasi radioterapi</li><li>Sumber tertutup</li><li>Material radiologi / nuklir</li></ul>
                     <div class="wadah-tag">Penanganan khusus & berizin</div>
                   </article>
-
                   <article class="wadah-card ungu">
-                    <div class="wadah-art">
-                      <div class="bag"><span class="art-icon">🧬</span></div>
-                      <div class="bin"><span class="art-icon">🧪</span></div>
-                    </div>
-                    <h3>Ungu</h3>
-                    <div class="wadah-sub">Limbah Sitotoksik</div>
-                    <ul class="wadah-list">
-                      <li>Sisa obat kemoterapi</li>
-                      <li>Vial / botol kemo</li>
-                      <li>Material kontak sitostatik</li>
-                    </ul>
+                    <div class="wadah-art"><div class="bag"><span class="art-icon">🧬</span></div><div class="bin"><span class="art-icon">🧪</span></div></div>
+                    <h3>Ungu</h3><div class="wadah-sub">Limbah Sitotoksik</div>
+                    <ul class="wadah-list"><li>Sisa obat kemoterapi</li><li>Vial / botol kemo</li><li>Material kontak sitostatik</li></ul>
                     <div class="wadah-tag">Jangan dicampur limbah biasa</div>
                   </article>
-
                   <article class="wadah-card coklat">
-                    <div class="wadah-art">
-                      <div class="bag"><span class="art-icon">💊</span></div>
-                      <div class="bin"><span class="art-icon">🧪</span></div>
-                    </div>
-                    <h3>Coklat</h3>
-                    <div class="wadah-sub">Limbah Farmasi & Kimiawi</div>
-                    <ul class="wadah-list">
-                      <li>Obat kedaluwarsa</li>
-                      <li>Obat rusak / ditarik</li>
-                      <li>Sisa bahan kimia / reagen</li>
-                    </ul>
+                    <div class="wadah-art"><div class="bag"><span class="art-icon">💊</span></div><div class="bin"><span class="art-icon">🧪</span></div></div>
+                    <h3>Coklat</h3><div class="wadah-sub">Limbah Farmasi & Kimiawi</div>
+                    <ul class="wadah-list"><li>Obat kedaluwarsa</li><li>Obat rusak / ditarik</li><li>Sisa bahan kimia / reagen</li></ul>
                     <div class="wadah-tag">Ikuti SDS & label</div>
                   </article>
-
                   <article class="wadah-card sharp">
-                    <div class="wadah-art">
-                      <div class="safety"><span class="art-icon">☣️</span></div>
-                      <div class="sharp-tools">
-                        <span>💉</span>
-                        <span>🔪</span>
-                      </div>
-                    </div>
-                    <h3>Safety Box</h3>
-                    <div class="wadah-sub">Limbah Benda Tajam</div>
-                    <ul class="wadah-list">
-                      <li>Jarum suntik</li>
-                      <li>Pisau bedah / scalpel</li>
-                      <li>Ampul kaca</li>
-                      <li>Fragment tajam lain</li>
-                    </ul>
+                    <div class="wadah-art"><div class="safety"><span class="art-icon">☣️</span></div><div class="sharp-tools"><span>💉</span><span>🔪</span></div></div>
+                    <h3>Safety Box</h3><div class="wadah-sub">Limbah Benda Tajam</div>
+                    <ul class="wadah-list"><li>Jarum suntik</li><li>Pisau bedah / scalpel</li><li>Ampul kaca</li><li>Fragment tajam lain</li></ul>
                     <div class="wadah-tag">Maks 3/4, jangan dibuka ulang</div>
                   </article>
                 </div>
-
                 <div class="wadah-presenters">
-                  <div class="presenter left">
-                    <img data-img="presenterLeft" data-alt="Presenter kiri" />
-                  </div>
-
-                  <div class="note presenter-note">
-                    <strong>Pesan kunci:</strong> Kenali warna wadah sejak di sumber. Satu kesalahan
-                    pemilahan dapat mengubah seluruh rantai menjadi berisiko — pastikan wadah, label,
-                    dan pelatihan berjalan seiring.
-                  </div>
-
-                  <div class="presenter right">
-                    <img data-img="presenterRight" data-alt="Presenter kanan" />
-                  </div>
+                  <div class="presenter left"><img data-img="presenterLeft" data-alt="Presenter kiri" /></div>
+                  <div class="note presenter-note"><strong>Pesan kunci:</strong> Kenali warna wadah sejak di sumber. Satu kesalahan pemilahan dapat mengubah seluruh rantai menjadi berisiko — pastikan wadah, label, dan pelatihan berjalan seiring.</div>
+                  <div class="presenter right"><img data-img="presenterRight" data-alt="Presenter kanan" /></div>
                 </div>
               </div>
             </div>
@@ -1846,13 +599,9 @@
           <section class="slide" aria-hidden="true">
             <div class="slide-inner">
               <div class="slide-head">
-                <div>
-                  <span class="kicker">Perlindungan Petugas</span>
-                  <h2>APD & Tanggap Insiden</h2>
-                </div>
+                <div><span class="kicker">Perlindungan Petugas</span><h2>APD & Tanggap Insiden</h2></div>
                 <p>Petugas limbah adalah garda depan yang wajib dilindungi.</p>
               </div>
-
               <div class="body split">
                 <div class="grid grid-2 fill stagger">
                   <div class="card violet"><div class="top-accent"></div><div class="icon">🧤</div><h3>Sarung Tangan</h3><p>Tahan tusuk, ganti jika robek/terkontaminasi.</p></div>
@@ -1860,17 +609,8 @@
                   <div class="card amber"><div class="top-accent"></div><div class="icon">🥼</div><h3>Gown/Apron</h3><p>Mencegah percikan menempel pada pakaian kerja.</p></div>
                   <div class="card pink"><div class="top-accent"></div><div class="icon">🥽</div><h3>Pelindung Mata</h3><p>Google/kacamata saat potensi terciprat.</p></div>
                 </div>
-
                 <div class="column-stack">
-                  <div class="tile">
-                    <div class="photo-parallax">
-                      <div class="photo-zoom">
-                        <img data-img="apd" data-alt="Foto petugas menggunakan APD" />
-                      </div>
-                    </div>
-                    <div class="tile-label">Foto APD Petugas<small>Edit IMAGE_URLS.apd</small></div>
-                  </div>
-
+                  <div class="tile"><div class="photo-parallax"><div class="photo-zoom"><img data-img="apd" data-alt="Foto petugas menggunakan APD" /></div></div><div class="tile-label">Foto APD Petugas<small>Edit IMAGE_URLS.apd</small></div></div>
                   <div class="mini-stack stagger">
                     <div class="card pink mini-card"><div class="top-accent"></div><h3>Infeksius</h3><p>Amankan area, APD lengkap, serap + desinfektan, lapor.</p></div>
                     <div class="card amber mini-card"><div class="top-accent"></div><h3>Kimia</h3><p>Cek label/SDS, ventilasi, absorbent netral, jangan campur.</p></div>
@@ -1885,13 +625,9 @@
           <section class="slide" aria-hidden="true">
             <div class="slide-inner">
               <div class="slide-head">
-                <div>
-                  <span class="kicker">Evaluasi Mandiri</span>
-                  <h2>Checklist Kepatuhan</h2>
-                </div>
+                <div><span class="kicker">Evaluasi Mandiri</span><h2>Checklist Kepatuhan</h2></div>
                 <p>Centang item yang sudah berjalan di unit Anda.</p>
               </div>
-
               <div class="body check-layout">
                 <div>
                   <div id="auditChecklist" class="checks stagger">
@@ -1907,33 +643,19 @@
                     <label class="check"><input type="checkbox" /> <span>Audit internal dilakukan berkala dengan tindak lanjut terdokumentasi.</span></label>
                   </div>
                 </div>
-
                 <div class="card mint ring-card">
                   <div class="top-accent"></div>
                   <div class="icon" style="margin:0 auto 8px;">📋</div>
                   <h3>Skor Kepatuhan</h3>
                   <div class="ring-wrap">
                     <svg class="ring" viewBox="0 0 200 200" aria-hidden="true">
-                      <defs>
-                        <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" stop-color="#34d399" />
-                          <stop offset="100%" stop-color="#8b5cf6" />
-                        </linearGradient>
-                      </defs>
+                      <defs><linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#34d399" /><stop offset="100%" stop-color="#8b5cf6" /></linearGradient></defs>
                       <circle class="ring-bg" cx="100" cy="100" r="82"></circle>
                       <circle id="ringFg" class="ring-fg" cx="100" cy="100" r="82"></circle>
                     </svg>
-                    <div class="ring-center">
-                      <div>
-                        <div id="ringText">0%</div>
-                        <div class="muted">terpenuhi</div>
-                      </div>
-                    </div>
+                    <div class="ring-center"><div><div id="ringText">0%</div><div class="muted">terpenuhi</div></div></div>
                   </div>
-                  <div class="note" style="margin-top:14px;text-align:left;">
-                    <strong>Cara Pakai:</strong> Gunakan checklist ini sebagai template audit internal.
-                    Isi persen sesuai hasil penilaian, lalu buat tindak lanjut untuk item yang belum centang.
-                  </div>
+                  <div class="note" style="margin-top:14px;text-align:left;"><strong>Cara Pakai:</strong> Gunakan checklist ini sebagai template audit internal. Isi persen sesuai hasil penilaian, lalu buat tindak lanjut untuk item yang belum centang.</div>
                 </div>
               </div>
             </div>
@@ -1943,47 +665,15 @@
           <section class="slide" aria-hidden="true">
             <div class="slide-inner">
               <div class="slide-head">
-                <div>
-                  <span class="kicker">Dokumentasi</span>
-                  <h2>Blok Gambar Pendukung</h2>
-                </div>
+                <div><span class="kicker">Dokumentasi</span><h2>Blok Gambar Pendukung</h2></div>
                 <p>Ganti URL di IMAGE_URLS dengan foto TPS, laboratorium, farmasi, audit, atau pelatihan RS Anda.</p>
               </div>
-
               <div class="body">
                 <div class="grid grid-2 fill stagger">
-                  <div class="tile">
-                    <div class="photo-parallax">
-                      <div class="photo-zoom">
-                        <img data-img="tps" data-alt="Foto TPS limbah B3 rumah sakit" />
-                      </div>
-                    </div>
-                    <div class="tile-label">TPS Limbah B3<small>Edit IMAGE_URLS.tps</small></div>
-                  </div>
-                  <div class="tile">
-                    <div class="photo-parallax">
-                      <div class="photo-zoom">
-                        <img data-img="lab" data-alt="Foto laboratorium rumah sakit" />
-                      </div>
-                    </div>
-                    <div class="tile-label">Laboratorium<small>Edit IMAGE_URLS.lab</small></div>
-                  </div>
-                  <div class="tile">
-                    <div class="photo-parallax">
-                      <div class="photo-zoom">
-                        <img data-img="pharmacy" data-alt="Foto instalasi farmasi rumah sakit" />
-                      </div>
-                    </div>
-                    <div class="tile-label">Farmasi<small>Edit IMAGE_URLS.pharmacy</small></div>
-                  </div>
-                  <div class="tile">
-                    <div class="photo-parallax">
-                      <div class="photo-zoom">
-                        <img data-img="audit" data-alt="Foto audit atau pelatihan pengelolaan limbah" />
-                      </div>
-                    </div>
-                    <div class="tile-label">Audit / Pelatihan<small>Edit IMAGE_URLS.audit</small></div>
-                  </div>
+                  <div class="tile"><div class="photo-parallax"><div class="photo-zoom"><img data-img="tps" data-alt="Foto TPS limbah B3 rumah sakit" /></div></div><div class="tile-label">TPS Limbah B3<small>Edit IMAGE_URLS.tps</small></div></div>
+                  <div class="tile"><div class="photo-parallax"><div class="photo-zoom"><img data-img="lab" data-alt="Foto laboratorium rumah sakit" /></div></div><div class="tile-label">Laboratorium<small>Edit IMAGE_URLS.lab</small></div></div>
+                  <div class="tile"><div class="photo-parallax"><div class="photo-zoom"><img data-img="pharmacy" data-alt="Foto instalasi farmasi rumah sakit" /></div></div><div class="tile-label">Farmasi<small>Edit IMAGE_URLS.pharmacy</small></div></div>
+                  <div class="tile"><div class="photo-parallax"><div class="photo-zoom"><img data-img="audit" data-alt="Foto audit atau pelatihan pengelolaan limbah" /></div></div><div class="tile-label">Audit / Pelatihan<small>Edit IMAGE_URLS.audit</small></div></div>
                 </div>
               </div>
             </div>
@@ -1993,30 +683,19 @@
           <section class="slide" aria-hidden="true">
             <div class="slide-inner">
               <div class="slide-head">
-                <div>
-                  <span class="kicker">Penutup</span>
-                  <h2>Penutup & Komitmen</h2>
-                </div>
+                <div><span class="kicker">Penutup</span><h2>Penutup & Komitmen</h2></div>
                 <p>Dari kesadaran menjadi kebiasaan, dari kebiasaan menjadi budaya aman.</p>
               </div>
-
               <div class="body closing">
                 <div class="grid grid-3 fill stagger">
                   <div class="card violet"><div class="top-accent"></div><div class="icon">🗑️</div><h3>Pilah Sejak Awal</h3><p>Kebiasaan kecil di ruang perawatan menentukan keselamatan besar di hilir.</p></div>
                   <div class="card mint"><div class="top-accent"></div><div class="icon">📝</div><h3>Dokumentasikan</h3><p>Jika tidak tercatat, sulit diaudit; jika sulit diaudit, sulit diperbaiki.</p></div>
                   <div class="card amber"><div class="top-accent"></div><div class="icon">🔁</div><h3>Perbaiki Terus</h3><p>Jadikan insiden dan temuan audit sebagai pembelajaran.</p></div>
                 </div>
-
                 <div class="final-row">
-                  <div>
-                    <p class="thanks">Terima kasih</p>
-                    <p class="muted" style="margin-top:8px;">Silakan ganti blok gambar dengan foto asli RS Anda agar lebih kontekstual.</p>
-                  </div>
-                  <div class="note" style="margin-top:0;">
-                    <strong>Ajakan Aksi:</strong> Mulai dari satu unit: pilih 3 item checklist yang paling mungkin diperbaiki minggu ini.
-                  </div>
+                  <div><p class="thanks">Terima kasih</p><p class="muted" style="margin-top:8px;">Silakan ganti blok gambar dengan foto asli RS Anda agar lebih kontekstual.</p></div>
+                  <div class="note" style="margin-top:0;"><strong>Ajakan Aksi:</strong> Mulai dari satu unit: pilih 3 item checklist yang paling mungkin diperbaiki minggu ini.</div>
                 </div>
-
                 <div class="cta-row">
                   <button class="btn primary" id="commitBtn">Saya Komit Perbaiki 🎉</button>
                   <button class="btn pink" id="qaBtn">Buka Tanya Jawab</button>
@@ -2041,23 +720,25 @@
 
   <script>
     /* ========================================================
-       GANTI URL GAMBAR DI SINI
+       1) GAMBAR HASIL MINI POLL (SLIDE 1)
        --------------------------------------------------------
-       Tempel URL foto Anda pada salah satu atau semua key.
-       Jika dibiarkan kosong "", akan muncul placeholder otomatis.
+       initial -> gambar saat BELUM ada jawaban
+       benar   -> gambar saat klik jawaban BENAR
+       salah   -> gambar saat klik jawaban SALAH
+       Default initial = Jawaban-Benar.png agar pembuka sudah
+       menampilkan foto asli (bukan placeholder). Silakan ganti
+       ke file lain misal "Foto-Kelompok.png" bila punya.
+       ======================================================== */
+    const RESULT_IMAGES = {
+      initial: "Jawaban-Benar.png",
+      benar:   "Jawaban-Benar.png",
+      salah:   "Jawaban-Salah.png"
+    };
 
-       Bisa pakai URL online:
-       hero: "https://example.com/foto.jpg"
-
-       Bisa pakai file lokal relatif jika folder aset disamping index.html:
-       hero: "assets/hero.jpg"
-
-       PRESENTER (slide 10):
-       presenterLeft  -> foto presenter pojok KIRI bawah (menunjuk ke kanan)
-       presenterRight -> foto presenter pojok KANAN bawah (menunjuk ke kiri)
-       Saran: pakai PNG dengan background TRANSPARAN agar terlihat seperti
-       stiker dengan hard shadow. Jika background putih, masih tetap tampil
-       (menjadi seperti foto yang ditempel), hanya shadow mengikuti kotak.
+    /* ========================================================
+       2) GAMBAR BLOK LAINNYA (foto pendukung tiap slide)
+       Kosongkan "" untuk pakai placeholder otomatis.
+       Bisa URL online atau path lokal, misal "assets/hero.jpg".
        ======================================================== */
     const IMAGE_URLS = {
       hero: "",
@@ -2069,8 +750,8 @@
       lab: "",
       pharmacy: "",
       audit: "",
-      presenterLeft: "assets/presenter-1.png",
-      presenterRight: "assets/presenter-2.png"
+      presenterLeft: "",
+      presenterRight: ""
     };
 
     const PLACEHOLDER_META = {
@@ -2090,24 +771,21 @@
     function presenterPlaceholder(key, color) {
       const emoji = key === "presenterLeft" ? "🧑‍⚕️" : "🧕";
       const label = key === "presenterLeft" ? "Presenter 1" : "Presenter 2";
-      const varName = key;
       const svg = `
 <svg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'>
   <rect x='14' y='14' width='372' height='372' rx='34' fill='#fffdf8' stroke='#17131f' stroke-width='7'/>
   <circle cx='200' cy='150' r='80' fill='${color}' fill-opacity='0.18'/>
   <text x='200' y='182' text-anchor='middle' font-size='104'>${emoji}</text>
   <text x='200' y='292' text-anchor='middle' font-family='Arial, sans-serif' font-size='30' font-weight='700' fill='#17131f'>${label}</text>
-  <text x='200' y='328' text-anchor='middle' font-family='Arial, sans-serif' font-size='17' fill='#625a69'>isi IMAGE_URLS.${varName}</text>
+  <text x='200' y='328' text-anchor='middle' font-family='Arial, sans-serif' font-size='17' fill='#625a69'>isi IMAGE_URLS.${key}</text>
 </svg>`;
       return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg.trim());
     }
 
     function placeholderFor(key) {
       if (key === "presenterLeft" || key === "presenterRight") {
-        const meta = PLACEHOLDER_META[key];
-        return presenterPlaceholder(key, meta.color);
+        return presenterPlaceholder(key, PLACEHOLDER_META[key].color);
       }
-
       const meta = PLACEHOLDER_META[key] || { label: key, color: "#8b5cf6" };
       const svg = `
 <svg xmlns='http://www.w3.org/2000/svg' width='1200' height='800' viewBox='0 0 1200 800'>
@@ -2129,27 +807,72 @@
         const raw = IMAGE_URLS[key];
         const url = typeof raw === "string" ? raw.trim() : "";
         const fallback = placeholderFor(key);
-
-        img.onerror = () => {
-          img.onerror = null;
-          img.src = fallback;
-        };
-
+        img.onerror = () => { img.onerror = null; img.src = fallback; };
         img.src = url || fallback;
-
-        if (img.dataset.alt) {
-          img.alt = img.dataset.alt;
-        }
+        if (img.dataset.alt) img.alt = img.dataset.alt;
       });
     }
 
-    window.setImage = function (key, url) {
-      IMAGE_URLS[key] = url;
-      applyImages();
-    };
-
+    window.setImage = function (key, url) { IMAGE_URLS[key] = url; applyImages(); };
     applyImages();
 
+    /* ========================================================
+       3) LOGIKA GAMBAR BENAR / SALAH PADA SLIDE 1
+       ======================================================== */
+    const RESULT_TILE = document.querySelector(".hero-tile");
+    const RESULT_IMG = RESULT_TILE ? RESULT_TILE.querySelector('img[data-img="hero"]') : null;
+    const RESULT_STICKER = RESULT_TILE ? RESULT_TILE.querySelector(".sticker") : null;
+    const RESULT_LABEL_SMALL = RESULT_TILE ? RESULT_TILE.querySelector(".tile-label small") : null;
+
+    function makeResultFallbackSvg(title, color, emoji) {
+      const svg = `
+<svg xmlns='http://www.w3.org/2000/svg' width='900' height='900' viewBox='0 0 900 900'>
+  <rect x='34' y='34' width='832' height='832' rx='48' fill='#fffdf8' stroke='#17131f' stroke-width='8'/>
+  <circle cx='450' cy='360' r='170' fill='${color}' opacity='0.18'/>
+  <text x='450' y='410' text-anchor='middle' font-family='Arial, sans-serif' font-size='150'>${emoji}</text>
+  <text x='450' y='575' text-anchor='middle' font-family='Arial, sans-serif' font-size='52' font-weight='700' fill='#17131f'>${title}</text>
+  <text x='450' y='635' text-anchor='middle' font-family='Arial, sans-serif' font-size='26' fill='#625a69'>Simpan file PNG satu folder dengan index.html</text>
+</svg>`;
+      return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg.trim());
+    }
+
+    function showInitialImage() {
+      if (!RESULT_TILE || !RESULT_IMG) return;
+      const src = (RESULT_IMAGES.initial || "").trim();
+      if (!src) return; // biarkan placeholder dari applyImages()
+      RESULT_TILE.classList.remove("result-active", "result-correct", "result-wrong");
+      RESULT_TILE.style.removeProperty("--result-color");
+      if (RESULT_STICKER) RESULT_STICKER.textContent = "Foto Utama";
+      if (RESULT_LABEL_SMALL) RESULT_LABEL_SMALL.textContent = "Edit RESULT_IMAGES.initial untuk mengganti gambar ini.";
+      RESULT_IMG.alt = "Foto utama slide pembuka";
+      RESULT_IMG.onerror = function () { this.onerror = null; this.src = makeResultFallbackSvg("Foto Utama", "#8b5cf6", "🏥"); };
+      RESULT_IMG.src = src;
+    }
+
+    function showResultImage(isCorrect) {
+      if (!RESULT_TILE || !RESULT_IMG) return;
+      const title = isCorrect ? "Jawaban Benar" : "Jawaban Salah";
+      const color = isCorrect ? "#34d399" : "#ec4899";
+      const emoji = isCorrect ? "✅" : "❌";
+      const src = (isCorrect ? RESULT_IMAGES.benar : RESULT_IMAGES.salah || "").trim();
+
+      RESULT_TILE.classList.add("result-active");
+      RESULT_TILE.classList.toggle("result-correct", isCorrect);
+      RESULT_TILE.classList.toggle("result-wrong", !isCorrect);
+      RESULT_TILE.style.setProperty("--result-color", color);
+      if (RESULT_STICKER) RESULT_STICKER.textContent = isCorrect ? "✅ Jawaban Benar" : "❌ Jawaban Salah";
+      if (RESULT_LABEL_SMALL) RESULT_LABEL_SMALL.textContent = src ? ("Gambar: " + src) : "Isi RESULT_IMAGES." + (isCorrect ? "benar" : "salah");
+
+      RESULT_IMG.alt = title;
+      RESULT_IMG.onerror = function () { this.onerror = null; this.src = makeResultFallbackSvg(title, color, emoji); };
+      RESULT_IMG.src = src || makeResultFallbackSvg(title, color, emoji);
+    }
+
+    showInitialImage();
+
+    /* ========================================================
+       4) NAVIGASI, PARALLAX, INTERAKSI
+       ======================================================== */
     const stage = document.getElementById("stage");
     const canvas = document.getElementById("canvas");
     const slides = Array.from(document.querySelectorAll(".slide"));
@@ -2160,72 +883,39 @@
     const btnFull = document.getElementById("btnFull");
     const toast = document.getElementById("toast");
     const dotsWrap = document.getElementById("dots");
-
     let current = 0;
 
-    function fitCanvas() {
-      const scale = stage.clientWidth / 1600;
-      canvas.style.transform = `scale(${scale})`;
-    }
-
+    function fitCanvas() { canvas.style.transform = `scale(${stage.clientWidth / 1600})`; }
     fitCanvas();
     window.addEventListener("resize", fitCanvas);
 
-    function clamp(value, min, max) {
-      return Math.max(min, Math.min(max, value));
-    }
+    function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
 
-    let targetX = 0;
-    let targetY = 0;
-    let currentX = 0;
-    let currentY = 0;
-    let velX = 0;
-    let velY = 0;
+    let targetX = 0, targetY = 0, currentX = 0, currentY = 0, velX = 0, velY = 0;
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     stage.addEventListener("pointermove", (e) => {
-      const rect = stage.getBoundingClientRect();
-      targetX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
-      targetY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+      const r = stage.getBoundingClientRect();
+      targetX = ((e.clientX - r.left) / r.width - 0.5) * 2;
+      targetY = ((e.clientY - r.top) / r.height - 0.5) * 2;
     });
-
-    stage.addEventListener("pointerleave", () => {
-      targetX = 0;
-      targetY = 0;
-    });
+    stage.addEventListener("pointerleave", () => { targetX = 0; targetY = 0; });
 
     const startTime = performance.now();
-
     function cinematicLoop(now) {
       const t = now - startTime;
-
       const autoX = Math.sin(t / 3200) * 0.48 + Math.sin(t / 1900) * 0.14;
       const autoY = Math.cos(t / 3800) * 0.36 + Math.sin(t / 2300) * 0.10;
-
       const blendX = clamp(targetX + autoX, -1.25, 1.25);
       const blendY = clamp(targetY + autoY, -1.25, 1.25);
-
-      const stiffness = 0.038;
-      const damping = 0.88;
-
-      velX += (blendX - currentX) * stiffness;
-      velY += (blendY - currentY) * stiffness;
-
-      velX *= damping;
-      velY *= damping;
-
-      currentX += velX;
-      currentY += velY;
-
+      velX += (blendX - currentX) * 0.038; velY += (blendY - currentY) * 0.038;
+      velX *= 0.88; velY *= 0.88;
+      currentX += velX; currentY += velY;
       canvas.style.setProperty("--mx", currentX.toFixed(4));
       canvas.style.setProperty("--my", currentY.toFixed(4));
-
       requestAnimationFrame(cinematicLoop);
     }
-
-    if (!reduceMotion) {
-      requestAnimationFrame(cinematicLoop);
-    }
+    if (!reduceMotion) requestAnimationFrame(cinematicLoop);
 
     slides.forEach((_, i) => {
       const btn = document.createElement("button");
@@ -2243,49 +933,34 @@
     }
 
     function animateCounters(slide) {
-      const counters = slide.querySelectorAll("[data-count]");
-      counters.forEach((el) => {
+      slide.querySelectorAll("[data-count]").forEach((el) => {
         if (el.dataset.animating === "1") return;
-
         const target = Number(el.dataset.count || 0);
         const suffix = el.dataset.suffix || "";
-        const duration = 1200;
         const start = performance.now();
         el.dataset.animating = "1";
-
         function tick(now) {
-          const p = Math.min(1, (now - start) / duration);
+          const p = Math.min(1, (now - start) / 1200);
           const eased = 1 - Math.pow(1 - p, 3);
           el.textContent = Math.round(target * eased) + suffix;
-          if (p < 1) {
-            requestAnimationFrame(tick);
-          } else {
-            el.dataset.animating = "0";
-          }
+          if (p < 1) requestAnimationFrame(tick); else el.dataset.animating = "0";
         }
-
         requestAnimationFrame(tick);
       });
     }
 
     function goTo(index) {
       index = Math.max(0, Math.min(slides.length - 1, index));
-
       slides.forEach((slide, i) => {
         const dir = i < index ? -1 : 1;
         slide.style.setProperty("--tx", `${dir * 56}px`);
         slide.classList.toggle("active", i === index);
         slide.setAttribute("aria-hidden", i === index ? "false" : "true");
       });
-
       current = index;
       bar.style.width = (index / (slides.length - 1)) * 100 + "%";
       counter.textContent = `${index + 1} / ${slides.length}`;
-
-      document.querySelectorAll(".dot-btn").forEach((dot, i) => {
-        dot.classList.toggle("active", i === index);
-      });
-
+      document.querySelectorAll(".dot-btn").forEach((dot, i) => dot.classList.toggle("active", i === index));
       animateCounters(slides[index]);
     }
 
@@ -2295,77 +970,47 @@
     window.addEventListener("keydown", (e) => {
       const interactive = e.target.closest("button, input, textarea, select");
       if (interactive && (e.key === "Enter" || e.key === " ")) return;
-
-      if (["ArrowRight", "PageDown", " ", "Enter"].includes(e.key)) {
-        e.preventDefault();
-        goTo(current + 1);
-      }
-      if (["ArrowLeft", "PageUp", "Backspace"].includes(e.key)) {
-        e.preventDefault();
-        goTo(current - 1);
-      }
+      if (["ArrowRight", "PageDown", " ", "Enter"].includes(e.key)) { e.preventDefault(); goTo(current + 1); }
+      if (["ArrowLeft", "PageUp", "Backspace"].includes(e.key)) { e.preventDefault(); goTo(current - 1); }
       if (e.key === "Home") goTo(0);
       if (e.key === "End") goTo(slides.length - 1);
     });
 
     let startX = null;
-    stage.addEventListener("touchstart", (e) => {
-      startX = e.touches[0].clientX;
-    }, { passive: true });
-
+    stage.addEventListener("touchstart", (e) => { startX = e.touches[0].clientX; }, { passive: true });
     stage.addEventListener("touchend", (e) => {
       if (startX === null) return;
-      const endX = e.changedTouches[0].clientX;
-      const dx = endX - startX;
-      if (Math.abs(dx) > 60) {
-        goTo(current + (dx < 0 ? 1 : -1));
-      }
+      const dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 60) goTo(current + (dx < 0 ? 1 : -1));
       startX = null;
     });
 
     btnFull.addEventListener("click", async () => {
       try {
-        if (!document.fullscreenElement) {
-          await stage.requestFullscreen();
-        } else {
-          await document.exitFullscreen();
-        }
+        if (!document.fullscreenElement) await stage.requestFullscreen();
+        else await document.exitFullscreen();
         setTimeout(fitCanvas, 120);
-      } catch (err) {
-        showToast("Fullscreen tidak didukung di browser ini.");
-      }
+      } catch (err) { showToast("Fullscreen tidak didukung di browser ini."); }
     });
 
     const choices = document.querySelectorAll(".choice");
     const introFeedback = document.getElementById("introFeedback");
-
     choices.forEach((btn) => {
       btn.addEventListener("click", () => {
         const isCorrect = btn.dataset.correct === "true";
         const correctBtn = Array.from(choices).find((c) => c.dataset.correct === "true");
-
-        choices.forEach((c) => {
-          c.disabled = true;
-          c.classList.remove("correct", "wrong");
-        });
-
+        choices.forEach((c) => { c.disabled = true; c.classList.remove("correct", "wrong"); });
         if (isCorrect) {
           btn.classList.add("correct");
           introFeedback.className = "feedback show good";
-          introFeedback.innerHTML = `
-            <strong>Tepat!</strong> Spuit bekas pakai yang terkontaminasi darah termasuk limbah berisiko
-            dan harus masuk penanganan benda tajam/infeksius sesuai SOP.
-            Ini pengingat bahwa <em>kebersihan visual tidak sama dengan aman</em>.
-          `;
+          introFeedback.innerHTML = `<strong>Tepat!</strong> Spuit bekas pakai yang terkontaminasi darah termasuk limbah berisiko dan harus masuk penanganan benda tajam/infeksius sesuai SOP. Ini pengingat bahwa <em>kebersihan visual tidak sama dengan aman</em>.`;
         } else {
           btn.classList.add("wrong");
           if (correctBtn) correctBtn.classList.add("correct");
           introFeedback.className = "feedback show bad";
-          introFeedback.innerHTML = `
-            <strong>Hampir.</strong> Jawaban paling tepat adalah spuit bekas pakai terkontaminasi darah.
-            Sisa makanan dan kertas bersih umumnya masuk domestik, selama tidak terkontaminasi bahan berbahaya.
-          `;
+          introFeedback.innerHTML = `<strong>Hampir.</strong> Jawaban paling tepat adalah spuit bekas pakai terkontaminasi darah. Sisa makanan dan kertas bersih umumnya masuk domestik, selama tidak terkontaminasi bahan berbahaya.`;
         }
+        showResultImage(isCorrect); // <-- ganti gambar foto utama sesuai jawaban
       });
     });
 
@@ -2378,10 +1023,8 @@
     const ringFg = document.getElementById("ringFg");
     const ringText = document.getElementById("ringText");
     const circumference = 2 * Math.PI * 82;
-
     ringFg.style.strokeDasharray = circumference;
     ringFg.style.strokeDashoffset = circumference;
-
     function updateAudit() {
       const total = checks.length;
       const done = Array.from(checks).filter((c) => c.checked).length;
@@ -2389,7 +1032,6 @@
       ringFg.style.strokeDashoffset = circumference * (1 - pct / 100);
       ringText.textContent = pct + "%";
     }
-
     checks.forEach((c) => c.addEventListener("change", updateAudit));
     updateAudit();
 
@@ -2407,15 +1049,8 @@
         setTimeout(() => piece.remove(), 4500);
       }
     }
-
-    document.getElementById("commitBtn").addEventListener("click", () => {
-      celebrate();
-      showToast("Mantap! Komitmen kecil hari ini bisa mencegah insiden besar besok.");
-    });
-
-    document.getElementById("qaBtn").addEventListener("click", () => {
-      showToast("Silakan berbagi: bagian mana dari alur limbah yang paling sering terlewat di unit Anda?");
-    });
+    document.getElementById("commitBtn").addEventListener("click", () => { celebrate(); showToast("Mantap! Komitmen kecil hari ini bisa mencegah insiden besar besok."); });
+    document.getElementById("qaBtn").addEventListener("click", () => { showToast("Silakan berbagi: bagian mana dari alur limbah yang paling sering terlewat di unit Anda?"); });
 
     goTo(0);
   </script>
