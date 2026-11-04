@@ -296,7 +296,13 @@ p{margin:0;font-size:14.5px;line-height:1.48}
 .slide-intro.is-playing .intro-progress{animation:icoFade .4s ease 2.15s forwards}
 .slide-intro.is-playing .intro-progress > span{animation:icoFill 1.3s cubic-bezier(.4,0,.2,1) 2.2s forwards}
 .slide-intro.is-playing .intro-cta{animation:icoUp .6s ease 3.45s forwards}
-
+/* ==== TEKS TAJAM: matikan parallax HANYA pada elemen berisi teks ==== */
+/* (latar bentuk + foto tetap ber-parallax => kedalaman sinematik terjaga) */
+.slide-inner{transform:none!important;will-change:auto!important}  /* judul, paragraf, kartu, list, note, quiz, checklist, label APD */
+.tile-label{transform:none!important}                              /* caption di atas blok foto */
+.chip{transform:none!important}                                    /* label kategori di slide pembuka */
+.slide{filter:none!important}                                      /* hapus blur sesaat saat pindah slide => teks selalu fokus */
+     
 @media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}}
 </style>
 </head>
