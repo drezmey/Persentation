@@ -15,387 +15,252 @@
       --paper: #fff8ed;
       --white: #fffdf8;
       --muted: #625a69;
-
       --violet: #8b5cf6;
       --pink: #ec4899;
       --amber: #f59e0b;
       --mint: #34d399;
-
       --border: 3px solid var(--ink);
       --shadow-sm: 6px 6px 0 var(--ink);
       --shadow: 10px 10px 0 var(--ink);
       --shadow-lg: 14px 14px 0 var(--ink);
       --radius: 26px;
     }
-
     * { box-sizing: border-box; }
-
     html, body {
-      margin: 0; padding: 0; width: 100%; height: 100%;
-      overflow: hidden;
+      margin:0; padding:0; width:100%; height:100%; overflow:hidden;
       background:
-        radial-gradient(circle at 12% 18%, rgba(139, 92, 246, 0.24), transparent 28%),
-        radial-gradient(circle at 88% 82%, rgba(52, 211, 153, 0.20), transparent 30%),
+        radial-gradient(circle at 12% 18%, rgba(139,92,246,0.24), transparent 28%),
+        radial-gradient(circle at 88% 82%, rgba(52,211,153,0.20), transparent 30%),
         #130f1a;
-      font-family: "Space Grotesk", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      color: var(--ink);
+      font-family:"Space Grotesk", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      color:var(--ink);
     }
-
-    .frame { width: 100%; height: 100%; display: grid; place-items: center; padding: 1.1vmin; }
-
+    .frame { width:100%; height:100%; display:grid; place-items:center; padding:1.1vmin; }
     .stage {
-      position: relative;
-      width: min(100vw, calc(100vh * 16 / 9));
-      aspect-ratio: 16 / 9;
-      overflow: hidden;
-      border: 4px solid var(--ink);
-      border-radius: 30px;
-      background: var(--paper);
-      box-shadow: 24px 24px 0 rgba(0, 0, 0, 0.32);
+      position:relative; width:min(100vw, calc(100vh * 16 / 9)); aspect-ratio:16/9;
+      overflow:hidden; border:4px solid var(--ink); border-radius:30px; background:var(--paper);
+      box-shadow:24px 24px 0 rgba(0,0,0,0.32);
     }
-
-    .canvas {
-      position: absolute; left: 0; top: 0;
-      width: 1600px; height: 900px;
-      transform-origin: top left;
-      --mx: 0; --my: 0;
-    }
-
+    .canvas { position:absolute; left:0; top:0; width:1600px; height:900px; transform-origin:top left; --mx:0; --my:0; }
     .paper {
-      position: absolute; inset: 0;
+      position:absolute; inset:0;
       background-image:
-        radial-gradient(circle, rgba(23, 19, 31, 0.075) 1.1px, transparent 1.1px),
-        linear-gradient(135deg, rgba(139, 92, 246, 0.055), transparent 38%, rgba(52, 211, 153, 0.065));
-      background-size: 24px 24px, cover;
+        radial-gradient(circle, rgba(23,19,31,0.075) 1.1px, transparent 1.1px),
+        linear-gradient(135deg, rgba(139,92,246,0.055), transparent 38%, rgba(52,211,153,0.065));
+      background-size:24px 24px, cover;
     }
-
-    .scene { position: absolute; inset: -180px; pointer-events: none; z-index: 1; }
-    .layer { position: absolute; inset: 0; will-change: transform; }
-    .layer.back  { transform: translate3d(calc(var(--mx) * -72px), calc(var(--my) * -46px), 0) scale(1.045); }
-    .layer.mid   { transform: translate3d(calc(var(--mx) * 42px), calc(var(--my) * 28px), 0) rotate(calc(var(--mx) * 0.75deg)) scale(1.015); }
-    .layer.front { transform: translate3d(calc(var(--mx) * 92px), calc(var(--my) * 58px), 0) rotate(calc(var(--mx) * -0.45deg)); }
-
-    .shape { position: absolute; border: var(--border); box-shadow: var(--shadow); }
-    .circle { border-radius: 50%; }
-    .square { border-radius: 26px; }
-    .pill { border-radius: 999px; }
-
-    .overlay { position: absolute; inset: 0; pointer-events: none; z-index: 45; }
-    .vignette { position: absolute; inset: 0; box-shadow: inset 0 0 170px rgba(23,19,31,0.20), inset 0 0 60px rgba(23,19,31,0.10); }
-    .sweep-wrap { position: absolute; inset: -30%; transform: translate3d(calc(var(--mx) * -1.6%), calc(var(--my) * -1%), 0); opacity: 0.18; mix-blend-mode: screen; }
-    .sweep { width: 100%; height: 100%; background: linear-gradient(115deg, transparent 0 39%, rgba(255,255,255,0.28) 46%, transparent 53% 100%); animation: sweepMove 18s linear infinite; }
-    .grain { position: absolute; inset: 0; opacity: 0.035; background-image: radial-gradient(circle, #17131f 1px, transparent 1px); background-size: 3px 3px; animation: grainMove 0.45s steps(2) infinite; }
-
-    @keyframes sweepMove { from { transform: translate3d(-26%,0,0) rotate(8deg);} to { transform: translate3d(26%,0,0) rotate(8deg);} }
+    .scene { position:absolute; inset:-180px; pointer-events:none; z-index:1; }
+    .layer { position:absolute; inset:0; will-change:transform; }
+    .layer.back  { transform: translate3d(calc(var(--mx)*-72px),calc(var(--my)*-46px),0) scale(1.045); }
+    .layer.mid   { transform: translate3d(calc(var(--mx)*42px),calc(var(--my)*28px),0) rotate(calc(var(--mx)*0.75deg)) scale(1.015); }
+    .layer.front { transform: translate3d(calc(var(--mx)*92px),calc(var(--my)*58px),0) rotate(calc(var(--mx)*-0.45deg)); }
+    .shape { position:absolute; border:var(--border); box-shadow:var(--shadow); }
+    .circle { border-radius:50%; } .square { border-radius:26px; } .pill { border-radius:999px; }
+    .overlay { position:absolute; inset:0; pointer-events:none; z-index:45; }
+    .vignette { position:absolute; inset:0; box-shadow: inset 0 0 170px rgba(23,19,31,0.20), inset 0 0 60px rgba(23,19,31,0.10); }
+    .sweep-wrap { position:absolute; inset:-30%; transform: translate3d(calc(var(--mx)*-1.6%),calc(var(--my)*-1%),0); opacity:0.18; mix-blend-mode:screen; }
+    .sweep { width:100%; height:100%; background: linear-gradient(115deg, transparent 0 39%, rgba(255,255,255,0.28) 46%, transparent 53% 100%); animation: sweepMove 18s linear infinite; }
+    .grain { position:absolute; inset:0; opacity:0.035; background-image: radial-gradient(circle,#17131f 1px,transparent 1px); background-size:3px 3px; animation: grainMove 0.45s steps(2) infinite; }
+    @keyframes sweepMove { from{transform:translate3d(-26%,0,0) rotate(8deg)} to{transform:translate3d(26%,0,0) rotate(8deg)} }
     @keyframes grainMove { 0%{transform:translate(0,0)}25%{transform:translate(-1px,1px)}50%{transform:translate(1px,-1px)}75%{transform:translate(-1px,-1px)}100%{transform:translate(1px,1px)} }
 
-    .topbar { position: absolute; z-index: 50; left:0; right:0; top:0; height:70px; display:flex; align-items:center; gap:18px; padding:0 28px; border-bottom: var(--border); background: rgba(255,248,237,0.9); backdrop-filter: blur(12px); }
+    .topbar { position:absolute; z-index:50; left:0; right:0; top:0; height:70px; display:flex; align-items:center; gap:18px; padding:0 28px; border-bottom:var(--border); background:rgba(255,248,237,0.9); backdrop-filter:blur(12px); }
     .brand { display:flex; align-items:center; gap:12px; font-family:"Fredoka",sans-serif; font-weight:700; font-size:21px; white-space:nowrap; }
     .brand-badge { width:44px; height:44px; border:var(--border); border-radius:16px; background:var(--violet); box-shadow:var(--shadow-sm); display:grid; place-items:center; color:#fff; font-size:22px; }
     .progress { flex:1; height:18px; border:var(--border); border-radius:999px; background:#fff; box-shadow:5px 5px 0 var(--ink); overflow:hidden; min-width:120px; }
-    #bar { width:0%; height:100%; background: repeating-linear-gradient(90deg, var(--pink) 0 16px, var(--amber) 16px 32px, var(--mint) 32px 48px, var(--violet) 48px 64px); transition: width 0.45s ease; }
-    .nav-btn, .icon-btn { width:44px; height:44px; border:var(--border); border-radius:15px; background:#fff; box-shadow:var(--shadow-sm); display:grid; place-items:center; cursor:pointer; font-family:"Fredoka",sans-serif; font-size:19px; font-weight:700; transition: transform 0.16s ease, box-shadow 0.16s ease; color:var(--ink); }
-    .nav-btn:hover, .icon-btn:hover { transform: translate(-2px,-2px); box-shadow:8px 8px 0 var(--ink); }
-    .nav-btn:active, .icon-btn:active { transform: translate(4px,4px); box-shadow:2px 2px 0 var(--ink); }
+    #bar { width:0%; height:100%; background:repeating-linear-gradient(90deg,var(--pink) 0 16px,var(--amber) 16px 32px,var(--mint) 32px 48px,var(--violet) 48px 64px); transition:width 0.45s ease; }
+    .nav-btn,.icon-btn { width:44px; height:44px; border:var(--border); border-radius:15px; background:#fff; box-shadow:var(--shadow-sm); display:grid; place-items:center; cursor:pointer; font-family:"Fredoka",sans-serif; font-size:19px; font-weight:700; transition:transform 0.16s ease,box-shadow 0.16s ease; color:var(--ink); }
+    .nav-btn:hover,.icon-btn:hover { transform:translate(-2px,-2px); box-shadow:8px 8px 0 var(--ink); }
+    .nav-btn:active,.icon-btn:active { transform:translate(4px,4px); box-shadow:2px 2px 0 var(--ink); }
     .counter { min-width:88px; text-align:center; font-family:"Fredoka",sans-serif; font-weight:700; font-size:16px; border:var(--border); border-radius:999px; padding:8px 12px; background:var(--mint); box-shadow:5px 5px 0 var(--ink); }
 
     .deck { position:absolute; inset:70px 0 0 0; z-index:30; perspective:1800px; }
-    .slide { position:absolute; inset:0; padding:30px 54px 42px; opacity:0; visibility:hidden; pointer-events:none; transform: translate3d(var(--tx,56px),18px,0) scale(0.985); filter: blur(3px); transition: opacity 0.55s ease, transform 0.78s cubic-bezier(0.2,0.8,0.2,1), filter 0.55s ease, visibility 0.55s ease; overflow:hidden; }
+    .slide { position:absolute; inset:0; padding:30px 54px 42px; opacity:0; visibility:hidden; pointer-events:none; transform:translate3d(var(--tx,56px),18px,0) scale(0.985); filter:blur(3px); transition:opacity 0.55s ease,transform 0.78s cubic-bezier(0.2,0.8,0.2,1),filter 0.55s ease,visibility 0.55s ease; overflow:hidden; }
     .slide.active { opacity:1; visibility:visible; pointer-events:auto; transform:none; filter:none; }
-
-    .slide-inner { height:100%; display:flex; flex-direction:column; gap:14px; transform-style:preserve-3d; transform: translate3d(calc(var(--mx)*12px),calc(var(--my)*8px),0) rotateY(calc(var(--mx)*0.28deg)) rotateX(calc(var(--my)*-0.18deg)); will-change:transform; }
+    .slide-inner { height:100%; display:flex; flex-direction:column; gap:14px; transform-style:preserve-3d; transform:translate3d(calc(var(--mx)*12px),calc(var(--my)*8px),0) rotateY(calc(var(--mx)*0.28deg)) rotateX(calc(var(--my)*-0.18deg)); will-change:transform; }
     .slide-head { flex:0 0 auto; display:flex; justify-content:space-between; align-items:end; gap:24px; }
     .slide-head p { max-width:390px; font-size:15px; color:var(--muted); margin:0; line-height:1.45; }
 
     .body { flex:1 1 auto; min-height:0; display:grid; gap:14px; }
-    .body.stack { grid-template-rows: minmax(0,1fr) auto; }
-    .body.closing { grid-template-rows: minmax(0,1fr) auto auto; }
-    .body.rows-photo { grid-template-rows: minmax(0,1.25fr) minmax(0,0.75fr); }
-    .body.hero, .body.split { grid-template-columns: 0.98fr 1.02fr; align-items:center; }
-    .body.check-layout { grid-template-columns: 1.12fr 0.88fr; align-items:center; }
+    .body.stack { grid-template-rows:minmax(0,1fr) auto; }
+    .body.closing { grid-template-rows:minmax(0,1fr) auto auto; }
+    .body.rows-photo { grid-template-rows:minmax(0,1.25fr) minmax(0,0.75fr); }
+    .body.hero,.body.split { grid-template-columns:0.98fr 1.02fr; align-items:center; }
+    .body.check-layout { grid-template-columns:1.12fr 0.88fr; align-items:center; }
 
     .grid { display:grid; gap:14px; min-height:0; }
-    .grid.fill { height:100%; grid-auto-rows: minmax(0,1fr); }
-    .grid-2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
-    .grid-3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
-    .grid-4 { grid-template-columns: repeat(4, minmax(0,1fr)); }
+    .grid.fill { height:100%; grid-auto-rows:minmax(0,1fr); }
+    .grid-2 { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .grid-3 { grid-template-columns:repeat(3,minmax(0,1fr)); }
+    .grid-4 { grid-template-columns:repeat(4,minmax(0,1fr)); }
 
     .kicker { display:inline-block; font-family:"Fredoka",sans-serif; font-size:14px; letter-spacing:0.05em; text-transform:uppercase; padding:7px 12px; border:var(--border); border-radius:999px; background:var(--amber); box-shadow:5px 5px 0 var(--ink); margin-bottom:10px; width:fit-content; }
-
     h1 { margin:0 0 12px; font-family:"Fredoka",sans-serif; font-size:54px; line-height:0.98; letter-spacing:-1.4px; }
     h2 { margin:0 0 10px; font-family:"Fredoka",sans-serif; font-size:36px; line-height:1.05; letter-spacing:-0.8px; }
     h3 { margin:0 0 8px; font-family:"Fredoka",sans-serif; font-size:18px; line-height:1.18; }
     p { margin:0; font-size:14.5px; line-height:1.48; }
     .lead { font-size:17.5px; line-height:1.45; max-width:720px; color:#4b4355; }
-    .muted { color: var(--muted); }
+    .muted { color:var(--muted); }
     .hl { padding:0 0.1em; border-radius:0.22em; -webkit-box-decoration-break:clone; box-decoration-break:clone; }
-    .hl-violet { background: rgba(139,92,246,0.24); }
-    .hl-pink { background: rgba(236,72,153,0.20); }
-    .hl-amber { background: rgba(245,158,11,0.26); }
-    .hl-mint { background: rgba(52,211,153,0.26); }
+    .hl-violet{background:rgba(139,92,246,0.24)} .hl-pink{background:rgba(236,72,153,0.20)} .hl-amber{background:rgba(245,158,11,0.26)} .hl-mint{background:rgba(52,211,153,0.26)}
 
     .cta-row { display:flex; flex-wrap:wrap; gap:12px; margin-top:14px; }
-    .btn { font-family:"Fredoka",sans-serif; font-size:16px; font-weight:600; border:var(--border); border-radius:999px; padding:11px 18px; background:#fff; box-shadow:7px 7px 0 var(--ink); cursor:pointer; transition: transform 0.16s ease, box-shadow 0.16s ease; color:var(--ink); }
-    .btn:hover { transform: translate(-2px,-2px); box-shadow:9px 9px 0 var(--ink); }
-    .btn:active { transform: translate(4px,4px); box-shadow:2px 2px 0 var(--ink); }
-    .btn.primary { background: var(--mint); }
-    .btn.violet { background: var(--violet); color:#fff; }
-    .btn.pink { background: var(--pink); color:#fff; }
-    .btn.amber { background: var(--amber); }
+    .btn { font-family:"Fredoka",sans-serif; font-size:16px; font-weight:600; border:var(--border); border-radius:999px; padding:11px 18px; background:#fff; box-shadow:7px 7px 0 var(--ink); cursor:pointer; transition:transform 0.16s ease,box-shadow 0.16s ease; color:var(--ink); }
+    .btn:hover{transform:translate(-2px,-2px);box-shadow:9px 9px 0 var(--ink)} .btn:active{transform:translate(4px,4px);box-shadow:2px 2px 0 var(--ink)}
+    .btn.primary{background:var(--mint)} .btn.violet{background:var(--violet);color:#fff} .btn.pink{background:var(--pink);color:#fff} .btn.amber{background:var(--amber)}
 
-    .card { position:relative; background:var(--white); border:var(--border); border-radius:var(--radius); box-shadow:var(--shadow); padding:16px 15px 15px; overflow:hidden; transition: transform 0.2s ease, box-shadow 0.2s ease; --accent: var(--violet); min-height:0; display:flex; flex-direction:column; }
-    .card:hover { transform: translate(-3px,-3px); box-shadow:13px 13px 0 var(--ink); }
-    .card .top-accent { position:absolute; left:0; top:0; width:100%; height:9px; border-bottom:var(--border); background:var(--accent); }
-    .card.violet { --accent: var(--violet); }
-    .card.pink { --accent: var(--pink); }
-    .card.amber { --accent: var(--amber); }
-    .card.mint { --accent: var(--mint); }
-    .icon { width:48px; height:48px; border:var(--border); border-radius:17px; background:var(--accent); box-shadow:var(--shadow-sm); display:grid; place-items:center; margin:10px 0 9px; font-size:23px; color:var(--ink); flex:0 0 auto; }
-    .icon-text { font-family:"Fredoka",sans-serif; font-size:20px; font-weight:700; }
-    .card p { font-size:13.5px; line-height:1.38; color:#5a5261; display:-webkit-box; -webkit-line-clamp:4; -webkit-box-orient:vertical; overflow:hidden; }
+    .card { position:relative; background:var(--white); border:var(--border); border-radius:var(--radius); box-shadow:var(--shadow); padding:16px 15px 15px; overflow:hidden; transition:transform 0.2s ease,box-shadow 0.2s ease; --accent:var(--violet); min-height:0; display:flex; flex-direction:column; }
+    .card:hover{transform:translate(-3px,-3px);box-shadow:13px 13px 0 var(--ink)}
+    .card .top-accent{position:absolute;left:0;top:0;width:100%;height:9px;border-bottom:var(--border);background:var(--accent)}
+    .card.violet{--accent:var(--violet)} .card.pink{--accent:var(--pink)} .card.amber{--accent:var(--amber)} .card.mint{--accent:var(--mint)}
+    .icon { width:48px;height:48px;border:var(--border);border-radius:17px;background:var(--accent);box-shadow:var(--shadow-sm);display:grid;place-items:center;margin:10px 0 9px;font-size:23px;color:var(--ink);flex:0 0 auto; }
+    .icon-text{font-family:"Fredoka",sans-serif;font-size:20px;font-weight:700}
+    .card p{font-size:13.5px;line-height:1.38;color:#5a5261;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
 
-    .list { list-style:none; padding:0; margin:12px 0 0; display:grid; gap:9px; font-size:14.5px; }
-    .list li { position:relative; padding-left:31px; line-height:1.38; color:#4b4355; }
-    .list li::before { content:"✓"; position:absolute; left:0; top:1px; width:21px; height:21px; border:3px solid var(--ink); border-radius:8px; background:var(--mint); box-shadow:3px 3px 0 var(--ink); display:grid; place-items:center; font-weight:900; font-size:12px; }
+    .list{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:9px;font-size:14.5px}
+    .list li{position:relative;padding-left:31px;line-height:1.38;color:#4b4355}
+    .list li::before{content:"✓";position:absolute;left:0;top:1px;width:21px;height:21px;border:3px solid var(--ink);border-radius:8px;background:var(--mint);box-shadow:3px 3px 0 var(--ink);display:grid;place-items:center;font-weight:900;font-size:12px}
 
-    .note { padding:13px 15px; border:var(--border); border-radius:20px; background:rgba(245,158,11,0.14); box-shadow:6px 6px 0 var(--ink); font-size:13.5px; line-height:1.42; }
-    .note strong { font-family:"Fredoka",sans-serif; }
+    .note{padding:13px 15px;border:var(--border);border-radius:20px;background:rgba(245,158,11,0.14);box-shadow:6px 6px 0 var(--ink);font-size:13.5px;line-height:1.42}
+    .note strong{font-family:"Fredoka",sans-serif}
+    .stat{text-align:center;justify-content:center;align-items:center}
+    .num{display:block;font-family:"Fredoka",sans-serif;font-size:40px;line-height:1;font-weight:700;color:var(--accent);margin-bottom:8px;text-shadow:3px 3px 0 rgba(23,19,31,0.10);font-variant-numeric:tabular-nums}
 
-    .stat { text-align:center; justify-content:center; align-items:center; }
-    .num { display:block; font-family:"Fredoka",sans-serif; font-size:40px; line-height:1; font-weight:700; color:var(--accent); margin-bottom:8px; text-shadow:3px 3px 0 rgba(23,19,31,0.10); font-variant-numeric:tabular-nums; }
+    .tile{position:relative;border:var(--border);border-radius:28px;box-shadow:var(--shadow-lg);overflow:hidden;background:var(--white);min-height:0}
+    .photo-parallax{position:absolute;inset:-6%;transform:translate3d(calc(var(--mx)*-18px),calc(var(--my)*-12px),0);will-change:transform}
+    .photo-zoom{width:100%;height:100%;overflow:hidden;animation:kenburns 22s ease-in-out infinite alternate}
+    .tile img{width:100%;height:100%;object-fit:cover;display:block}
+    @keyframes kenburns{from{transform:scale(1.03) translate3d(0,0,0)}to{transform:scale(1.12) translate3d(-1.4%,1%,0)}}
+    .tile-label{position:absolute;left:16px;right:16px;bottom:16px;padding:10px 12px;border:3px solid var(--ink);border-radius:18px;background:rgba(255,253,248,0.94);box-shadow:5px 5px 0 var(--ink);font-family:"Fredoka",sans-serif;font-size:15px;font-weight:700;line-height:1.2;transform:translate3d(calc(var(--mx)*8px),calc(var(--my)*5px),0);backdrop-filter:blur(8px)}
+    .tile-label small{display:block;margin-top:4px;font-family:"Space Grotesk",sans-serif;font-size:11.5px;font-weight:500;color:var(--muted)}
+    .sticker{position:absolute;top:-12px;left:34px;z-index:2;padding:8px 14px;border:3px solid var(--ink);background:var(--amber);box-shadow:5px 5px 0 var(--ink);font-family:"Fredoka",sans-serif;font-size:14px;font-weight:700;transform:rotate(-7deg)}
 
-    .tile { position:relative; border:var(--border); border-radius:28px; box-shadow:var(--shadow-lg); overflow:hidden; background:var(--white); min-height:0; }
-    .photo-parallax { position:absolute; inset:-6%; transform: translate3d(calc(var(--mx)*-18px),calc(var(--my)*-12px),0); will-change:transform; }
-    .photo-zoom { width:100%; height:100%; overflow:hidden; animation: kenburns 22s ease-in-out infinite alternate; }
-    .tile img { width:100%; height:100%; object-fit:cover; display:block; }
-    @keyframes kenburns { from { transform: scale(1.03) translate3d(0,0,0);} to { transform: scale(1.12) translate3d(-1.4%,1%,0);} }
-    .tile-label { position:absolute; left:16px; right:16px; bottom:16px; padding:10px 12px; border:3px solid var(--ink); border-radius:18px; background:rgba(255,253,248,0.94); box-shadow:5px 5px 0 var(--ink); font-family:"Fredoka",sans-serif; font-size:15px; font-weight:700; line-height:1.2; transform: translate3d(calc(var(--mx)*8px),calc(var(--my)*5px),0); backdrop-filter: blur(8px); }
-    .tile-label small { display:block; margin-top:4px; font-family:"Space Grotesk",sans-serif; font-size:11.5px; font-weight:500; color:var(--muted); }
-    .sticker { position:absolute; top:-12px; left:34px; z-index:2; padding:8px 14px; border:3px solid var(--ink); background:var(--amber); box-shadow:5px 5px 0 var(--ink); font-family:"Fredoka",sans-serif; font-size:14px; font-weight:700; transform: rotate(-7deg); }
+    .hero-media{position:relative;height:100%;display:grid;place-items:center}
+    .hero-tile{width:100%;height:100%;min-height:520px}
+    .chip{position:absolute;z-index:3;display:flex;align-items:center;gap:8px;padding:9px 13px;border:var(--border);border-radius:999px;background:var(--white);box-shadow:7px 7px 0 var(--ink);font-family:"Fredoka",sans-serif;font-size:14px;font-weight:700;white-space:nowrap;transform:translate3d(calc(var(--mx)*var(--cx,20px)),calc(var(--my)*var(--cy,14px)),0);--accent:var(--violet)}
+    .chip .dot{width:13px;height:13px;border:3px solid var(--ink);border-radius:50%;background:var(--accent)}
 
-    .hero-media { position:relative; height:100%; display:grid; place-items:center; }
-    .hero-tile { width:100%; height:100%; min-height:520px; }
+    .quiz{margin-top:12px;padding:14px;border:var(--border);border-radius:var(--radius);background:var(--white);box-shadow:var(--shadow)}
+    .quiz-title{font-family:"Fredoka",sans-serif;font-size:20px;font-weight:700;margin-bottom:10px}
+    .choices{display:grid;gap:8px}
+    .choice{display:flex;align-items:center;gap:10px;width:100%;padding:8px 10px;border:var(--border);border-radius:16px;background:#fff;box-shadow:5px 5px 0 var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;text-align:left;color:var(--ink);transition:transform 0.16s ease,box-shadow 0.16s ease,background 0.2s ease}
+    .choice:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
+    .choice:disabled{cursor:default;opacity:0.96}
+    .choice.correct{background:rgba(52,211,153,0.22)} .choice.wrong{background:rgba(236,72,153,0.18)}
+    .mark{width:29px;height:29px;border:var(--border);border-radius:10px;background:var(--amber);box-shadow:3px 3px 0 var(--ink);display:grid;place-items:center;font-family:"Fredoka",sans-serif;font-weight:700;flex:0 0 auto}
+    .feedback{display:none;margin-top:10px;padding:10px 12px;border:var(--border);border-radius:16px;background:var(--paper);box-shadow:5px 5px 0 var(--ink);font-size:12.5px;line-height:1.42}
+    .feedback.show{display:block;animation:popIn 0.35s ease}
+    .feedback.good{border-left:8px solid var(--mint)} .feedback.bad{border-left:8px solid var(--pink)}
 
-    .chip { position:absolute; z-index:3; display:flex; align-items:center; gap:8px; padding:9px 13px; border:var(--border); border-radius:999px; background:var(--white); box-shadow:7px 7px 0 var(--ink); font-family:"Fredoka",sans-serif; font-size:14px; font-weight:700; white-space:nowrap; transform: translate3d(calc(var(--mx)*var(--cx,20px)),calc(var(--my)*var(--cy,14px)),0); --accent: var(--violet); }
-    .chip .dot { width:13px; height:13px; border:3px solid var(--ink); border-radius:50%; background:var(--accent); }
+    .checks{display:grid;gap:8px;min-height:0;overflow:hidden}
+    .check{display:flex;gap:10px;align-items:flex-start;padding:7px 9px;border:var(--border);border-radius:14px;background:var(--white);box-shadow:5px 5px 0 var(--ink);font-size:13px;line-height:1.32;cursor:pointer;transition:transform 0.16s ease,box-shadow 0.16s ease}
+    .check:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
+    .check input{width:17px;height:17px;margin-top:1px;accent-color:var(--mint);flex:0 0 auto}
+    .check span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 
-    .quiz { margin-top:12px; padding:14px; border:var(--border); border-radius:var(--radius); background:var(--white); box-shadow:var(--shadow); }
-    .quiz-title { font-family:"Fredoka",sans-serif; font-size:20px; font-weight:700; margin-bottom:10px; }
-    .choices { display:grid; gap:8px; }
-    .choice { display:flex; align-items:center; gap:10px; width:100%; padding:8px 10px; border:var(--border); border-radius:16px; background:#fff; box-shadow:5px 5px 0 var(--ink); cursor:pointer; font-size:13.5px; font-weight:600; text-align:left; color:var(--ink); transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.2s ease; }
-    .choice:hover { transform: translate(-2px,-2px); box-shadow:7px 7px 0 var(--ink); }
-    .choice:disabled { cursor:default; opacity:0.96; }
-    .choice.correct { background: rgba(52,211,153,0.22); }
-    .choice.wrong { background: rgba(236,72,153,0.18); }
-    .mark { width:29px; height:29px; border:var(--border); border-radius:10px; background:var(--amber); box-shadow:3px 3px 0 var(--ink); display:grid; place-items:center; font-family:"Fredoka",sans-serif; font-weight:700; flex:0 0 auto; }
-    .feedback { display:none; margin-top:10px; padding:10px 12px; border:var(--border); border-radius:16px; background:var(--paper); box-shadow:5px 5px 0 var(--ink); font-size:12.5px; line-height:1.42; }
-    .feedback.show { display:block; animation: popIn 0.35s ease; }
-    .feedback.good { border-left:8px solid var(--mint); }
-    .feedback.bad { border-left:8px solid var(--pink); }
+    .ring-card{text-align:center;justify-content:center;align-items:center}
+    .ring-wrap{position:relative;width:205px;height:205px;margin:10px auto 0}
+    .ring{width:205px;height:205px;transform:rotate(-90deg)}
+    .ring-bg{fill:none;stroke:rgba(23,19,31,0.13);stroke-width:12}
+    .ring-fg{fill:none;stroke:url(#ringGrad);stroke-width:12;stroke-linecap:round;transition:stroke-dashoffset 0.55s ease}
+    .ring-center{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+    #ringText{font-family:"Fredoka",sans-serif;font-size:35px;font-weight:700;color:var(--mint);line-height:1}
 
-    .checks { display:grid; gap:8px; min-height:0; overflow:hidden; }
-    .check { display:flex; gap:10px; align-items:flex-start; padding:7px 9px; border:var(--border); border-radius:14px; background:var(--white); box-shadow:5px 5px 0 var(--ink); font-size:13px; line-height:1.32; cursor:pointer; transition: transform 0.16s ease, box-shadow 0.16s ease; }
-    .check:hover { transform: translate(-2px,-2px); box-shadow:7px 7px 0 var(--ink); }
-    .check input { width:17px; height:17px; margin-top:1px; accent-color:var(--mint); flex:0 0 auto; }
-    .check span { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+    .final-row{display:grid;grid-template-columns:0.9fr 1.1fr;gap:24px;align-items:center}
+    .thanks{font-family:"Fredoka",sans-serif;font-size:46px;line-height:1;margin:0}
 
-    .ring-card { text-align:center; justify-content:center; align-items:center; }
-    .ring-wrap { position:relative; width:205px; height:205px; margin:10px auto 0; }
-    .ring { width:205px; height:205px; transform: rotate(-90deg); }
-    .ring-bg { fill:none; stroke:rgba(23,19,31,0.13); stroke-width:12; }
-    .ring-fg { fill:none; stroke:url(#ringGrad); stroke-width:12; stroke-linecap:round; transition: stroke-dashoffset 0.55s ease; }
-    .ring-center { position:absolute; inset:0; display:grid; place-items:center; text-align:center; }
-    #ringText { font-family:"Fredoka",sans-serif; font-size:35px; font-weight:700; color:var(--mint); line-height:1; }
+    .toast{position:absolute;left:50%;bottom:24px;transform:translate(-50%,18px);z-index:70;padding:12px 18px;border:var(--border);border-radius:999px;background:var(--ink);color:var(--paper);box-shadow:8px 8px 0 rgba(0,0,0,0.20);font-size:14.5px;line-height:1.35;opacity:0;pointer-events:none;transition:0.3s ease;max-width:900px;text-align:center}
+    .toast.show{opacity:1;transform:translate(-50%,0)}
+    .hint{position:absolute;left:28px;bottom:16px;z-index:55;font-size:13px;color:#6b6375}
+    .dots{position:absolute;right:28px;bottom:18px;display:flex;gap:7px;z-index:55}
+    .dot-btn{width:12px;height:12px;border:3px solid var(--ink);border-radius:50%;background:#fff;cursor:pointer;box-shadow:3px 3px 0 var(--ink);padding:0;transition:transform 0.16s ease,background 0.2s ease}
+    .dot-btn.active{background:var(--pink);transform:scale(1.18)}
+    .confetti{position:absolute;top:-40px;width:14px;height:20px;border:3px solid var(--ink);border-radius:5px;box-shadow:4px 4px 0 rgba(0,0,0,0.16);z-index:80;pointer-events:none;animation:fall linear forwards}
 
-    .final-row { display:grid; grid-template-columns: 0.9fr 1.1fr; gap:24px; align-items:center; }
-    .thanks { font-family:"Fredoka",sans-serif; font-size:46px; line-height:1; margin:0; }
-
-    .toast { position:absolute; left:50%; bottom:24px; transform: translate(-50%,18px); z-index:70; padding:12px 18px; border:var(--border); border-radius:999px; background:var(--ink); color:var(--paper); box-shadow:8px 8px 0 rgba(0,0,0,0.20); font-size:14.5px; line-height:1.35; opacity:0; pointer-events:none; transition:0.3s ease; max-width:900px; text-align:center; }
-    .toast.show { opacity:1; transform: translate(-50%,0); }
-    .hint { position:absolute; left:28px; bottom:16px; z-index:55; font-size:13px; color:#6b6375; }
-    .dots { position:absolute; right:28px; bottom:18px; display:flex; gap:7px; z-index:55; }
-    .dot-btn { width:12px; height:12px; border:3px solid var(--ink); border-radius:50%; background:#fff; cursor:pointer; box-shadow:3px 3px 0 var(--ink); padding:0; transition: transform 0.16s ease, background 0.2s ease; }
-    .dot-btn.active { background: var(--pink); transform: scale(1.18); }
-    .confetti { position:absolute; top:-40px; width:14px; height:20px; border:3px solid var(--ink); border-radius:5px; box-shadow:4px 4px 0 rgba(0,0,0,0.16); z-index:80; pointer-events:none; animation: fall linear forwards; }
-
-    @keyframes popIn { from { opacity:0; transform: translateY(8px) scale(0.98);} to { opacity:1; transform:none;} }
-    @keyframes fall { to { transform: translateY(980px) rotate(720deg); opacity:0;} }
-    @keyframes rise { from { opacity:0; transform: translateY(14px) scale(0.985);} to { opacity:1; transform:none;} }
-    .slide.active .stagger > * { animation: rise 0.62s cubic-bezier(0.2,0.8,0.2,1) both; }
-    .slide.active .stagger > *:nth-child(1){animation-delay:0.04s}
-    .slide.active .stagger > *:nth-child(2){animation-delay:0.08s}
-    .slide.active .stagger > *:nth-child(3){animation-delay:0.12s}
-    .slide.active .stagger > *:nth-child(4){animation-delay:0.16s}
-    .slide.active .stagger > *:nth-child(5){animation-delay:0.20s}
-    .slide.active .stagger > *:nth-child(6){animation-delay:0.24s}
-    .slide.active .stagger > *:nth-child(7){animation-delay:0.28s}
-    .slide.active .stagger > *:nth-child(8){animation-delay:0.32s}
+    @keyframes popIn{from{opacity:0;transform:translateY(8px) scale(0.98)}to{opacity:1;transform:none}}
+    @keyframes fall{to{transform:translateY(980px) rotate(720deg);opacity:0}}
+    @keyframes rise{from{opacity:0;transform:translateY(14px) scale(0.985)}to{opacity:1;transform:none}}
+    .slide.active .stagger > *{animation:rise 0.62s cubic-bezier(0.2,0.8,0.2,1) both}
+    .slide.active .stagger > *:nth-child(1){animation-delay:0.04s}.slide.active .stagger > *:nth-child(2){animation-delay:0.08s}.slide.active .stagger > *:nth-child(3){animation-delay:0.12s}.slide.active .stagger > *:nth-child(4){animation-delay:0.16s}.slide.active .stagger > *:nth-child(5){animation-delay:0.20s}.slide.active .stagger > *:nth-child(6){animation-delay:0.24s}.slide.active .stagger > *:nth-child(7){animation-delay:0.28s}.slide.active .stagger > *:nth-child(8){animation-delay:0.32s}
 
     /* ===== SLIDE 10: KATEGORI WADAH + PRESENTER ===== */
-    .wadah-slide .body { grid-template-rows: minmax(0,1fr) auto; }
-    .wadah-board { min-height:0; display:grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap:14px; }
-    .wadah-card { position:relative; min-width:0; min-height:0; display:flex; flex-direction:column; background:var(--white); border:var(--border); border-radius:24px; box-shadow:var(--shadow); padding:22px 13px 13px; overflow:hidden; transition: transform 0.2s ease, box-shadow 0.2s ease; }
-    .wadah-card:hover { transform: translate(-3px,-3px); box-shadow:13px 13px 0 var(--ink); }
-    .wadah-card::before { content:""; position:absolute; left:0; top:0; width:100%; height:9px; border-bottom:var(--border); background:var(--accent); }
-    .wadah-card.kuning { --accent:#facc15; --soft:rgba(250,204,21,0.20); }
-    .wadah-card.merah { --accent:#ef4444; --soft:rgba(239,68,68,0.16); }
-    .wadah-card.ungu { --accent:#a855f7; --soft:rgba(168,85,247,0.16); }
-    .wadah-card.coklat { --accent:#92400e; --soft:rgba(146,64,14,0.14); }
-    .wadah-card.sharp { --accent:#f59e0b; --soft:rgba(245,158,11,0.18); }
-    .wadah-art { height:124px; margin-bottom:10px; border:3px solid rgba(23,19,31,0.12); border-radius:18px; background:var(--soft); display:flex; align-items:flex-end; justify-content:center; gap:10px; padding:12px; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.35); flex:0 0 auto; }
-    .bag, .bin, .safety { position:relative; border:3px solid var(--ink); box-shadow:4px 4px 0 var(--ink); flex:0 0 auto; }
-    .bag { width:48px; height:70px; border-radius:14px 14px 11px 11px; background:var(--accent); }
-    .bag::before { content:""; position:absolute; top:-12px; left:9px; width:28px; height:16px; border:3px solid var(--ink); border-bottom:0; border-radius:14px 14px 0 0; background:var(--accent); }
-    .bag::after { content:""; position:absolute; top:-2px; left:14px; width:18px; height:7px; border:3px solid var(--ink); border-radius:999px; background:rgba(255,255,255,0.55); }
-    .bin { width:56px; height:66px; border-radius:8px; background:var(--accent); }
-    .bin::before { content:""; position:absolute; top:-13px; left:-6px; width:68px; height:15px; border:3px solid var(--ink); border-radius:8px; background:var(--accent); }
-    .bin::after { content:""; position:absolute; top:16px; left:12px; width:32px; height:4px; border-radius:999px; background:rgba(23,19,31,0.20); box-shadow:0 13px 0 rgba(23,19,31,0.20), 0 26px 0 rgba(23,19,31,0.20); }
-    .safety { width:84px; height:66px; border-radius:10px; background:#fde047; }
-    .safety::before { content:""; position:absolute; top:-15px; left:22px; width:38px; height:15px; border:3px solid var(--ink); border-bottom:0; border-radius:10px 10px 0 0; background:#fde047; }
-    .safety::after { content:"SAFETY BOX"; position:absolute; left:7px; bottom:6px; font-family:"Fredoka",sans-serif; font-size:8.5px; font-weight:700; letter-spacing:0.02em; color:var(--ink); }
-    .art-icon { position:absolute; inset:0; display:grid; place-items:center; font-size:22px; line-height:1; filter: drop-shadow(2px 2px 0 rgba(23,19,31,0.20)); pointer-events:none; }
-    .safety .art-icon { inset:7px 0 15px; font-size:21px; }
-    .sharp-tools { display:grid; gap:7px; font-size:21px; filter: drop-shadow(2px 2px 0 rgba(23,19,31,0.18)); }
-    .wadah-card h3 { margin:0; font-family:"Fredoka",sans-serif; font-size:20px; line-height:1; letter-spacing:-0.4px; }
-    .wadah-sub { margin-top:5px; font-family:"Fredoka",sans-serif; font-size:12px; font-weight:700; line-height:1.22; color:var(--ink); }
-    .wadah-list { margin:8px 0 0; padding:0; list-style:none; display:grid; gap:4px; font-size:12px; line-height:1.26; color:#5a5261; }
-    .wadah-list li { position:relative; padding-left:13px; }
-    .wadah-list li::before { content:"•"; position:absolute; left:1px; color:var(--accent); font-weight:900; }
-    .wadah-tag { margin-top:auto; align-self:flex-start; padding:5px 8px; border:3px solid var(--ink); border-radius:999px; background:var(--accent); box-shadow:3px 3px 0 var(--ink); font-family:"Fredoka",sans-serif; font-size:10px; font-weight:700; color:var(--ink); white-space:nowrap; max-width:100%; overflow:hidden; text-overflow:ellipsis; }
-    .wadah-card.merah .wadah-tag, .wadah-card.ungu .wadah-tag, .wadah-card.coklat .wadah-tag { color:#fff; }
-    .wadah-presenters { display:grid; grid-template-columns: 250px minmax(0,1fr) 250px; align-items:end; gap:20px; min-height:0; }
-    .presenter { position:relative; width:250px; height:250px; align-self:end; overflow:hidden; will-change:transform; pointer-events:none; }
-    .presenter.left  { transform: translate3d(calc(var(--mx)*-7px),0,0); }
-    .presenter.right { transform: translate3d(calc(var(--mx)*7px),0,0); }
-    .presenter img { display:block; width:100%; height:100%; object-fit:contain; object-position:bottom center; filter: drop-shadow(7px 8px 0 rgba(23,19,31,0.82)); }
-    .presenter-note { align-self:end; margin-bottom:2px; }
+    .wadah-slide .body{grid-template-rows:minmax(0,1fr) auto}
+    .wadah-board{min-height:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
+    .wadah-card{position:relative;min-width:0;min-height:0;display:flex;flex-direction:column;background:var(--white);border:var(--border);border-radius:24px;box-shadow:var(--shadow);padding:22px 13px 13px;overflow:hidden;transition:transform 0.2s ease,box-shadow 0.2s ease}
+    .wadah-card:hover{transform:translate(-3px,-3px);box-shadow:13px 13px 0 var(--ink)}
+    .wadah-card::before{content:"";position:absolute;left:0;top:0;width:100%;height:9px;border-bottom:var(--border);background:var(--accent)}
+    .wadah-card.kuning{--accent:#facc15;--soft:rgba(250,204,21,0.20)}
+    .wadah-card.merah{--accent:#ef4444;--soft:rgba(239,68,68,0.16)}
+    .wadah-card.ungu{--accent:#a855f7;--soft:rgba(168,85,247,0.16)}
+    .wadah-card.coklat{--accent:#92400e;--soft:rgba(146,64,14,0.14)}
+    .wadah-card.sharp{--accent:#f59e0b;--soft:rgba(245,158,11,0.18)}
+    .wadah-art{height:124px;margin-bottom:10px;border:3px solid rgba(23,19,31,0.12);border-radius:18px;background:var(--soft);display:flex;align-items:flex-end;justify-content:center;gap:10px;padding:12px;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.35);flex:0 0 auto}
+    .bag,.bin,.safety{position:relative;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);flex:0 0 auto}
+    .bag{width:48px;height:70px;border-radius:14px 14px 11px 11px;background:var(--accent)}
+    .bag::before{content:"";position:absolute;top:-12px;left:9px;width:28px;height:16px;border:3px solid var(--ink);border-bottom:0;border-radius:14px 14px 0 0;background:var(--accent)}
+    .bag::after{content:"";position:absolute;top:-2px;left:14px;width:18px;height:7px;border:3px solid var(--ink);border-radius:999px;background:rgba(255,255,255,0.55)}
+    .bin{width:56px;height:66px;border-radius:8px;background:var(--accent)}
+    .bin::before{content:"";position:absolute;top:-13px;left:-6px;width:68px;height:15px;border:3px solid var(--ink);border-radius:8px;background:var(--accent)}
+    .bin::after{content:"";position:absolute;top:16px;left:12px;width:32px;height:4px;border-radius:999px;background:rgba(23,19,31,0.20);box-shadow:0 13px 0 rgba(23,19,31,0.20),0 26px 0 rgba(23,19,31,0.20)}
+    .safety{width:84px;height:66px;border-radius:10px;background:#fde047}
+    .safety::before{content:"";position:absolute;top:-15px;left:22px;width:38px;height:15px;border:3px solid var(--ink);border-bottom:0;border-radius:10px 10px 0 0;background:#fde047}
+    .safety::after{content:"SAFETY BOX";position:absolute;left:7px;bottom:6px;font-family:"Fredoka",sans-serif;font-size:8.5px;font-weight:700;letter-spacing:0.02em;color:var(--ink)}
+    .art-icon{position:absolute;inset:0;display:grid;place-items:center;font-size:22px;line-height:1;filter:drop-shadow(2px 2px 0 rgba(23,19,31,0.20));pointer-events:none}
+    .safety .art-icon{inset:7px 0 15px;font-size:21px}
+    .sharp-tools{display:grid;gap:7px;font-size:21px;filter:drop-shadow(2px 2px 0 rgba(23,19,31,0.18))}
+    .wadah-card h3{margin:0;font-family:"Fredoka",sans-serif;font-size:20px;line-height:1;letter-spacing:-0.4px}
+    .wadah-sub{margin-top:5px;font-family:"Fredoka",sans-serif;font-size:12px;font-weight:700;line-height:1.22;color:var(--ink)}
+    .wadah-list{margin:8px 0 0;padding:0;list-style:none;display:grid;gap:4px;font-size:12px;line-height:1.26;color:#5a5261}
+    .wadah-list li{position:relative;padding-left:13px}
+    .wadah-list li::before{content:"•";position:absolute;left:1px;color:var(--accent);font-weight:900}
+    .wadah-tag{margin-top:auto;align-self:flex-start;padding:5px 8px;border:3px solid var(--ink);border-radius:999px;background:var(--accent);box-shadow:3px 3px 0 var(--ink);font-family:"Fredoka",sans-serif;font-size:10px;font-weight:700;color:var(--ink);white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+    .wadah-card.merah .wadah-tag,.wadah-card.ungu .wadah-tag,.wadah-card.coklat .wadah-tag{color:#fff}
+    .wadah-presenters{display:grid;grid-template-columns:250px minmax(0,1fr) 250px;align-items:end;gap:20px;min-height:0}
+    .presenter{position:relative;width:250px;height:250px;align-self:end;overflow:hidden;will-change:transform;pointer-events:none}
+    .presenter.left{transform:translate3d(calc(var(--mx)*-7px),0,0)}
+    .presenter.right{transform:translate3d(calc(var(--mx)*7px),0,0)}
+    .presenter img{display:block;width:100%;height:100%;object-fit:contain;object-position:bottom center;filter:drop-shadow(7px 8px 0 rgba(23,19,31,0.82))}
+    .presenter-note{align-self:end;margin-bottom:2px}
 
-    /* ===== SLIDE 11: URUTAN APD — CALLAWAY-SPLIT ===== */
+    /* ===== SLIDE 11: URUTAN APD — CALLAWAY CENTER (PETUGAS DI TENGAH) ===== */
     .apd-body { grid-template-rows: minmax(0,1fr) auto; }
-    .apd-callaway {
-      position:relative;
-      min-height:0;
-      display:grid;
-      grid-template-columns: 1.06fr 0.94fr;
-      gap:26px;
-      align-items:stretch;
-    }
-    .apd-lines {
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      z-index:1;
-      pointer-events:none;
-      overflow:visible;
-    }
-    .apd-lines path {
-      fill:none;
-      stroke:var(--ink);
-      stroke-width:2.5;
-      stroke-linecap:round;
-      vector-effect:non-scaling-stroke;
-      stroke-dasharray:1;
-      stroke-dashoffset:1;
-      opacity:0.85;
-    }
-    .slide.active .apd-lines path { animation: drawLine 0.7s cubic-bezier(0.2,0.8,0.2,1) forwards; }
-    .slide.active .apd-lines path:nth-of-type(1){animation-delay:0.30s}
-    .slide.active .apd-lines path:nth-of-type(2){animation-delay:0.42s}
-    .slide.active .apd-lines path:nth-of-type(3){animation-delay:0.54s}
-    .slide.active .apd-lines path:nth-of-type(4){animation-delay:0.66s}
-    .slide.active .apd-lines path:nth-of-type(5){animation-delay:0.78s}
-    .slide.active .apd-lines path:nth-of-type(6){animation-delay:0.90s}
-    @keyframes drawLine { to { stroke-dashoffset:0; } }
+    .apd-callaway { position:relative; min-height:0; }
+    .apd-lines { position:absolute; inset:0; width:100%; height:100%; z-index:1; pointer-events:none; overflow:visible; }
+    .apd-lines path { fill:none; stroke:var(--ink); stroke-width:2.5; stroke-linecap:round; opacity:.92; transition: stroke-dashoffset .7s cubic-bezier(.2,.8,.2,1); }
+    .apd-lines circle.node { fill:var(--white); stroke:var(--ink); stroke-width:2.5; }
+    .apd-lines circle.anchor { stroke:var(--ink); stroke-width:2.5; }
 
-    .apd-steps {
-      position:relative;
-      z-index:2;
-      list-style:none;
-      margin:0;
-      padding:0;
-      display:grid;
-      grid-auto-rows: minmax(0,1fr);
-      gap:8px;
-      min-height:0;
-    }
-    .apd-step {
-      position:relative;
-      display:grid;
-      grid-template-columns: 46px 1fr;
-      align-items:center;
-      gap:12px;
-      background:var(--white);
-      border:var(--border);
-      border-radius:20px;
-      box-shadow:var(--shadow);
-      padding:9px 14px 9px 10px;
-      min-height:0;
-      --accent: var(--violet);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .apd-step:hover { transform: translate(-2px,-2px); box-shadow:12px 12px 0 var(--ink); }
-    .apd-step:nth-child(1){--accent:var(--mint);}
-    .apd-step:nth-child(2){--accent:var(--violet);}
-    .apd-step:nth-child(3){--accent:var(--pink);}
-    .apd-step:nth-child(4){--accent:var(--amber);}
-    .apd-step:nth-child(5){--accent:var(--violet);}
-    .apd-step:nth-child(6){--accent:var(--mint);}
-    .apd-num {
-      width:46px; height:46px;
-      border:var(--border);
-      border-radius:15px;
-      background:var(--accent);
-      box-shadow:4px 4px 0 var(--ink);
-      display:grid; place-items:center;
-      font-family:"Fredoka",sans-serif;
-      font-size:21px; font-weight:700;
-      color:var(--ink);
-      flex:0 0 auto;
-    }
-    .apd-step:nth-child(3) .apd-num,
-    .apd-step:nth-child(5) .apd-num { color:#fff; }
-    .apd-step-body { min-width:0; }
-    .apd-step-title {
-      display:flex; align-items:center; gap:8px;
-      font-family:"Fredoka",sans-serif;
-      font-size:16.5px; font-weight:700; line-height:1.1;
-      margin:0 0 3px;
-    }
-    .apd-step-title .em { font-size:18px; }
-    .apd-step-desc {
-      margin:0;
-      font-size:12.5px; line-height:1.32; color:#5a5261;
-      display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
-    }
+    .apd-figure { position:absolute; top:0; bottom:0; left:50%; transform:translateX(-50%); width:auto; z-index:2; display:flex; align-items:flex-end; justify-content:center; }
+    .apd-figure-img { height:100%; width:auto; display:block; object-fit:contain; filter: drop-shadow(7px 8px 0 var(--ink)) drop-shadow(15px 17px 0 rgba(23,19,31,.20)); }
+    .apd-figure-glow { position:absolute; inset:-4% -14%; z-index:-1; background: radial-gradient(ellipse at 50% 40%, rgba(139,92,246,.20), transparent 60%), radial-gradient(ellipse at 50% 72%, rgba(52,211,153,.18), transparent 62%); }
+    .apd-ground { position:absolute; left:50%; bottom:1.5%; transform:translateX(-50%); width:64%; height:30px; border-radius:50%; background:radial-gradient(ellipse, rgba(23,19,31,.34), transparent 70%); filter:blur(3px); z-index:-1; }
 
-    .apd-photo-wrap { position:relative; z-index:2; min-height:0; }
-    .apd-photo { height:100%; }
-    .apd-photo img { object-fit:cover; object-position:center top; }
-    .apd-sticker {
-      top:-14px; left:auto; right:24px;
-      background:var(--mint);
-      transform: rotate(6deg);
-      box-shadow:5px 5px 0 var(--ink);
-      font-size:15px;
-    }
-    .slide.active .apd-photo-wrap { animation: callIn 0.85s cubic-bezier(0.2,0.8,0.2,1) both; }
-    @keyframes callIn {
-      from { opacity:0; transform: translate3d(46px,0,0) scale(0.96) rotate(1.5deg); }
-      to   { opacity:1; transform: none; }
-    }
+    .apd-label { position:absolute; z-index:3; width:372px; display:grid; grid-template-columns:46px 1fr; align-items:start; gap:10px; background:var(--white); border:var(--border); border-radius:18px; box-shadow:var(--shadow); padding:9px 13px; --accent:var(--violet); transition:transform .2s ease, box-shadow .2s ease; transform:translateY(-50%); }
+    .apd-label:hover { transform:translateY(-50%) translate(-2px,-2px); box-shadow:12px 12px 0 var(--ink); }
+    .apd-label.left { left:0; }
+    .apd-label.right { right:0; }
+    .apd-num { width:46px;height:46px;border:var(--border);border-radius:14px;background:var(--accent);box-shadow:4px 4px 0 var(--ink);display:grid;place-items:center;font-family:"Fredoka",sans-serif;font-size:20px;font-weight:700;color:var(--ink);flex:0 0 auto; }
+    .apd-label.dark .apd-num { color:#fff; }
+    .apd-ltitle { display:flex;align-items:center;gap:7px;font-family:"Fredoka",sans-serif;font-size:15.5px;font-weight:700;line-height:1.1;margin:0 0 2px; }
+    .apd-ltitle .em { font-size:17px; }
+    .apd-ldesc { margin:0;font-size:12px;line-height:1.3;color:#5a5261; }
+    .apd-stub { position:absolute; top:50%; width:14px;height:14px;border:3px solid var(--ink);border-radius:50%;background:var(--accent);box-shadow:2px 2px 0 var(--ink); }
+    .apd-label.left .apd-stub { right:-8px; transform:translateY(-50%); }
+    .apd-label.right .apd-stub { left:-8px; transform:translateY(-50%); }
+    .slide.active .apd-label { animation: rise 0.55s cubic-bezier(0.2,0.8,0.2,1) both; }
+
     .apd-footnote { background: rgba(52,211,153,0.16); }
     .apd-footnote strong { color:#0f7a52; }
 
-    /* ===== HASIL MINI POLL: GAMBAR BENAR/SALAH DI SLIDE 1 ===== */
-    .hero-tile.result-active .photo-zoom { animation: none; }
-    .hero-tile.result-active img { object-fit: contain; object-position: center bottom; padding: 24px 28px 12px; filter: drop-shadow(8px 10px 0 rgba(23,19,31,0.78)); }
-    .hero-tile.result-correct { box-shadow: 14px 14px 0 var(--ink), 0 0 0 6px rgba(52,211,153,0.22); }
-    .hero-tile.result-wrong { box-shadow: 14px 14px 0 var(--ink), 0 0 0 6px rgba(236,72,153,0.20); }
-    .hero-tile.result-active .sticker { background: var(--result-color, var(--amber)); color: var(--ink); }
-    .hero-tile.result-correct .sticker { background: var(--mint); }
-    .hero-tile.result-wrong .sticker { background: var(--pink); color: #fff; }
-    .hero-tile.result-active .tile-label { background: rgba(255,253,248,0.96); }
+    /* ===== HASIL MINI POLL SLIDE 1 ===== */
+    .hero-tile.result-active .photo-zoom { animation:none; }
+    .hero-tile.result-active img { object-fit:contain; object-position:center bottom; padding:24px 28px 12px; filter:drop-shadow(8px 10px 0 rgba(23,19,31,0.78)); }
+    .hero-tile.result-correct { box-shadow:14px 14px 0 var(--ink), 0 0 0 6px rgba(52,211,153,0.22); }
+    .hero-tile.result-wrong { box-shadow:14px 14px 0 var(--ink), 0 0 0 6px rgba(236,72,153,0.20); }
+    .hero-tile.result-active .sticker { background:var(--result-color,var(--amber)); color:var(--ink); }
+    .hero-tile.result-correct .sticker { background:var(--mint); }
+    .hero-tile.result-wrong .sticker { background:var(--pink); color:#fff; }
+    .hero-tile.result-active .tile-label { background:rgba(255,253,248,0.96); }
 
     @media (prefers-reduced-motion: reduce) {
       * { animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; }
@@ -407,7 +272,6 @@
     <div class="stage" id="stage">
       <div class="canvas" id="canvas">
         <div class="paper"></div>
-
         <div class="scene" aria-hidden="true">
           <div class="layer back">
             <div class="shape circle" style="width:250px;height:250px;background:var(--violet);left:-20px;top:105px;opacity:.92;"></div>
@@ -427,10 +291,7 @@
         </div>
 
         <header class="topbar">
-          <div class="brand">
-            <div class="brand-badge">☣️</div>
-            <span>Limbah B3 RS</span>
-          </div>
+          <div class="brand"><div class="brand-badge">☣️</div><span>Limbah B3 RS</span></div>
           <div class="progress" aria-label="Progres presentasi"><div id="bar"></div></div>
           <button class="nav-btn" id="btnPrev" aria-label="Slide sebelumnya">◀</button>
           <div class="counter" id="counter">1 / 14</div>
@@ -439,20 +300,14 @@
         </header>
 
         <main class="deck">
-          <!-- SLIDE 1: INTRO -->
+          <!-- SLIDE 1 -->
           <section class="slide active" aria-hidden="false">
             <div class="slide-inner">
               <div class="body hero">
                 <div>
                   <span class="kicker">Agency Premium • Cinematic 16:9</span>
-                  <h1>
-                    Limbah B3 <span class="hl hl-violet">Rumah Sakit</span><br />
-                    <span class="hl hl-mint">Aman, Patuh, Berdampak</span>
-                  </h1>
-                  <p class="lead">
-                    Sebelum masuk materi, uji insting Anda: manakah yang
-                    <strong>wajib</strong> masuk ke pengelolaan limbah B3/infeksius?
-                  </p>
+                  <h1>Limbah B3 <span class="hl hl-violet">Rumah Sakit</span><br /><span class="hl hl-mint">Aman, Patuh, Berdampak</span></h1>
+                  <p class="lead">Sebelum masuk materi, uji insting Anda: manakah yang <strong>wajib</strong> masuk ke pengelolaan limbah B3/infeksius?</p>
                   <div class="quiz">
                     <div class="quiz-title">Mini Poll Pembuka</div>
                     <div class="choices">
@@ -468,19 +323,11 @@
                     <button class="btn" id="askBtn">Pantik Diskusi</button>
                   </div>
                 </div>
-
                 <div class="hero-media">
                   <div class="tile hero-tile">
                     <div class="sticker">Foto Utama</div>
-                    <div class="photo-parallax">
-                      <div class="photo-zoom">
-                        <img data-img="hero" data-alt="Foto utama pengelolaan limbah B3 rumah sakit" />
-                      </div>
-                    </div>
-                    <div class="tile-label">
-                      Blok Foto Utama
-                      <small>Edit RESULT_IMAGES.initial untuk mengganti gambar ini.</small>
-                    </div>
+                    <div class="photo-parallax"><div class="photo-zoom"><img data-img="hero" data-alt="Foto utama pengelolaan limbah B3 rumah sakit" /></div></div>
+                    <div class="tile-label">Blok Foto Utama<small>Edit RESULT_IMAGES.initial untuk mengganti gambar ini.</small></div>
                   </div>
                   <div class="chip" style="left:-8px; top:58px; --accent:var(--pink); --cx:26px; --cy:16px;"><span class="dot"></span><span>Infeksius</span></div>
                   <div class="chip" style="right:-10px; top:126px; --accent:var(--amber); --cx:-22px; --cy:14px;"><span class="dot"></span><span>Kimia</span></div>
@@ -491,13 +338,10 @@
             </div>
           </section>
 
-          <!-- SLIDE 2: AGENDA -->
+          <!-- SLIDE 2 -->
           <section class="slide" aria-hidden="true">
             <div class="slide-inner">
-              <div class="slide-head">
-                <div><span class="kicker">Agenda</span><h2>Apa yang akan kita bahas?</h2></div>
-                <p>Dari pemahaman dasar hingga aksi nyata di lapangan.</p>
-              </div>
+              <div class="slide-head"><div><span class="kicker">Agenda</span><h2>Apa yang akan kita bahas?</h2></div><p>Dari pemahaman dasar hingga aksi nyata di lapangan.</p></div>
               <div class="body">
                 <div class="grid grid-4 fill stagger">
                   <div class="card violet"><div class="top-accent"></div><div class="icon"><span class="icon-text">01</span></div><h3>Pembuka</h3><p>Menguji persepsi awal tentang risiko limbah di RS.</p></div>
@@ -513,21 +357,14 @@
             </div>
           </section>
 
-          <!-- SLIDE 3: DEFINISI -->
+          <!-- SLIDE 3 -->
           <section class="slide" aria-hidden="true">
             <div class="slide-inner">
-              <div class="slide-head">
-                <div><span class="kicker">Dasar Pemahaman</span><h2>Apa itu Limbah B3 RS?</h2></div>
-                <p>Bukan sekadar sampah medis; ada kriteria sifat, konsentrasi, dan jumlah.</p>
-              </div>
+              <div class="slide-head"><div><span class="kicker">Dasar Pemahaman</span><h2>Apa itu Limbah B3 RS?</h2></div><p>Bukan sekadar sampah medis; ada kriteria sifat, konsentrasi, dan jumlah.</p></div>
               <div class="body split">
                 <div>
                   <p class="lead">Limbah B3 adalah limbah yang mengandung atau terkontaminasi bahan berbahaya dan/atau beracun yang karena sifat, konsentrasi, dan/atau jumlahnya dapat mencemarkan lingkungan, membahayakan kesehatan manusia, atau menimbulkan penyakit.</p>
-                  <ul class="list">
-                    <li>Dapat berasal dari layanan medis, penunjang medis, dan operasional tertentu.</li>
-                    <li>Tidak semua sampah RS adalah B3; sampah domestik perlu dipisahkan sejak sumber.</li>
-                    <li>Kesalahan pemilahan dapat membuat limbah biasa berpotensi menjadi berbahaya.</li>
-                  </ul>
+                  <ul class="list"><li>Dapat berasal dari layanan medis, penunjang medis, dan operasional tertentu.</li><li>Tidak semua sampah RS adalah B3; sampah domestik perlu dipisahkan sejak sumber.</li><li>Kesalahan pemilahan dapat membuat limbah biasa berpotensi menjadi berbahaya.</li></ul>
                   <div class="note"><strong>Catatan Regulasi:</strong> Rujuk peraturan terbaru: PP 22/2021, Permen LHK terkait limbah B3, Permenkes 7/2019, serta SOP internal rumah sakit.</div>
                 </div>
                 <div class="grid grid-2 fill stagger">
@@ -540,13 +377,10 @@
             </div>
           </section>
 
-          <!-- SLIDE 4: SUMBER -->
+          <!-- SLIDE 4 -->
           <section class="slide" aria-hidden="true">
             <div class="slide-inner">
-              <div class="slide-head">
-                <div><span class="kicker">Sumber Timbulan</span><h2>Sumber Limbah B3 RS</h2></div>
-                <p>Setiap unit memiliki profil risiko berbeda.</p>
-              </div>
+              <div class="slide-head"><div><span class="kicker">Sumber Timbulan</span><h2>Sumber Limbah B3 RS</h2></div><p>Setiap unit memiliki profil risiko berbeda.</p></div>
               <div class="body">
                 <div class="grid grid-3 fill stagger">
                   <div class="card pink"><div class="top-accent"></div><div class="icon">🛏️</div><h3>Ruang Perawatan</h3><p>Kasa berdarah, sarung tangan terkontaminasi, selang infus, bahan habis pakai medis.</p></div>
@@ -560,13 +394,10 @@
             </div>
           </section>
 
-          <!-- SLIDE 5: KARAKTERISTIK -->
+          <!-- SLIDE 5 -->
           <section class="slide" aria-hidden="true">
             <div class="slide-inner">
-              <div class="slide-head">
-                <div><span class="kicker">Sifat Bahaya</span><h2>Karakteristik Bahaya</h2></div>
-                <p>Karakter menentukan pemilahan, penyimpanan, dan penanganan.</p>
-              </div>
+              <div class="slide-head"><div><span class="kicker">Sifat Bahaya</span><h2>Karakteristik Bahaya</h2></div><p>Karakter menentukan pemilahan, penyimpanan, dan penanganan.</p></div>
               <div class="body">
                 <div class="grid grid-3 fill stagger">
                   <div class="card pink"><div class="top-accent"></div><div class="icon">☣️</div><h3>Infektius</h3><p>Mengandung patogen yang dapat menyebabkan infeksi.</p></div>
@@ -580,13 +411,10 @@
             </div>
           </section>
 
-          <!-- SLIDE 6: DAMPAK -->
+          <!-- SLIDE 6 -->
           <section class="slide" aria-hidden="true">
             <div class="slide-inner">
-              <div class="slide-head">
-                <div><span class="kicker">Mengapa Penting?</span><h2>Dampak Jika Salah Kelola</h2></div>
-                <p>Risikonya berlapis: manusia, lingkungan, dan institusi.</p>
-              </div>
+              <div class="slide-head"><div><span class="kicker">Mengapa Penting?</span><h2>Dampak Jika Salah Kelola</h2></div><p>Risikonya berlapis: manusia, lingkungan, dan institusi.</p></div>
               <div class="body stack">
                 <div class="grid grid-3 fill stagger">
                   <div class="card pink"><div class="top-accent"></div><div class="icon">🩺</div><h3>Kesehatan</h3><p>Luka tusuk, paparan darah, infeksi silang, keracunan, penyakit akibat kerja.</p></div>
@@ -598,13 +426,10 @@
             </div>
           </section>
 
-          <!-- SLIDE 7: DATA -->
+          <!-- SLIDE 7 -->
           <section class="slide" aria-hidden="true">
             <div class="slide-inner">
-              <div class="slide-head">
-                <div><span class="kicker">Data & Gambaran Umum</span><h2>Angka yang Perlu Diingat</h2></div>
-                <p>Contoh gambaran umum untuk memantik kesadaran.</p>
-              </div>
+              <div class="slide-head"><div><span class="kicker">Data & Gambaran Umum</span><h2>Angka yang Perlu Diingat</h2></div><p>Contoh gambaran umum untuk memantik kesadaran.</p></div>
               <div class="body stack">
                 <div class="grid grid-4 fill stagger">
                   <div class="card pink stat"><div class="top-accent"></div><span class="num" data-count="15" data-suffix="%">0%</span><h3>Limbah Berbahaya</h3><p>Sebagian limbah faskes dapat tergolong berbahaya.</p></div>
@@ -617,13 +442,10 @@
             </div>
           </section>
 
-          <!-- SLIDE 8: ALUR -->
+          <!-- SLIDE 8 -->
           <section class="slide" aria-hidden="true">
             <div class="slide-inner">
-              <div class="slide-head">
-                <div><span class="kicker">Sistem Pengelolaan</span><h2>Alur Pengelolaan Limbah B3</h2></div>
-                <p>Putus di satu titik, risiko meningkat di titik berikutnya.</p>
-              </div>
+              <div class="slide-head"><div><span class="kicker">Sistem Pengelolaan</span><h2>Alur Pengelolaan Limbah B3</h2></div><p>Putus di satu titik, risiko meningkat di titik berikutnya.</p></div>
               <div class="body">
                 <div class="grid grid-3 fill stagger">
                   <div class="card mint"><div class="top-accent"></div><div class="icon">1</div><h3>Pilah di Sumber</h3><p>Pemisahan awal menentukan seluruh rantai aman.</p></div>
@@ -637,13 +459,10 @@
             </div>
           </section>
 
-          <!-- SLIDE 9: PEMILAHAN DI SUMBER (FOTO) -->
+          <!-- SLIDE 9 -->
           <section class="slide" aria-hidden="true">
             <div class="slide-inner">
-              <div class="slide-head">
-                <div><span class="kicker">Praktik Lapangan</span><h2>Pemilahan di Sumber</h2></div>
-                <p>Blok gambar di bawah bisa Anda ganti dengan foto asli RS Anda.</p>
-              </div>
+              <div class="slide-head"><div><span class="kicker">Praktik Lapangan</span><h2>Pemilahan di Sumber</h2></div><p>Blok gambar di bawah bisa Anda ganti dengan foto asli RS Anda.</p></div>
               <div class="body rows-photo">
                 <div class="grid grid-3 fill stagger">
                   <div class="tile"><div class="photo-parallax"><div class="photo-zoom"><img data-img="infectious" data-alt="Foto limbah infeksius kantong kuning" /></div></div><div class="tile-label">Kuning: Infeksius<small>Edit IMAGE_URLS.infectious</small></div></div>
@@ -659,45 +478,17 @@
             </div>
           </section>
 
-          <!-- SLIDE 10: KATEGORI WADAH + PRESENTER -->
+          <!-- SLIDE 10 -->
           <section class="slide" aria-hidden="true">
             <div class="slide-inner wadah-slide">
-              <div class="slide-head">
-                <div><span class="kicker">Katalog Warna Wadah</span><h2>Kategori Wadah Sampah B3 Medis</h2></div>
-                <p>5 kategori warna wadah di atas; dua presenter di pojok kiri‑kanan bawah. Kartu disusun agar tidak tertutup gambar.</p>
-              </div>
+              <div class="slide-head"><div><span class="kicker">Katalog Warna Wadah</span><h2>Kategori Wadah Sampah B3 Medis</h2></div><p>5 kategori warna wadah di atas; dua presenter di pojok kiri‑kanan bawah. Kartu disusun agar tidak tertutup gambar.</p></div>
               <div class="body">
                 <div class="wadah-board stagger">
-                  <article class="wadah-card kuning">
-                    <div class="wadah-art"><div class="bag"><span class="art-icon">☣️</span></div><div class="bin"><span class="art-icon">☣️</span></div></div>
-                    <h3>Kuning</h3><div class="wadah-sub">Limbah Infeksius & Patologis</div>
-                    <ul class="wadah-list"><li>Perban berdarah</li><li>Kasa & balutan</li><li>Cairan tubuh</li><li>Jaringan / patologi</li></ul>
-                    <div class="wadah-tag">Kantong + tempat sampah kuning</div>
-                  </article>
-                  <article class="wadah-card merah">
-                    <div class="wadah-art"><div class="bag"><span class="art-icon">☢️</span></div><div class="bin"><span class="art-icon">☢️</span></div></div>
-                    <h3>Merah</h3><div class="wadah-sub">Limbah Radioaktif</div>
-                    <ul class="wadah-list"><li>Terkontaminasi radioterapi</li><li>Sumber tertutup</li><li>Material radiologi / nuklir</li></ul>
-                    <div class="wadah-tag">Penanganan khusus & berizin</div>
-                  </article>
-                  <article class="wadah-card ungu">
-                    <div class="wadah-art"><div class="bag"><span class="art-icon">🧬</span></div><div class="bin"><span class="art-icon">🧪</span></div></div>
-                    <h3>Ungu</h3><div class="wadah-sub">Limbah Sitotoksik</div>
-                    <ul class="wadah-list"><li>Sisa obat kemoterapi</li><li>Vial / botol kemo</li><li>Material kontak sitostatik</li></ul>
-                    <div class="wadah-tag">Jangan dicampur limbah biasa</div>
-                  </article>
-                  <article class="wadah-card coklat">
-                    <div class="wadah-art"><div class="bag"><span class="art-icon">💊</span></div><div class="bin"><span class="art-icon">🧪</span></div></div>
-                    <h3>Coklat</h3><div class="wadah-sub">Limbah Farmasi & Kimiawi</div>
-                    <ul class="wadah-list"><li>Obat kedaluwarsa</li><li>Obat rusak / ditarik</li><li>Sisa bahan kimia / reagen</li></ul>
-                    <div class="wadah-tag">Ikuti SDS & label</div>
-                  </article>
-                  <article class="wadah-card sharp">
-                    <div class="wadah-art"><div class="safety"><span class="art-icon">☣️</span></div><div class="sharp-tools"><span>💉</span><span>🔪</span></div></div>
-                    <h3>Safety Box</h3><div class="wadah-sub">Limbah Benda Tajam</div>
-                    <ul class="wadah-list"><li>Jarum suntik</li><li>Pisau bedah / scalpel</li><li>Ampul kaca</li><li>Fragment tajam lain</li></ul>
-                    <div class="wadah-tag">Maks 3/4, jangan dibuka ulang</div>
-                  </article>
+                  <article class="wadah-card kuning"><div class="wadah-art"><div class="bag"><span class="art-icon">☣️</span></div><div class="bin"><span class="art-icon">☣️</span></div></div><h3>Kuning</h3><div class="wadah-sub">Limbah Infeksius & Patologis</div><ul class="wadah-list"><li>Perban berdarah</li><li>Kasa & balutan</li><li>Cairan tubuh</li><li>Jaringan / patologi</li></ul><div class="wadah-tag">Kantong + tempat sampah kuning</div></article>
+                  <article class="wadah-card merah"><div class="wadah-art"><div class="bag"><span class="art-icon">☢️</span></div><div class="bin"><span class="art-icon">☢️</span></div></div><h3>Merah</h3><div class="wadah-sub">Limbah Radioaktif</div><ul class="wadah-list"><li>Terkontaminasi radioterapi</li><li>Sumber tertutup</li><li>Material radiologi / nuklir</li></ul><div class="wadah-tag">Penanganan khusus & berizin</div></article>
+                  <article class="wadah-card ungu"><div class="wadah-art"><div class="bag"><span class="art-icon">🧬</span></div><div class="bin"><span class="art-icon">🧪</span></div></div><h3>Ungu</h3><div class="wadah-sub">Limbah Sitotoksik</div><ul class="wadah-list"><li>Sisa obat kemoterapi</li><li>Vial / botol kemo</li><li>Material kontak sitostatik</li></ul><div class="wadah-tag">Jangan dicampur limbah biasa</div></article>
+                  <article class="wadah-card coklat"><div class="wadah-art"><div class="bag"><span class="art-icon">💊</span></div><div class="bin"><span class="art-icon">🧪</span></div></div><h3>Coklat</h3><div class="wadah-sub">Limbah Farmasi & Kimiawi</div><ul class="wadah-list"><li>Obat kedaluwarsa</li><li>Obat rusak / ditarik</li><li>Sisa bahan kimia / reagen</li></ul><div class="wadah-tag">Ikuti SDS & label</div></article>
+                  <article class="wadah-card sharp"><div class="wadah-art"><div class="safety"><span class="art-icon">☣️</span></div><div class="sharp-tools"><span>💉</span><span>🔪</span></div></div><h3>Safety Box</h3><div class="wadah-sub">Limbah Benda Tajam</div><ul class="wadah-list"><li>Jarum suntik</li><li>Pisau bedah / scalpel</li><li>Ampul kaca</li><li>Fragment tajam lain</li></ul><div class="wadah-tag">Maks 3/4, jangan dibuka ulang</div></article>
                 </div>
                 <div class="wadah-presenters">
                   <div class="presenter left"><img data-img="presenterLeft" data-alt="Presenter kiri" /></div>
@@ -708,87 +499,23 @@
             </div>
           </section>
 
-          <!-- SLIDE 11: URUTAN PEMAKAIAN APD — CALLAWAY-SPLIT -->
+          <!-- SLIDE 11: URUTAN APD — CALLAWAY CENTER -->
           <section class="slide" aria-hidden="true">
             <div class="slide-inner">
               <div class="slide-head">
                 <div><span class="kicker">Perlindungan Petugas</span><h2>Urutan Pemakaian APD</h2></div>
-                <p>Penanganan sampah B3 &amp; limbah medis — kenakan sesuai urutan, lepas kebalikannya.</p>
+                <p>Penanganan sampah B3 &amp; limbah medis — garis penunjuk mengarah ke bagian tubuh pada foto. Kenakan sesuai nomor 1–6.</p>
               </div>
-
               <div class="body apd-body">
-                <div class="apd-callaway">
-                  <!-- garis callaway: memanggil tiap langkah ke foto -->
-                  <svg class="apd-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-                    <path pathLength="1" d="M50 9  C 52 9,  53 14, 55 14" />
-                    <path pathLength="1" d="M50 25 C 52 25, 53 30, 55 30" />
-                    <path pathLength="1" d="M50 42 C 52 42, 53 46, 55 46" />
-                    <path pathLength="1" d="M50 58 C 52 58, 53 62, 55 62" />
-                    <path pathLength="1" d="M50 75 C 52 75, 53 78, 55 78" />
-                    <path pathLength="1" d="M50 91 C 52 91, 53 90, 55 90" />
-                  </svg>
-
-                  <ol class="apd-steps stagger">
-                    <li class="apd-step">
-                      <div class="apd-num">1</div>
-                      <div class="apd-step-body">
-                        <h3 class="apd-step-title"><span class="em">😷</span> Masker</h3>
-                        <p class="apd-step-desc">Masker bedah atau respirator untuk melindungi saluran pernapasan dari agen infeksius di udara.</p>
-                      </div>
-                    </li>
-                    <li class="apd-step">
-                      <div class="apd-num">2</div>
-                      <div class="apd-step-body">
-                        <h3 class="apd-step-title"><span class="em">🥽</span> Pelindung Wajah / Mata</h3>
-                        <p class="apd-step-desc">Kacamata pelindung (goggles) atau face shield untuk percik cairan tubuh atau limbah B3.</p>
-                      </div>
-                    </li>
-                    <li class="apd-step">
-                      <div class="apd-num">3</div>
-                      <div class="apd-step-body">
-                        <h3 class="apd-step-title"><span class="em">🧤</span> Sarung Tangan Khusus</h3>
-                        <p class="apd-step-desc">Sarung tangan tahan kimia / heavy duty gloves untuk cairan tubuh dan bahan kimia berbahaya.</p>
-                      </div>
-                    </li>
-                    <li class="apd-step">
-                      <div class="apd-num">4</div>
-                      <div class="apd-step-body">
-                        <h3 class="apd-step-title"><span class="em">🥼</span> Pakaian Pelindung / Apron</h3>
-                        <p class="apd-step-desc">Pakaian pelindung lengan panjang; melindungi kulit dan pakaian dari percikan serta tumpahan limbah medis.</p>
-                      </div>
-                    </li>
-                    <li class="apd-step">
-                      <div class="apd-num">5</div>
-                      <div class="apd-step-body">
-                        <h3 class="apd-step-title"><span class="em">🧢</span> Topi Medis</h3>
-                        <p class="apd-step-desc">Penutup yang melindungi rambut dan kepala dari kontaminasi.</p>
-                      </div>
-                    </li>
-                    <li class="apd-step">
-                      <div class="apd-num">6</div>
-                      <div class="apd-step-body">
-                        <h3 class="apd-step-title"><span class="em">🥾</span> Sepatu Boot</h3>
-                        <p class="apd-step-desc">Sepatu keselamatan tertutup / boot melindungi kaki dari tumpahan cairan, pecahan kaca, dan benda tajam.</p>
-                      </div>
-                    </li>
-                  </ol>
-
-                  <div class="apd-photo-wrap">
-                    <div class="tile apd-photo">
-                      <div class="sticker apd-sticker">✅ APD LENGKAP!</div>
-                      <div class="photo-parallax">
-                        <div class="photo-zoom">
-                          <img data-img="apd" data-alt="Petugas menggunakan APD lengkap penanganan limbah B3" />
-                        </div>
-                      </div>
-                      <div class="tile-label">
-                        Petugas APD Lengkap
-                        <small>Edit IMAGE_URLS.apd untuk mengganti gambar ini.</small>
-                      </div>
-                    </div>
+                <div class="apd-callaway" id="apdCallaway">
+                  <svg class="apd-lines" id="apdLines" aria-hidden="true"></svg>
+                  <div class="apd-figure" id="apdFigure">
+                    <div class="apd-figure-glow"></div>
+                    <img class="apd-figure-img" id="apdFigureImg" data-img="apd" data-alt="Petugas menggunakan APD lengkap penanganan limbah B3" />
+                    <div class="apd-ground"></div>
                   </div>
+                  <!-- label kiri & kanan dibuat otomatis oleh script dari APD_ITEMS -->
                 </div>
-
                 <div class="note apd-footnote">
                   <strong>Semua APD sudah lengkap.</strong> Petugas siap mengangkut dan membuang sampah B3 dengan aman — kenakan sesuai urutan, lepas dengan urutan terbalik, dan selalu lakukan higiene tangan setelah melepas APD.
                 </div>
@@ -796,13 +523,10 @@
             </div>
           </section>
 
-          <!-- SLIDE 12: CHECKLIST -->
+          <!-- SLIDE 12 -->
           <section class="slide" aria-hidden="true">
             <div class="slide-inner">
-              <div class="slide-head">
-                <div><span class="kicker">Evaluasi Mandiri</span><h2>Checklist Kepatuhan</h2></div>
-                <p>Centang item yang sudah berjalan di unit Anda.</p>
-              </div>
+              <div class="slide-head"><div><span class="kicker">Evaluasi Mandiri</span><h2>Checklist Kepatuhan</h2></div><p>Centang item yang sudah berjalan di unit Anda.</p></div>
               <div class="body check-layout">
                 <div>
                   <div id="auditChecklist" class="checks stagger">
@@ -836,13 +560,10 @@
             </div>
           </section>
 
-          <!-- SLIDE 13: DOKUMENTASI FOTO -->
+          <!-- SLIDE 13 -->
           <section class="slide" aria-hidden="true">
             <div class="slide-inner">
-              <div class="slide-head">
-                <div><span class="kicker">Dokumentasi</span><h2>Blok Gambar Pendukung</h2></div>
-                <p>Ganti URL di IMAGE_URLS dengan foto TPS, laboratorium, farmasi, audit, atau pelatihan RS Anda.</p>
-              </div>
+              <div class="slide-head"><div><span class="kicker">Dokumentasi</span><h2>Blok Gambar Pendukung</h2></div><p>Ganti URL di IMAGE_URLS dengan foto TPS, laboratorium, farmasi, audit, atau pelatihan RS Anda.</p></div>
               <div class="body">
                 <div class="grid grid-2 fill stagger">
                   <div class="tile"><div class="photo-parallax"><div class="photo-zoom"><img data-img="tps" data-alt="Foto TPS limbah B3 rumah sakit" /></div></div><div class="tile-label">TPS Limbah B3<small>Edit IMAGE_URLS.tps</small></div></div>
@@ -854,13 +575,10 @@
             </div>
           </section>
 
-          <!-- SLIDE 14: PENUTUP -->
+          <!-- SLIDE 14 -->
           <section class="slide" aria-hidden="true">
             <div class="slide-inner">
-              <div class="slide-head">
-                <div><span class="kicker">Penutup</span><h2>Penutup & Komitmen</h2></div>
-                <p>Dari kesadaran menjadi kebiasaan, dari kebiasaan menjadi budaya aman.</p>
-              </div>
+              <div class="slide-head"><div><span class="kicker">Penutup</span><h2>Penutup & Komitmen</h2></div><p>Dari kesadaran menjadi kebiasaan, dari kebiasaan menjadi budaya aman.</p></div>
               <div class="body closing">
                 <div class="grid grid-3 fill stagger">
                   <div class="card violet"><div class="top-accent"></div><div class="icon">🗑️</div><h3>Pilah Sejak Awal</h3><p>Kebiasaan kecil di ruang perawatan menentukan keselamatan besar di hilir.</p></div>
@@ -885,7 +603,6 @@
           <div class="vignette"></div>
           <div class="grain"></div>
         </div>
-
         <div class="hint">Navigasi: ← → / spasi / swipe layar. Gerakkan mouse untuk efek parallax cinematic.</div>
         <div class="dots" id="dots"></div>
         <div class="toast" id="toast"></div>
@@ -895,7 +612,7 @@
 
   <script>
     /* ========================================================
-       1) GAMBAR HASIL MINI POLL (SLIDE 1)
+       1) GAMBAR HASIL MINI POLL (SLIDE 1)  — path aset Anda
        ======================================================== */
     const RESULT_IMAGES = {
       initial: "assets/Hero-Default.png",
@@ -904,8 +621,7 @@
     };
 
     /* ========================================================
-       2) GAMBAR BLOK LAINNYA (foto pendukung tiap slide)
-       Kosongkan "" untuk pakai placeholder otomatis.
+       2) GAMBAR BLOK LAINNYA — path aset Anda
        ======================================================== */
     const IMAGE_URLS = {
       hero: "",
@@ -948,11 +664,8 @@
 </svg>`;
       return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg.trim());
     }
-
     function placeholderFor(key) {
-      if (key === "presenterLeft" || key === "presenterRight") {
-        return presenterPlaceholder(key, PLACEHOLDER_META[key].color);
-      }
+      if (key === "presenterLeft" || key === "presenterRight") return presenterPlaceholder(key, PLACEHOLDER_META[key].color);
       const meta = PLACEHOLDER_META[key] || { label: key, color: "#8b5cf6" };
       const svg = `
 <svg xmlns='http://www.w3.org/2000/svg' width='1200' height='800' viewBox='0 0 1200 800'>
@@ -967,7 +680,6 @@
 </svg>`;
       return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg.trim());
     }
-
     function applyImages() {
       document.querySelectorAll("img[data-img]").forEach((img) => {
         const key = img.dataset.img;
@@ -979,12 +691,116 @@
         if (img.dataset.alt) img.alt = img.dataset.alt;
       });
     }
-
     window.setImage = function (key, url) { IMAGE_URLS[key] = url; applyImages(); };
     applyImages();
 
     /* ========================================================
-       3) LOGIKA GAMBAR BENAR / SALAH PADA SLIDE 1
+       3) SLIDE 11 — CALLAWAY CENTER: KONFIGURASI ANCHOR
+       --------------------------------------------------------
+       side : "left" | "right"  -> posisi kartu keterangan
+       top  : % vertikal pusat kartu (0=atas,100=bawah area)
+       ax,ay: % titik tujuan garis PADA FOTO (relatif bingkai img)
+              0,0 = kiri-atas foto ; 100,100 = kanan-bawah foto
+       Ubah angka ini setelah melihat hasil, agar garis pas
+       mengenai bagian tubuh (topi, kacamata, masker, dll).
+       dark:true = nomor berlatar warna gelap (teks putih).
+       ======================================================== */
+    const APD_ITEMS = [
+      { num:5, icon:"🧢", title:"Topi Medis",                 desc:"Penutup yang melindungi rambut dan kepala dari kontaminasi.",                 side:"left",  top:9,  ax:50, ay:5,  accent:"var(--violet)", dark:true },
+      { num:2, icon:"🥽", title:"Pelindung Wajah / Mata",     desc:"Goggles atau face shield untuk percik cairan tubuh / limbah B3.",              side:"right", top:20, ax:50, ay:12, accent:"var(--mint)" },
+      { num:1, icon:"😷", title:"Masker",                     desc:"Masker bedah / respirator melindungi saluran napas dari agen infeksius.",       side:"left",  top:32, ax:50, ay:18, accent:"var(--mint)" },
+      { num:4, icon:"🥼", title:"Pakaian Pelindung / Apron",  desc:"Lengan panjang; melindungi kulit & pakaian dari percikan dan tumpahan.",        side:"right", top:46, ax:50, ay:45, accent:"var(--amber)" },
+      { num:3, icon:"🧤", title:"Sarung Tangan Khusus",       desc:"Heavy duty / tahan kimia untuk cairan tubuh & bahan kimia berbahaya.",          side:"left",  top:60, ax:27, ay:58, accent:"var(--pink)", dark:true },
+      { num:6, icon:"🥾", title:"Sepatu Boot",                desc:"Sepatu keselamatan tertutup melindungi kaki dari tumpahan, kaca, benda tajam.",side:"right", top:82, ax:50, ay:93, accent:"var(--violet)", dark:true }
+    ];
+
+    const apdCallaway = document.getElementById("apdCallaway");
+    const apdLines = document.getElementById("apdLines");
+    const apdFigure = document.getElementById("apdFigure");
+    const apdFigureImg = document.getElementById("apdFigureImg");
+    const SVGNS = "http://www.w3.org/2000/svg";
+    let apdBuilt = false;
+
+    function buildApdLabels() {
+      if (apdBuilt) return;
+      APD_ITEMS.forEach((it, i) => {
+        const el = document.createElement("div");
+        el.className = "apd-label " + it.side + (it.dark ? " dark" : "");
+        el.style.top = it.top + "%";
+        el.style.setProperty("--accent", it.accent);
+        el.style.animationDelay = (0.10 + i * 0.06) + "s";
+        el.innerHTML =
+          '<span class="apd-stub"></span>' +
+          '<div class="apd-num">' + it.num + '</div>' +
+          '<div class="apd-step-body">' +
+            '<h3 class="apd-ltitle"><span class="em">' + it.icon + '</span>' + it.title + '</h3>' +
+            '<p class="apd-ldesc">' + it.desc + '</p>' +
+          '</div>';
+        apdCallaway.appendChild(el);
+        it._el = el;
+        it._stub = el.querySelector(".apd-stub");
+      });
+      apdBuilt = true;
+    }
+
+    function layoutApd(drawn) {
+      if (!apdCallaway) return;
+      buildApdLabels();
+      const cw = apdCallaway.clientWidth;
+      const ch = apdCallaway.clientHeight;
+      if (!cw || !ch) return;
+      apdLines.setAttribute("viewBox", "0 0 " + cw + " " + ch);
+      apdLines.setAttribute("width", cw);
+      apdLines.setAttribute("height", ch);
+      apdLines.innerHTML = "";
+
+      const figW = apdFigure.offsetWidth || 320;
+      const figH = apdFigure.offsetHeight || ch;
+      const figX = apdFigure.offsetLeft;
+      const figY = apdFigure.offsetTop;
+
+      APD_ITEMS.forEach((it, i) => {
+        const stub = it._stub;
+        const nodeX = it._el.offsetLeft + stub.offsetLeft + 7;
+        const nodeY = it._el.offsetTop + stub.offsetTop + 7;
+        const ax = figX + (it.ax / 100) * figW;
+        const ay = figY + (it.ay / 100) * figH;
+        const dir = it.side === "left" ? 1 : -1;
+        const c1x = nodeX + dir * 46, c1y = nodeY;
+        const c2x = ax - dir * 46,  c2y = ay;
+
+        const path = document.createElementNS(SVGNS, "path");
+        path.setAttribute("d", "M" + nodeX + " " + nodeY + " C " + c1x + " " + c1y + ", " + c2x + " " + c2y + ", " + ax + " " + ay);
+        apdLines.appendChild(path);
+        const len = path.getTotalLength();
+        path.style.strokeDasharray = len;
+        path.style.strokeDashoffset = drawn ? 0 : len;
+        path.style.transitionDelay = (0.18 + i * 0.09) + "s";
+
+        const anchor = document.createElementNS(SVGNS, "circle");
+        anchor.setAttribute("class", "anchor");
+        anchor.setAttribute("cx", ax); anchor.setAttribute("cy", ay); anchor.setAttribute("r", 5);
+        anchor.setAttribute("fill", getComputedStyle(it._el).getPropertyValue("--accent").trim() || "#8b5cf6");
+        anchor.style.opacity = drawn ? 1 : 0;
+        anchor.style.transition = "opacity .4s ease " + (0.18 + i * 0.09 + 0.45) + "s";
+        apdLines.appendChild(anchor);
+
+        const node = document.createElementNS(SVGNS, "circle");
+        node.setAttribute("class", "node");
+        node.setAttribute("cx", nodeX); node.setAttribute("cy", nodeY); node.setAttribute("r", 4);
+        node.style.opacity = drawn ? 1 : 0;
+        node.style.transition = "opacity .3s ease " + (0.10 + i * 0.06) + "s";
+        apdLines.appendChild(node);
+      });
+    }
+
+    if (apdFigureImg) {
+      apdFigureImg.addEventListener("load", () => layoutApd(current === 10));
+      apdFigureImg.addEventListener("error", () => layoutApd(current === 10));
+    }
+
+    /* ========================================================
+       4) LOGIKA GAMBAR BENAR / SALAH SLIDE 1
        ======================================================== */
     const RESULT_TILE = document.querySelector(".hero-tile");
     const RESULT_IMG = RESULT_TILE ? RESULT_TILE.querySelector('img[data-img="hero"]') : null;
@@ -1002,43 +818,38 @@
 </svg>`;
       return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg.trim());
     }
-
     function showInitialImage() {
       if (!RESULT_TILE || !RESULT_IMG) return;
       const src = (RESULT_IMAGES.initial || "").trim();
       if (!src) return;
-      RESULT_TILE.classList.remove("result-active", "result-correct", "result-wrong");
+      RESULT_TILE.classList.remove("result-active","result-correct","result-wrong");
       RESULT_TILE.style.removeProperty("--result-color");
       if (RESULT_STICKER) RESULT_STICKER.textContent = "Foto Utama";
       if (RESULT_LABEL_SMALL) RESULT_LABEL_SMALL.textContent = "Edit RESULT_IMAGES.initial untuk mengganti gambar ini.";
       RESULT_IMG.alt = "Foto utama slide pembuka";
-      RESULT_IMG.onerror = function () { this.onerror = null; this.src = makeResultFallbackSvg("Foto Utama", "#8b5cf6", "🏥"); };
+      RESULT_IMG.onerror = function(){ this.onerror=null; this.src = makeResultFallbackSvg("Foto Utama","#8b5cf6","🏥"); };
       RESULT_IMG.src = src;
     }
-
     function showResultImage(isCorrect) {
       if (!RESULT_TILE || !RESULT_IMG) return;
       const title = isCorrect ? "Jawaban Benar" : "Jawaban Salah";
       const color = isCorrect ? "#34d399" : "#ec4899";
       const emoji = isCorrect ? "✅" : "❌";
       const src = (isCorrect ? RESULT_IMAGES.benar : RESULT_IMAGES.salah || "").trim();
-
       RESULT_TILE.classList.add("result-active");
       RESULT_TILE.classList.toggle("result-correct", isCorrect);
       RESULT_TILE.classList.toggle("result-wrong", !isCorrect);
       RESULT_TILE.style.setProperty("--result-color", color);
       if (RESULT_STICKER) RESULT_STICKER.textContent = isCorrect ? "✅ Jawaban Benar" : "❌ Jawaban Salah";
       if (RESULT_LABEL_SMALL) RESULT_LABEL_SMALL.textContent = src ? ("Gambar: " + src) : "Isi RESULT_IMAGES." + (isCorrect ? "benar" : "salah");
-
       RESULT_IMG.alt = title;
-      RESULT_IMG.onerror = function () { this.onerror = null; this.src = makeResultFallbackSvg(title, color, emoji); };
-      RESULT_IMG.src = src || makeResultFallbackSvg(title, color, emoji);
+      RESULT_IMG.onerror = function(){ this.onerror=null; this.src = makeResultFallbackSvg(title,color,emoji); };
+      RESULT_IMG.src = src || makeResultFallbackSvg(title,color,emoji);
     }
-
     showInitialImage();
 
     /* ========================================================
-       4) NAVIGASI, PARALLAX, INTERAKSI
+       5) NAVIGASI, PARALLAX, INTERAKSI
        ======================================================== */
     const stage = document.getElementById("stage");
     const canvas = document.getElementById("canvas");
@@ -1054,170 +865,73 @@
 
     function fitCanvas() { canvas.style.transform = `scale(${stage.clientWidth / 1600})`; }
     fitCanvas();
-    window.addEventListener("resize", fitCanvas);
+    window.addEventListener("resize", () => { fitCanvas(); layoutApd(current === 10); });
 
-    function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
-
-    let targetX = 0, targetY = 0, currentX = 0, currentY = 0, velX = 0, velY = 0;
+    function clamp(v,a,b){ return Math.max(a, Math.min(b, v)); }
+    let targetX=0,targetY=0,currentX=0,currentY=0,velX=0,velY=0;
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    stage.addEventListener("pointermove", (e) => {
-      const r = stage.getBoundingClientRect();
-      targetX = ((e.clientX - r.left) / r.width - 0.5) * 2;
-      targetY = ((e.clientY - r.top) / r.height - 0.5) * 2;
-    });
-    stage.addEventListener("pointerleave", () => { targetX = 0; targetY = 0; });
-
+    stage.addEventListener("pointermove",(e)=>{ const r=stage.getBoundingClientRect(); targetX=((e.clientX-r.left)/r.width-0.5)*2; targetY=((e.clientY-r.top)/r.height-0.5)*2; });
+    stage.addEventListener("pointerleave",()=>{ targetX=0; targetY=0; });
     const startTime = performance.now();
-    function cinematicLoop(now) {
+    function cinematicLoop(now){
       const t = now - startTime;
-      const autoX = Math.sin(t / 3200) * 0.48 + Math.sin(t / 1900) * 0.14;
-      const autoY = Math.cos(t / 3800) * 0.36 + Math.sin(t / 2300) * 0.10;
-      const blendX = clamp(targetX + autoX, -1.25, 1.25);
-      const blendY = clamp(targetY + autoY, -1.25, 1.25);
-      velX += (blendX - currentX) * 0.038; velY += (blendY - currentY) * 0.038;
-      velX *= 0.88; velY *= 0.88;
-      currentX += velX; currentY += velY;
+      const autoX = Math.sin(t/3200)*0.48 + Math.sin(t/1900)*0.14;
+      const autoY = Math.cos(t/3800)*0.36 + Math.sin(t/2300)*0.10;
+      const blendX = clamp(targetX+autoX,-1.25,1.25);
+      const blendY = clamp(targetY+autoY,-1.25,1.25);
+      velX += (blendX-currentX)*0.038; velY += (blendY-currentY)*0.038;
+      velX *= 0.88; velY *= 0.88; currentX += velX; currentY += velY;
       canvas.style.setProperty("--mx", currentX.toFixed(4));
       canvas.style.setProperty("--my", currentY.toFixed(4));
       requestAnimationFrame(cinematicLoop);
     }
     if (!reduceMotion) requestAnimationFrame(cinematicLoop);
 
-    slides.forEach((_, i) => {
-      const btn = document.createElement("button");
-      btn.className = "dot-btn" + (i === 0 ? " active" : "");
-      btn.setAttribute("aria-label", "Ke slide " + (i + 1));
-      btn.addEventListener("click", () => goTo(i));
-      dotsWrap.appendChild(btn);
-    });
+    slides.forEach((_,i)=>{ const b=document.createElement("button"); b.className="dot-btn"+(i===0?" active":""); b.setAttribute("aria-label","Ke slide "+(i+1)); b.addEventListener("click",()=>goTo(i)); dotsWrap.appendChild(b); });
 
-    function showToast(message) {
-      toast.textContent = message;
-      toast.classList.add("show");
-      clearTimeout(toast._timer);
-      toast._timer = setTimeout(() => toast.classList.remove("show"), 3800);
-    }
+    function showToast(m){ toast.textContent=m; toast.classList.add("show"); clearTimeout(toast._t); toast._t=setTimeout(()=>toast.classList.remove("show"),3800); }
+    function animateCounters(slide){ slide.querySelectorAll("[data-count]").forEach((el)=>{ if(el.dataset.animating==="1")return; const target=Number(el.dataset.count||0); const suffix=el.dataset.suffix||""; const start=performance.now(); el.dataset.animating="1"; function tick(now){ const p=Math.min(1,(now-start)/1200); const e=1-Math.pow(1-p,3); el.textContent=Math.round(target*e)+suffix; if(p<1)requestAnimationFrame(tick); else el.dataset.animating="0"; } requestAnimationFrame(tick); }); }
 
-    function animateCounters(slide) {
-      slide.querySelectorAll("[data-count]").forEach((el) => {
-        if (el.dataset.animating === "1") return;
-        const target = Number(el.dataset.count || 0);
-        const suffix = el.dataset.suffix || "";
-        const start = performance.now();
-        el.dataset.animating = "1";
-        function tick(now) {
-          const p = Math.min(1, (now - start) / 1200);
-          const eased = 1 - Math.pow(1 - p, 3);
-          el.textContent = Math.round(target * eased) + suffix;
-          if (p < 1) requestAnimationFrame(tick); else el.dataset.animating = "0";
-        }
-        requestAnimationFrame(tick);
-      });
-    }
-
-    function goTo(index) {
-      index = Math.max(0, Math.min(slides.length - 1, index));
-      slides.forEach((slide, i) => {
-        const dir = i < index ? -1 : 1;
-        slide.style.setProperty("--tx", `${dir * 56}px`);
-        slide.classList.toggle("active", i === index);
-        slide.setAttribute("aria-hidden", i === index ? "false" : "true");
-      });
+    function goTo(index){
+      index = Math.max(0, Math.min(slides.length-1, index));
+      slides.forEach((slide,i)=>{ const dir=i<index?-1:1; slide.style.setProperty("--tx",`${dir*56}px`); slide.classList.toggle("active",i===index); slide.setAttribute("aria-hidden", i===index?"false":"true"); });
       current = index;
-      bar.style.width = (index / (slides.length - 1)) * 100 + "%";
-      counter.textContent = `${index + 1} / ${slides.length}`;
-      document.querySelectorAll(".dot-btn").forEach((dot, i) => dot.classList.toggle("active", i === index));
+      bar.style.width = (index/(slides.length-1))*100 + "%";
+      counter.textContent = `${index+1} / ${slides.length}`;
+      document.querySelectorAll(".dot-btn").forEach((d,i)=>d.classList.toggle("active",i===index));
       animateCounters(slides[index]);
+      // slide 11 = index 10 -> gambar garis callaway
+      requestAnimationFrame(()=> layoutApd(index === 10));
     }
 
-    btnPrev.addEventListener("click", () => goTo(current - 1));
-    btnNext.addEventListener("click", () => goTo(current + 1));
+    btnPrev.addEventListener("click",()=>goTo(current-1));
+    btnNext.addEventListener("click",()=>goTo(current+1));
+    window.addEventListener("keydown",(e)=>{ const inter=e.target.closest("button,input,textarea,select"); if(inter&&(e.key==="Enter"||e.key===" "))return; if(["ArrowRight","PageDown"," ","Enter"].includes(e.key)){e.preventDefault();goTo(current+1);} if(["ArrowLeft","PageUp","Backspace"].includes(e.key)){e.preventDefault();goTo(current-1);} if(e.key==="Home")goTo(0); if(e.key==="End")goTo(slides.length-1); });
 
-    window.addEventListener("keydown", (e) => {
-      const interactive = e.target.closest("button, input, textarea, select");
-      if (interactive && (e.key === "Enter" || e.key === " ")) return;
-      if (["ArrowRight", "PageDown", " ", "Enter"].includes(e.key)) { e.preventDefault(); goTo(current + 1); }
-      if (["ArrowLeft", "PageUp", "Backspace"].includes(e.key)) { e.preventDefault(); goTo(current - 1); }
-      if (e.key === "Home") goTo(0);
-      if (e.key === "End") goTo(slides.length - 1);
-    });
+    let startX=null;
+    stage.addEventListener("touchstart",(e)=>{startX=e.touches[0].clientX;},{passive:true});
+    stage.addEventListener("touchend",(e)=>{ if(startX===null)return; const dx=e.changedTouches[0].clientX-startX; if(Math.abs(dx)>60)goTo(current+(dx<0?1:-1)); startX=null; });
 
-    let startX = null;
-    stage.addEventListener("touchstart", (e) => { startX = e.touches[0].clientX; }, { passive: true });
-    stage.addEventListener("touchend", (e) => {
-      if (startX === null) return;
-      const dx = e.changedTouches[0].clientX - startX;
-      if (Math.abs(dx) > 60) goTo(current + (dx < 0 ? 1 : -1));
-      startX = null;
-    });
-
-    btnFull.addEventListener("click", async () => {
-      try {
-        if (!document.fullscreenElement) await stage.requestFullscreen();
-        else await document.exitFullscreen();
-        setTimeout(fitCanvas, 120);
-      } catch (err) { showToast("Fullscreen tidak didukung di browser ini."); }
-    });
+    btnFull.addEventListener("click",async()=>{ try{ if(!document.fullscreenElement)await stage.requestFullscreen(); else await document.exitFullscreen(); setTimeout(()=>{fitCanvas();layoutApd(current===10);},120);}catch(err){showToast("Fullscreen tidak didukung di browser ini.");} });
 
     const choices = document.querySelectorAll(".choice");
     const introFeedback = document.getElementById("introFeedback");
-    choices.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const isCorrect = btn.dataset.correct === "true";
-        const correctBtn = Array.from(choices).find((c) => c.dataset.correct === "true");
-        choices.forEach((c) => { c.disabled = true; c.classList.remove("correct", "wrong"); });
-        if (isCorrect) {
-          btn.classList.add("correct");
-          introFeedback.className = "feedback show good";
-          introFeedback.innerHTML = `<strong>Tepat!</strong> Spuit bekas pakai yang terkontaminasi darah termasuk limbah berisiko dan harus masuk penanganan benda tajam/infeksius sesuai SOP. Ini pengingat bahwa <em>kebersihan visual tidak sama dengan aman</em>.`;
-        } else {
-          btn.classList.add("wrong");
-          if (correctBtn) correctBtn.classList.add("correct");
-          introFeedback.className = "feedback show bad";
-          introFeedback.innerHTML = `<strong>Hampir.</strong> Jawaban paling tepat adalah spuit bekas pakai terkontaminasi darah. Sisa makanan dan kertas bersih umumnya masuk domestik, selama tidak terkontaminasi bahan berbahaya.`;
-        }
-        showResultImage(isCorrect);
-      });
-    });
+    choices.forEach((btn)=>{ btn.addEventListener("click",()=>{ const isCorrect=btn.dataset.correct==="true"; const correctBtn=Array.from(choices).find(c=>c.dataset.correct==="true"); choices.forEach(c=>{c.disabled=true;c.classList.remove("correct","wrong");}); if(isCorrect){btn.classList.add("correct");introFeedback.className="feedback show good";introFeedback.innerHTML=`<strong>Tepat!</strong> Spuit bekas pakai yang terkontaminasi darah termasuk limbah berisiko dan harus masuk penanganan benda tajam/infeksius sesuai SOP. Ini pengingat bahwa <em>kebersihan visual tidak sama dengan aman</em>.`;}else{btn.classList.add("wrong");if(correctBtn)correctBtn.classList.add("correct");introFeedback.className="feedback show bad";introFeedback.innerHTML=`<strong>Hampir.</strong> Jawaban paling tepat adalah spuit bekas pakai terkontaminasi darah. Sisa makanan dan kertas bersih umumnya masuk domestik, selama tidak terkontaminasi bahan berbahaya.`;} showResultImage(isCorrect); }); });
 
-    document.getElementById("startBtn").addEventListener("click", () => goTo(1));
-    document.getElementById("askBtn").addEventListener("click", () => {
-      showToast("Coba lempar ke audiens: “Kapan terakhir kali kita melihat tumpahan atau pemilahan yang keliru di RS ini?”");
-    });
+    document.getElementById("startBtn").addEventListener("click",()=>goTo(1));
+    document.getElementById("askBtn").addEventListener("click",()=>showToast("Coba lempar ke audiens: “Kapan terakhir kali kita melihat tumpahan atau pemilahan yang keliru di RS ini?”"));
 
     const checks = document.querySelectorAll("#auditChecklist input");
     const ringFg = document.getElementById("ringFg");
     const ringText = document.getElementById("ringText");
-    const circumference = 2 * Math.PI * 82;
-    ringFg.style.strokeDasharray = circumference;
-    ringFg.style.strokeDashoffset = circumference;
-    function updateAudit() {
-      const total = checks.length;
-      const done = Array.from(checks).filter((c) => c.checked).length;
-      const pct = Math.round((done / total) * 100);
-      ringFg.style.strokeDashoffset = circumference * (1 - pct / 100);
-      ringText.textContent = pct + "%";
-    }
-    checks.forEach((c) => c.addEventListener("change", updateAudit));
-    updateAudit();
+    const circumference = 2*Math.PI*82;
+    ringFg.style.strokeDasharray=circumference; ringFg.style.strokeDashoffset=circumference;
+    function updateAudit(){ const total=checks.length; const done=Array.from(checks).filter(c=>c.checked).length; const pct=Math.round(done/total*100); ringFg.style.strokeDashoffset=circumference*(1-pct/100); ringText.textContent=pct+"%"; }
+    checks.forEach(c=>c.addEventListener("change",updateAudit)); updateAudit();
 
-    function celebrate() {
-      const colors = ["#8b5cf6", "#ec4899", "#f59e0b", "#34d399", "#ffffff"];
-      for (let i = 0; i < 90; i++) {
-        const piece = document.createElement("div");
-        piece.className = "confetti";
-        piece.style.left = Math.random() * 1600 + "px";
-        piece.style.background = colors[i % colors.length];
-        piece.style.animationDuration = (2 + Math.random() * 2) + "s";
-        piece.style.animationDelay = (Math.random() * 0.4) + "s";
-        piece.style.transform = `rotate(${Math.random() * 360}deg)`;
-        canvas.appendChild(piece);
-        setTimeout(() => piece.remove(), 4500);
-      }
-    }
-    document.getElementById("commitBtn").addEventListener("click", () => { celebrate(); showToast("Mantap! Komitmen kecil hari ini bisa mencegah insiden besar besok."); });
-    document.getElementById("qaBtn").addEventListener("click", () => { showToast("Silakan berbagi: bagian mana dari alur limbah yang paling sering terlewat di unit Anda?"); });
+    function celebrate(){ const colors=["#8b5cf6","#ec4899","#f59e0b","#34d399","#ffffff"]; for(let i=0;i<90;i++){ const p=document.createElement("div"); p.className="confetti"; p.style.left=Math.random()*1600+"px"; p.style.background=colors[i%colors.length]; p.style.animationDuration=(2+Math.random()*2)+"s"; p.style.animationDelay=(Math.random()*0.4)+"s"; p.style.transform=`rotate(${Math.random()*360}deg)`; canvas.appendChild(p); setTimeout(()=>p.remove(),4500);} }
+    document.getElementById("commitBtn").addEventListener("click",()=>{celebrate();showToast("Mantap! Komitmen kecil hari ini bisa mencegah insiden besar besok.");});
+    document.getElementById("qaBtn").addEventListener("click",()=>showToast("Silakan berbagi: bagian mana dari alur limbah yang paling sering terlewat di unit Anda?"));
 
     goTo(0);
   </script>
