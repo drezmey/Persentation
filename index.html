@@ -207,10 +207,6 @@
     .ring-center { position:absolute; inset:0; display:grid; place-items:center; text-align:center; }
     #ringText { font-family:"Fredoka",sans-serif; font-size:35px; font-weight:700; color:var(--mint); line-height:1; }
 
-    .column-stack { display:grid; grid-template-rows: minmax(220px,1fr) auto; gap:12px; height:100%; min-height:0; }
-    .mini-stack { display:grid; gap:10px; min-height:0; }
-    .mini-card { padding:12px 13px; border-radius:20px; }
-    .mini-card p { -webkit-line-clamp:2; }
     .final-row { display:grid; grid-template-columns: 0.9fr 1.1fr; gap:24px; align-items:center; }
     .thanks { font-family:"Fredoka",sans-serif; font-size:46px; line-height:1; margin:0; }
 
@@ -273,6 +269,123 @@
     .presenter.right { transform: translate3d(calc(var(--mx)*7px),0,0); }
     .presenter img { display:block; width:100%; height:100%; object-fit:contain; object-position:bottom center; filter: drop-shadow(7px 8px 0 rgba(23,19,31,0.82)); }
     .presenter-note { align-self:end; margin-bottom:2px; }
+
+    /* ===== SLIDE 11: URUTAN APD — CALLAWAY-SPLIT ===== */
+    .apd-body { grid-template-rows: minmax(0,1fr) auto; }
+    .apd-callaway {
+      position:relative;
+      min-height:0;
+      display:grid;
+      grid-template-columns: 1.06fr 0.94fr;
+      gap:26px;
+      align-items:stretch;
+    }
+    .apd-lines {
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index:1;
+      pointer-events:none;
+      overflow:visible;
+    }
+    .apd-lines path {
+      fill:none;
+      stroke:var(--ink);
+      stroke-width:2.5;
+      stroke-linecap:round;
+      vector-effect:non-scaling-stroke;
+      stroke-dasharray:1;
+      stroke-dashoffset:1;
+      opacity:0.85;
+    }
+    .slide.active .apd-lines path { animation: drawLine 0.7s cubic-bezier(0.2,0.8,0.2,1) forwards; }
+    .slide.active .apd-lines path:nth-of-type(1){animation-delay:0.30s}
+    .slide.active .apd-lines path:nth-of-type(2){animation-delay:0.42s}
+    .slide.active .apd-lines path:nth-of-type(3){animation-delay:0.54s}
+    .slide.active .apd-lines path:nth-of-type(4){animation-delay:0.66s}
+    .slide.active .apd-lines path:nth-of-type(5){animation-delay:0.78s}
+    .slide.active .apd-lines path:nth-of-type(6){animation-delay:0.90s}
+    @keyframes drawLine { to { stroke-dashoffset:0; } }
+
+    .apd-steps {
+      position:relative;
+      z-index:2;
+      list-style:none;
+      margin:0;
+      padding:0;
+      display:grid;
+      grid-auto-rows: minmax(0,1fr);
+      gap:8px;
+      min-height:0;
+    }
+    .apd-step {
+      position:relative;
+      display:grid;
+      grid-template-columns: 46px 1fr;
+      align-items:center;
+      gap:12px;
+      background:var(--white);
+      border:var(--border);
+      border-radius:20px;
+      box-shadow:var(--shadow);
+      padding:9px 14px 9px 10px;
+      min-height:0;
+      --accent: var(--violet);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .apd-step:hover { transform: translate(-2px,-2px); box-shadow:12px 12px 0 var(--ink); }
+    .apd-step:nth-child(1){--accent:var(--mint);}
+    .apd-step:nth-child(2){--accent:var(--violet);}
+    .apd-step:nth-child(3){--accent:var(--pink);}
+    .apd-step:nth-child(4){--accent:var(--amber);}
+    .apd-step:nth-child(5){--accent:var(--violet);}
+    .apd-step:nth-child(6){--accent:var(--mint);}
+    .apd-num {
+      width:46px; height:46px;
+      border:var(--border);
+      border-radius:15px;
+      background:var(--accent);
+      box-shadow:4px 4px 0 var(--ink);
+      display:grid; place-items:center;
+      font-family:"Fredoka",sans-serif;
+      font-size:21px; font-weight:700;
+      color:var(--ink);
+      flex:0 0 auto;
+    }
+    .apd-step:nth-child(3) .apd-num,
+    .apd-step:nth-child(5) .apd-num { color:#fff; }
+    .apd-step-body { min-width:0; }
+    .apd-step-title {
+      display:flex; align-items:center; gap:8px;
+      font-family:"Fredoka",sans-serif;
+      font-size:16.5px; font-weight:700; line-height:1.1;
+      margin:0 0 3px;
+    }
+    .apd-step-title .em { font-size:18px; }
+    .apd-step-desc {
+      margin:0;
+      font-size:12.5px; line-height:1.32; color:#5a5261;
+      display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+    }
+
+    .apd-photo-wrap { position:relative; z-index:2; min-height:0; }
+    .apd-photo { height:100%; }
+    .apd-photo img { object-fit:cover; object-position:center top; }
+    .apd-sticker {
+      top:-14px; left:auto; right:24px;
+      background:var(--mint);
+      transform: rotate(6deg);
+      box-shadow:5px 5px 0 var(--ink);
+      font-size:15px;
+    }
+    .slide.active .apd-photo-wrap { animation: callIn 0.85s cubic-bezier(0.2,0.8,0.2,1) both; }
+    @keyframes callIn {
+      from { opacity:0; transform: translate3d(46px,0,0) scale(0.96) rotate(1.5deg); }
+      to   { opacity:1; transform: none; }
+    }
+    .apd-footnote { background: rgba(52,211,153,0.16); }
+    .apd-footnote strong { color:#0f7a52; }
 
     /* ===== HASIL MINI POLL: GAMBAR BENAR/SALAH DI SLIDE 1 ===== */
     .hero-tile.result-active .photo-zoom { animation: none; }
@@ -595,27 +708,89 @@
             </div>
           </section>
 
-          <!-- SLIDE 11: APD & KASUS -->
+          <!-- SLIDE 11: URUTAN PEMAKAIAN APD — CALLAWAY-SPLIT -->
           <section class="slide" aria-hidden="true">
             <div class="slide-inner">
               <div class="slide-head">
-                <div><span class="kicker">Perlindungan Petugas</span><h2>APD & Tanggap Insiden</h2></div>
-                <p>Petugas limbah adalah garda depan yang wajib dilindungi.</p>
+                <div><span class="kicker">Perlindungan Petugas</span><h2>Urutan Pemakaian APD</h2></div>
+                <p>Penanganan sampah B3 &amp; limbah medis — kenakan sesuai urutan, lepas kebalikannya.</p>
               </div>
-              <div class="body split">
-                <div class="grid grid-2 fill stagger">
-                  <div class="card violet"><div class="top-accent"></div><div class="icon">🧤</div><h3>Sarung Tangan</h3><p>Tahan tusuk, ganti jika robek/terkontaminasi.</p></div>
-                  <div class="card mint"><div class="top-accent"></div><div class="icon">😷</div><h3>Masker</h3><p>Sesuai potensi aerosol, debu, atau uap kimia.</p></div>
-                  <div class="card amber"><div class="top-accent"></div><div class="icon">🥼</div><h3>Gown/Apron</h3><p>Mencegah percikan menempel pada pakaian kerja.</p></div>
-                  <div class="card pink"><div class="top-accent"></div><div class="icon">🥽</div><h3>Pelindung Mata</h3><p>Google/kacamata saat potensi terciprat.</p></div>
-                </div>
-                <div class="column-stack">
-                  <div class="tile"><div class="photo-parallax"><div class="photo-zoom"><img data-img="apd" data-alt="Foto petugas menggunakan APD" /></div></div><div class="tile-label">Foto APD Petugas<small>Edit IMAGE_URLS.apd</small></div></div>
-                  <div class="mini-stack stagger">
-                    <div class="card pink mini-card"><div class="top-accent"></div><h3>Infeksius</h3><p>Amankan area, APD lengkap, serap + desinfektan, lapor.</p></div>
-                    <div class="card amber mini-card"><div class="top-accent"></div><h3>Kimia</h3><p>Cek label/SDS, ventilasi, absorbent netral, jangan campur.</p></div>
-                    <div class="card violet mini-card"><div class="top-accent"></div><h3>Benda Tajam</h3><p>Jangan pungut tangan kosong, pakai alat bantu, ke safety box.</p></div>
+
+              <div class="body apd-body">
+                <div class="apd-callaway">
+                  <!-- garis callaway: memanggil tiap langkah ke foto -->
+                  <svg class="apd-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                    <path pathLength="1" d="M50 9  C 52 9,  53 14, 55 14" />
+                    <path pathLength="1" d="M50 25 C 52 25, 53 30, 55 30" />
+                    <path pathLength="1" d="M50 42 C 52 42, 53 46, 55 46" />
+                    <path pathLength="1" d="M50 58 C 52 58, 53 62, 55 62" />
+                    <path pathLength="1" d="M50 75 C 52 75, 53 78, 55 78" />
+                    <path pathLength="1" d="M50 91 C 52 91, 53 90, 55 90" />
+                  </svg>
+
+                  <ol class="apd-steps stagger">
+                    <li class="apd-step">
+                      <div class="apd-num">1</div>
+                      <div class="apd-step-body">
+                        <h3 class="apd-step-title"><span class="em">😷</span> Masker</h3>
+                        <p class="apd-step-desc">Masker bedah atau respirator untuk melindungi saluran pernapasan dari agen infeksius di udara.</p>
+                      </div>
+                    </li>
+                    <li class="apd-step">
+                      <div class="apd-num">2</div>
+                      <div class="apd-step-body">
+                        <h3 class="apd-step-title"><span class="em">🥽</span> Pelindung Wajah / Mata</h3>
+                        <p class="apd-step-desc">Kacamata pelindung (goggles) atau face shield untuk percik cairan tubuh atau limbah B3.</p>
+                      </div>
+                    </li>
+                    <li class="apd-step">
+                      <div class="apd-num">3</div>
+                      <div class="apd-step-body">
+                        <h3 class="apd-step-title"><span class="em">🧤</span> Sarung Tangan Khusus</h3>
+                        <p class="apd-step-desc">Sarung tangan tahan kimia / heavy duty gloves untuk cairan tubuh dan bahan kimia berbahaya.</p>
+                      </div>
+                    </li>
+                    <li class="apd-step">
+                      <div class="apd-num">4</div>
+                      <div class="apd-step-body">
+                        <h3 class="apd-step-title"><span class="em">🥼</span> Pakaian Pelindung / Apron</h3>
+                        <p class="apd-step-desc">Pakaian pelindung lengan panjang; melindungi kulit dan pakaian dari percikan serta tumpahan limbah medis.</p>
+                      </div>
+                    </li>
+                    <li class="apd-step">
+                      <div class="apd-num">5</div>
+                      <div class="apd-step-body">
+                        <h3 class="apd-step-title"><span class="em">🧢</span> Topi Medis</h3>
+                        <p class="apd-step-desc">Penutup yang melindungi rambut dan kepala dari kontaminasi.</p>
+                      </div>
+                    </li>
+                    <li class="apd-step">
+                      <div class="apd-num">6</div>
+                      <div class="apd-step-body">
+                        <h3 class="apd-step-title"><span class="em">🥾</span> Sepatu Boot</h3>
+                        <p class="apd-step-desc">Sepatu keselamatan tertutup / boot melindungi kaki dari tumpahan cairan, pecahan kaca, dan benda tajam.</p>
+                      </div>
+                    </li>
+                  </ol>
+
+                  <div class="apd-photo-wrap">
+                    <div class="tile apd-photo">
+                      <div class="sticker apd-sticker">✅ APD LENGKAP!</div>
+                      <div class="photo-parallax">
+                        <div class="photo-zoom">
+                          <img data-img="apd" data-alt="Petugas menggunakan APD lengkap penanganan limbah B3" />
+                        </div>
+                      </div>
+                      <div class="tile-label">
+                        Petugas APD Lengkap
+                        <small>Edit IMAGE_URLS.apd untuk mengganti gambar ini.</small>
+                      </div>
+                    </div>
                   </div>
+                </div>
+
+                <div class="note apd-footnote">
+                  <strong>Semua APD sudah lengkap.</strong> Petugas siap mengangkut dan membuang sampah B3 dengan aman — kenakan sesuai urutan, lepas dengan urutan terbalik, dan selalu lakukan higiene tangan setelah melepas APD.
                 </div>
               </div>
             </div>
@@ -721,13 +896,6 @@
   <script>
     /* ========================================================
        1) GAMBAR HASIL MINI POLL (SLIDE 1)
-       --------------------------------------------------------
-       initial -> gambar saat BELUM ada jawaban
-       benar   -> gambar saat klik jawaban BENAR
-       salah   -> gambar saat klik jawaban SALAH
-       Default initial = Jawaban-Benar.png agar pembuka sudah
-       menampilkan foto asli (bukan placeholder). Silakan ganti
-       ke file lain misal "Foto-Kelompok.png" bila punya.
        ======================================================== */
     const RESULT_IMAGES = {
       initial: "assets/Hero-Default.png",
@@ -738,20 +906,19 @@
     /* ========================================================
        2) GAMBAR BLOK LAINNYA (foto pendukung tiap slide)
        Kosongkan "" untuk pakai placeholder otomatis.
-       Bisa URL online atau path lokal, misal "assets/hero.jpg".
        ======================================================== */
     const IMAGE_URLS = {
       hero: "",
       infectious: "",
       sharps: "",
       domestic: "",
-      apd: "",
+      apd: "assets/petugas-apd.png",
       tps: "",
       lab: "",
       pharmacy: "",
       audit: "",
-      presenterLeft: "assets/presenter-1.png",
-      presenterRight: "assets/presenter-2.png"
+      presenterLeft: "assets/Jawaban-Benar.png",
+      presenterRight: "assets/Jawaban-Salah.png"
     };
 
     const PLACEHOLDER_META = {
@@ -759,7 +926,7 @@
       infectious: { label: "Limbah Infeksius", color: "#f59e0b" },
       sharps: { label: "Safety Box", color: "#ec4899" },
       domestic: { label: "Sampah Domestik", color: "#8b5cf6" },
-      apd: { label: "APD Petugas", color: "#34d399" },
+      apd: { label: "Petugas APD Lengkap", color: "#34d399" },
       tps: { label: "TPS Limbah B3", color: "#f59e0b" },
       lab: { label: "Laboratorium", color: "#8b5cf6" },
       pharmacy: { label: "Farmasi", color: "#34d399" },
@@ -839,7 +1006,7 @@
     function showInitialImage() {
       if (!RESULT_TILE || !RESULT_IMG) return;
       const src = (RESULT_IMAGES.initial || "").trim();
-      if (!src) return; // biarkan placeholder dari applyImages()
+      if (!src) return;
       RESULT_TILE.classList.remove("result-active", "result-correct", "result-wrong");
       RESULT_TILE.style.removeProperty("--result-color");
       if (RESULT_STICKER) RESULT_STICKER.textContent = "Foto Utama";
@@ -1010,7 +1177,7 @@
           introFeedback.className = "feedback show bad";
           introFeedback.innerHTML = `<strong>Hampir.</strong> Jawaban paling tepat adalah spuit bekas pakai terkontaminasi darah. Sisa makanan dan kertas bersih umumnya masuk domestik, selama tidak terkontaminasi bahan berbahaya.`;
         }
-        showResultImage(isCorrect); // <-- ganti gambar foto utama sesuai jawaban
+        showResultImage(isCorrect);
       });
     });
 
